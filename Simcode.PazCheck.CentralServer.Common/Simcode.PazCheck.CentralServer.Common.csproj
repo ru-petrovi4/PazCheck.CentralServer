@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>    
+    <Nullable>enable</Nullable>
+	<LangVersion>Latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="27.2.1" />
+    <PackageReference Include="JsonApiDotNetCore" Version="5.0.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Ssz.Utils\Ssz.Utils\Ssz.Utils.csproj" />
+    <ProjectReference Include="..\Simcode.PazCheck.Common\Simcode.PazCheck.Common.csproj" />
+  </ItemGroup>  
+
+</Project>

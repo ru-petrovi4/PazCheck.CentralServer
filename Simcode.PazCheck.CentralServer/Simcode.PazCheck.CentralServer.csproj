@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>    
+    <!--<ImplicitUsings>enable</ImplicitUsings>-->
+    <Nullable>enable</Nullable>
+	<LangVersion>Latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\MainDependencyValidation\MainDependencyValidation.layerdiagram" Link="MainDependencyValidation.layerdiagram">
+      <Visible>False</Visible>
+    </AdditionalFiles>
+    <None Include="..\MainDependencyValidation\MainDependencyValidation.layerdiagram.layout" Link="MainDependencyValidation.layerdiagram.layout" />
+    <None Include="..\MainDependencyValidation\MainDependencyValidation.layerdiagram.suppressions" Link="MainDependencyValidation.layerdiagram.suppressions" />
+  </ItemGroup>  
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="27.2.1" />
+    <PackageReference Include="JsonApiDotNetCore" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4" />
+    <PackageReference Include="Microsoft.DependencyValidation.Analyzers" Version="0.11.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="6.0.0" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Ssz.Utils\Ssz.Utils\Ssz.Utils.csproj" />    
+    <ProjectReference Include="..\Simcode.PazCheck.CentralServer.Common\Simcode.PazCheck.CentralServer.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Simcode_PazCheck_CentralServer.cer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
