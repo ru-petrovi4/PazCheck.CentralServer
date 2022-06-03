@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Simcode.PazCheck.Addons.CentralServer.DummyCeMatrixRuntime
 {
@@ -45,6 +46,12 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyCeMatrixRuntime
 
         public override void LoadFixtures(IConfiguration configuration, IServiceProvider serviceProvider, PazCheckDbContext context, Project project)
         {
+        }
+
+        public override Task CalculateResultsAsync(PazCheckDbContext dbContext, int logId, DateTime startTimeUtc, DateTime endTimeUtc,
+            CancellationToken cancellationToken, IJobProgress jobProgress)
+        {
+            return Task.CompletedTask;
         }
     }
 }

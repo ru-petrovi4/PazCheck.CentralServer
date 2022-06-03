@@ -107,7 +107,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         progress += 30;
                         break;
                 }
-                _jobProgress.ReportAsync(progress, null, null, true);
+                _jobProgress.ReportAsync(progress, null, null, false);
             }
 
             throw new JsonException();

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Simcode.PazCheck.CentralServer.Common
@@ -16,5 +17,8 @@ namespace Simcode.PazCheck.CentralServer.Common
         public abstract string? GetCeMatrixString(PazCheckDbContext context, Diagram diagram);
 
         public abstract string? GetCeMatrixRuntimeString(PazCheckDbContext context, DiagResult diagResult);
+
+        public abstract Task CalculateResultsAsync(PazCheckDbContext dbContext, int logId, DateTime startTimeUtc, DateTime endTimeUtc,
+            CancellationToken cancellationToken, IJobProgress jobProgress);
     }
 }

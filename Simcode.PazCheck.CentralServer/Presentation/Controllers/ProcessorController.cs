@@ -2,11 +2,15 @@
 // All rights reserved by Simcode
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Simcode.PazCheck.CentralServer.BusinessLogic;
+using Simcode.PazCheck.CentralServer.Common;
+using Simcode.PazCheck.CentralServer.Common.EntityFramework;
+using Simcode.PazCheck.Common;
 
 namespace Simcode.PazCheck.CentralServer.Presentation
 {
@@ -15,25 +19,38 @@ namespace Simcode.PazCheck.CentralServer.Presentation
     {
         private readonly JobsManager _jobsManager;
         private readonly CancellationToken _cancellationToken;
+        private readonly AddonsManager _addonsManager;
 
-        public ProcessorController(IHostApplicationLifetime applicationLifetime, JobsManager jobsManager)
+        public ProcessorController(IHostApplicationLifetime applicationLifetime, JobsManager jobsManager, AddonsManager addonsManager)
         {
             _jobsManager = jobsManager;
             _cancellationToken = applicationLifetime.ApplicationStopping;
+            _addonsManager = addonsManager;
         }
 
         [HttpGet("analyze/{logId}/{startTime}/{endTime}")]
         public async Task<IActionResult> ImportLogAsync(int logId, DateTime startTime, DateTime endTime)
         {
-            var guid = Guid.NewGuid().ToString();
+            var jobId = Guid.NewGuid().ToString();
             if (!_cancellationToken.IsCancellationRequested)
             {
-                //_jobsManager.QueueJob(async token =>
-                //    new AnalyzeTaskData {Id = guid, LogId = logId, StartTime = startTime, EndTime = endTime}
-                //);
+                _jobsManager.QueueJob(jobId,
+                            async (cancellationToken, jobProgress) =>
+                            {
+                                var ceMatrixRuntimeAddonBase = _addonsManager.GetInitializedAddons<CeMatrixRuntimeAddonBase>(null).FirstOrDefault();
+                                if (ceMatrixRuntimeAddonBase is null)
+                                {
+                                    return;
+                                }
+
+                                using (var dbContext = new PazCheckDbContext())
+                                {                                    
+                                    await ceMatrixRuntimeAddonBase.CalculateResultsAsync(dbContext, logId, startTime, endTime, cancellationToken, jobProgress);
+                                }
+                            });                
             }
 
-            return Ok(new {guid});
+            return Ok(new { jobId });
         }
 
         [HttpGet("getexplog/{unitId}")]
