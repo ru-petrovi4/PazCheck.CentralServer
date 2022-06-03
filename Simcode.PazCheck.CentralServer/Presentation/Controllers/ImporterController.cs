@@ -49,7 +49,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                 var jobId = Guid.NewGuid().ToString();
                 jobIds.Add(jobId);
                 var stream = formFile.OpenReadStream();
-                _jobsManager.QueueJob(jobId,
+                _jobsManager.QueueJob(jobId, "Import Tags",
                     (cancellationToken, jobProgress) => _tagsImporter.ImportTagsAsync(stream, prjId, jobProgress, cancellationToken)
                     );
             }
@@ -79,7 +79,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                     jobIds.Add(jobId);
                     if (!_applicationStopping_CancellationToken.IsCancellationRequested)
                     {
-                        _jobsManager.QueueJob(jobId,
+                        _jobsManager.QueueJob(jobId, "Import Log",
                             async (cancellationToken, jobProgress) =>
                             {
                                 var logsImporterAddon = _addonsManager.GetInitializedAddons<LogsImporterAddonBase>(null).FirstOrDefault();

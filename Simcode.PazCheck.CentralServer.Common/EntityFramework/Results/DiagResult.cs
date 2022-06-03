@@ -13,14 +13,19 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     {
         [Attr(PublicName = "name")]
         public string Name { get; set; } = @"";
+
         public int ResultId { get; set; }
+
         [HasOne(PublicName="result")]
         public Result Result { get; set; } = null!;
+
         [HasMany(PublicName="causeresults")]
         public List<CauseResult> CauseResults { get; set; } = new();
+
         [HasMany(PublicName="effectresults")]
         [InverseProperty("DiagResult")]
         public List<EffectResult> EffectResults { get; set; } = new();
+
         [HasMany(PublicName = "intersectresults")]
         public List<IntersectResult> IntersectResults { get; set; } = new();
     }

@@ -32,10 +32,10 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [HasOne(PublicName="diagresult")]
         public DiagResult DiagResult { get; set; } = null!;
 
-        [HasOne(PublicName="firstresult")]
-        public DiagResult FirstResult  { get; set; } = null!;
-
         [Attr(PublicName = "num")]
         public int Num { get; set; } = 0;
     }
 }
+
+//[HasOne(PublicName = "firstresult")]
+//public DiagResult FirstResult { get; set; } = null!;

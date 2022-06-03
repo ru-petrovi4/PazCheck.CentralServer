@@ -13,9 +13,10 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic
 	{
 		#region construction and destruction
 
-		public JobInfo(JobsManager jobsManager, CancellationToken cancellationToken)
+		public JobInfo(JobsManager jobsManager, string jobName, CancellationToken cancellationToken)
         {
             _jobsManager = jobsManager;
+			JobName = jobName;
 			CancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 		}
 
@@ -24,6 +25,8 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic
 		#region public functions		
 
 		public string JobId = @"";
+
+		public string JobName = @"";
 
 		public double ProgressPercent;
 

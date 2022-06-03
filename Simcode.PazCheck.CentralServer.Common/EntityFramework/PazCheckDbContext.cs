@@ -34,3 +34,8 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         }
     }
 }
+
+//services.AddDbContext<PazCheckDbContext>(opt =>
+//{
+//    opt.UseNpgsql(@"Host=localhost;Username=postgres;Password=postgres;Database=PazCheck");
+//});

@@ -27,7 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Ssz.Utils\Ssz.Utils\Ssz.Utils.csproj" />    
+    <ProjectReference Include="..\..\IdentityServer\Simcode.IdentityServer\Simcode.IdentityServer.csproj" />
+    <ProjectReference Include="..\..\Ssz.Utils\Ssz.Utils\Ssz.Utils.csproj" />
+    <ProjectReference Include="..\..\Ssz.Utils\ThirdParties\IdentityServer4\IdentityServer4\IdentityServer4.csproj" />    
     <ProjectReference Include="..\Simcode.PazCheck.CentralServer.Common\Simcode.PazCheck.CentralServer.Common.csproj" />
   </ItemGroup>
 

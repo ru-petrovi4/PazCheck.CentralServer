@@ -34,7 +34,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             var jobId = Guid.NewGuid().ToString();
             if (!_cancellationToken.IsCancellationRequested)
             {
-                _jobsManager.QueueJob(jobId,
+                _jobsManager.QueueJob(jobId, "Import Log",
                             async (cancellationToken, jobProgress) =>
                             {
                                 var ceMatrixRuntimeAddonBase = _addonsManager.GetInitializedAddons<CeMatrixRuntimeAddonBase>(null).FirstOrDefault();

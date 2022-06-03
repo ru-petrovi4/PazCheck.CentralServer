@@ -1,4 +1,4 @@
-//#define LOCAL_IDENTITY_SERVER
+#define LOCAL_IDENTITY_SERVER
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -87,11 +87,7 @@ namespace Simcode.PazCheck.CentralServer
             //services.AddDbContext<EmseventsContext>(opt =>
             //{
             //    opt.UseSqlServer(); // "Server=SRVEPKS01B;Database=emsevents;User ID=pazcheck;Password=Pier1@Exp!"
-            //});
-            //services.AddDbContext<PazCheckDbContext>(opt =>
-            //{
-            //    opt.UseNpgsql(@"Host=localhost;Username=postgres;Password=postgres;Database=PazCheck");
-            //});
+            //});            
 
             services.AddDbContext<PazCheckDbContext>();
 
