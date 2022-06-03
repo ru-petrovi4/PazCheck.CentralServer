@@ -53,7 +53,7 @@ namespace Simcode.PazCheck.Common
         public static string GetExamplesDirectoryFullName(IConfiguration configuration)
         {
             DirectoryInfo programDataDirectoryInfo = GetProgramDataDirectoryInfo(configuration);
-            return Path.Combine(programDataDirectoryInfo.FullName, @"..\");
+            return Path.Combine(programDataDirectoryInfo.FullName, @"..");
         }
 
         #endregion        

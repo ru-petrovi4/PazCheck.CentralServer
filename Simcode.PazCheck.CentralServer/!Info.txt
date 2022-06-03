@@ -1,0 +1,13 @@
+dotnet publish PazCheck.Private-LocalIdentityServer.sln -c Release -r linux-x64
+/etc/systemd/system/simcode_pazcheck_centralserver.service
+
+sudo systemctl daemon-reload
+
+sudo systemctl status simcode_pazcheck_centralserver.service
+sudo systemctl enable simcode_pazcheck_centralserver.service
+sudo systemctl start simcode_pazcheck_centralserver.service
+
+sudo journalctl -u simcode_pazcheck_centralserver.service
+
+
+/usr/bin/dotnet Simcode.PazCheck.CentralServer.dll
