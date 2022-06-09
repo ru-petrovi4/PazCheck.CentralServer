@@ -10,18 +10,30 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     public class Timeevent : Identifiable<int>
     {
+        /// <summary>
+        ///     Порядок
+        /// </summary>
+        [Attr(PublicName = "order")]
+        public int Num { get; set; } = 0;
+
         [Attr(PublicName = "name")]
-        public string Name { get; set; } = @"";
+        public string TagName { get; set; } = @"";
+
+        /// <summary>
+        ///     0 - cause, 1 - effect
+        /// </summary>
         [Attr(PublicName = "type")]
-        public int Type { get; set; } = 0; //0 - cause, 1 - effect
+        public int Type { get; set; } = 0;
+
         [Attr(PublicName = "state")]
-        public string State { get; set; } = @""; //Положение в котором он срабатыает
+        public string TagConditionString { get; set; } = @"";
+
         [Attr(PublicName = "triggeredtype")]
         public TriggeredTypes TriggeredType { get; set; } = 0;
+
         [Attr(PublicName = "triggeredtime")]
-        public DateTime TriggeredTime { get; set; } = DateTime.UtcNow;
-        [Attr(PublicName = "order")]
-        public int Order { get; set; } = 0; // Порядок
+        public DateTime TriggeredTime { get; set; } = DateTime.UtcNow;        
+
         [HasOne(PublicName = "result")]
         public Result Result { get; set; } = null!;
     }

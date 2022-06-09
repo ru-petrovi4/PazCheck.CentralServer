@@ -52,7 +52,7 @@ namespace Simcode.PazCheck.CentralServer
                 context.SaveChanges();
                 var userMngr = new Simuser
                 {
-                    Username = "mngr",
+                    User = "mngr",
                     Password = "mngr1",
                     FirstName = "Александр",
                     MiddleName = "Сергеевич",
@@ -101,9 +101,9 @@ namespace Simcode.PazCheck.CentralServer
                 context.Units.Add(someUnit);
                 context.SaveChanges();
 
-                var mainProject = new Project { Title = "Основной", Desc = "Установка АВТ-6", Unit = avtUnit, ByUser = Simuser };
-                var p2Project = new Project { Title = "Второй", Desc = "Гидроочистка дизельных топлив", Unit = avtUnit, ByUser = Simuser };
-                var p3Project = new Project { Title = "Третий", Desc = "Производство элементарной серы", Unit = avtUnit, ByUser = Simuser };
+                var mainProject = new Project { Title = "Основной", Desc = "Установка АВТ-6", Unit = avtUnit, _CreateUser = Simuser!.User, _CreateTimeUtc = DateTime.UtcNow };
+                var p2Project = new Project { Title = "Второй", Desc = "Гидроочистка дизельных топлив", Unit = avtUnit, _CreateUser = Simuser!.User, _CreateTimeUtc = DateTime.UtcNow };
+                var p3Project = new Project { Title = "Третий", Desc = "Производство элементарной серы", Unit = avtUnit, _CreateUser = Simuser!.User, _CreateTimeUtc = DateTime.UtcNow };
                 context.Projects.Add(mainProject);
                 context.Projects.Add(p2Project);
                 context.Projects.Add(p3Project);
@@ -124,9 +124,8 @@ namespace Simcode.PazCheck.CentralServer
                 //context.Actuators.Add(baseActuator);
                 context.SaveChanges();
 
-                avtUnit.ActiveProject = mainProject;
-                avtUnit.ByUser = Simuser;
-                avtUnit.LoadedDate = DateTime.UtcNow;
+                avtUnit.ActiveProject = mainProject;               
+                
                 context.SaveChanges();
 
                 ImportQdbTags(configuration, serviceProvider, context, mainProject);
@@ -200,12 +199,12 @@ namespace Simcode.PazCheck.CentralServer
             {
                 using (var stream = File.OpenRead(Path.Combine(ServerConfigurationHelper.GetExamplesDirectoryFullName(configuration), @"ExampleExperionTags.csv")))
                 {
-                    tagsImporterAddon.ImportTags(stream, context, project);
+                    tagsImporterAddon.ImportTags(stream, context, project, Simuser!.User);
                 }
 
                 using (var stream = File.OpenRead(Path.Combine(ServerConfigurationHelper.GetExamplesDirectoryFullName(configuration), @"ExampleDeltaSimTags.csv")))
                 {
-                    tagsImporterAddon.ImportTags(stream, context, project);
+                    tagsImporterAddon.ImportTags(stream, context, project, Simuser!.User);
                 }
             }
         }

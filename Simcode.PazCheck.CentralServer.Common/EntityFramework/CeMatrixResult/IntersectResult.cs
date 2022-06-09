@@ -12,13 +12,17 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     {
         [HasOne(PublicName = "causeresult")]
         public CauseResult CauseResult { get; set; } = null!;
+
         [HasOne(PublicName = "effectresult")]
         public EffectResult EffectResult { get; set; } = null!;
+
         [Attr(PublicName = "state")]
-        public string State { get; set; } = @"";
+        public string TagConditionString { get; set; } = @"";
+
         [Attr(PublicName = "triggeredtype")]
         public TriggeredTypes TriggeredType { get; set; } = 0;
+
         [HasOne(PublicName="diagresult")]
-        public CeMatrixResult DiagResult { get; set; } = null!;
+        public CeMatrixResult CeMatrixResult { get; set; } = null!;
     }
 }

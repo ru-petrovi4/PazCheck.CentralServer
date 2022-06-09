@@ -11,10 +11,12 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public class Result : Identifiable<int>
     {
         [Attr(PublicName = "name")]
-        public string Name { get; set; } = @"";
+        public string Title { get; set; } = @"";
 
         [Attr(PublicName = "descr")]
-        public string Descr { get; set; } = @"";
+        public string Desc { get; set; } = @"";
+
+        public string Comment { get; set; } = @"";
 
         [Attr(PublicName="logfile")]
         public string LogFile { get; set; } = @"";

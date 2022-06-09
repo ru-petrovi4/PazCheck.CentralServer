@@ -5,7 +5,7 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    public class Simuser : VersionEntity
+    public class Simuser : Identifiable<int>
     {
         [NotMapped]
         public string SubjectId => Id.ToString();
@@ -13,7 +13,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
          * Login name
          */
         [Attr(PublicName="username")]
-        public string Username { get; set; } = @"";
+        public string User { get; set; } = @"";
         [Attr(PublicName="password")]
         public string Password { get; set; } = @"";
         [Attr(PublicName="providername")]

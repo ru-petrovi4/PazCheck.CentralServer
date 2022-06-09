@@ -6,6 +6,6 @@ namespace Simcode.PazCheck.CentralServer.Common
 {
     public abstract class TagsImporterAddonBase : AddonBase
     {
-        public abstract void ImportTags(Stream stream, PazCheckDbContext context, Project project);
+        public abstract void ImportTags(Stream stream, PazCheckDbContext context, Project project, string user);
     }
 }
