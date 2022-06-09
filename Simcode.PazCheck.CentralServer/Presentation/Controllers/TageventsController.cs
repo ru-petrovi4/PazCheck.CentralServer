@@ -9,11 +9,11 @@ using Simcode.PazCheck.CentralServer.Common.EntityFramework;
 
 namespace Simcode.PazCheck.CentralServer.Presentation
 {
-    public class TageventsController : JsonApiController<Tagevents, int>
+    public class TageventsController : JsonApiController<TagEvent, int>
     {
         public TageventsController(IJsonApiOptions options, IResourceGraph resourceGraph,
             ILoggerFactory loggerFactory,
-            IResourceService<Tagevents, int> resourceService)
+            IResourceService<TagEvent, int> resourceService)
             : base(options, resourceGraph, loggerFactory, resourceService)
         {
         }

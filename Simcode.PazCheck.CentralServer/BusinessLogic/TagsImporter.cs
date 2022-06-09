@@ -32,7 +32,7 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic
         {            
             var project = await _context.Projects
                 .Include(prj => prj.Tags)
-                .ThenInclude(tag => tag.Identities)
+                .ThenInclude(tag => tag.TagConditions)
                 .FirstAsync(prj => prj.Id == projectId, cancellationToken: _applicationStopping_CancellationToken);
         }
 

@@ -10,27 +10,27 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public class Unit : Identifiable<int>
     {
         [Attr(PublicName = "name")]
-        public string Name { get; set; } = @"";
+        public string Title { get; set; } = @"";
 
         [Attr(PublicName = "descr")]
-        public string Descr { get; set; } = @"";
+        public string Desc { get; set; } = @"";
 
         [HasMany(PublicName = "projects")]
         [InverseProperty("Unit")]
-        public List<Project> Projects { get; set; } = new List<Project>();
+        public List<Project> Projects { get; set; } = new();
 
         [HasOne(PublicName = "activeproject")]
-        public Project? ActiveProject { get; set; } = null;
+        public Project? ActiveProject { get; set; }        
 
-        [HasOne(PublicName = "byuser")]
-        public Simuser? ByUser { get; set; } = null;
+        //[Attr(PublicName="loadeddate")]
+        //public DateTime LoadedDate { get; set; }
 
-        [Attr(PublicName="loadeddate")]
-        public DateTime LoadedDate { get; set; }
-        [HasMany(PublicName = "logs")]
-        public List<Log> Logs { get; set; } = new();
-        [HasMany(PublicName = "results")]
-        public List<Result> Results { get; set; } = new();
+        //[HasMany(PublicName = "logs")]
+        //public List<Log> Logs { get; set; } = new();
+
+        //[HasMany(PublicName = "results")]
+        //public List<Result> Results { get; set; } = new();
+
         [HasMany(PublicName = "sections")]
         public List<Section> Sections { get; set; } = new();
     }

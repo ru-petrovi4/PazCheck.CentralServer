@@ -7,10 +7,11 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    public class Tagevents : Identifiable<int>
+    public class TagEvent : VersionEntity
     {
         [Attr(PublicName="eventtime")]
-        public DateTime EventTime { get; set; }
+        public DateTime EventTimeUtc { get; set; }
+
         [Attr(PublicName = "value")]
         public string Value { get; set; } = @"";
     }

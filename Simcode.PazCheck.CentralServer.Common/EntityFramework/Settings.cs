@@ -7,7 +7,7 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    public class Settings : Identifiable<int>
+    public class Settings : VersionEntity
     {
         [Attr(PublicName="starttime")]
         public DateTime StartTime { get; set; }

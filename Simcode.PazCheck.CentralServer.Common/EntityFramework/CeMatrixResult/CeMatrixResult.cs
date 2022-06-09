@@ -9,12 +9,12 @@ using JsonApiDotNetCore.Resources.Annotations;
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     [Resource(PublicName = "diagresults")]
-    public class DiagResult : Identifiable<int>
+    public class CeMatrixResult : Identifiable<int>
     {
         [Attr(PublicName = "name")]
-        public string Name { get; set; } = @"";
+        public string Guid { get; set; } = @"";
 
-        public int ResultId { get; set; }
+        public string Version { get; set; } = @"";
 
         [HasOne(PublicName="result")]
         public Result Result { get; set; } = null!;

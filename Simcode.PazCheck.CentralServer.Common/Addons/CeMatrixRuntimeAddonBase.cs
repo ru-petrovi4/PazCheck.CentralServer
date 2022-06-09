@@ -14,9 +14,9 @@ namespace Simcode.PazCheck.CentralServer.Common
     {
         public abstract void LoadFixtures(IConfiguration configuration, IServiceProvider serviceProvider, PazCheckDbContext context, Project project);
 
-        public abstract string? GetCeMatrixString(PazCheckDbContext context, Diagram diagram);
+        public abstract string? GetCeMatrixString(PazCheckDbContext context, CeMatrix diagram);
 
-        public abstract string? GetCeMatrixRuntimeString(PazCheckDbContext context, DiagResult diagResult);
+        public abstract string? GetCeMatrixRuntimeString(PazCheckDbContext context, CeMatrixResult diagResult);
 
         public abstract Task CalculateResultsAsync(PazCheckDbContext dbContext, int logId, DateTime startTimeUtc, DateTime endTimeUtc,
             CancellationToken cancellationToken, IJobProgress jobProgress);

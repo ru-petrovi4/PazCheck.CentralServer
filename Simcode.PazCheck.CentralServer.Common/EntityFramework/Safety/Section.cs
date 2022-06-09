@@ -11,7 +11,7 @@ using Ssz.Utils.DataAccess;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    public class Section : Identifiable<int>, IValueSubscription
+    public class Section : VersionEntity, IValueSubscription
     {
         [Attr(PublicName = "name")]
         public string Name { get; set; } = @"";

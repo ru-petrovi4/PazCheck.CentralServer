@@ -34,12 +34,12 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyCeMatrixRuntime
 
         public override bool IsDummy => true;
 
-        public override string? GetCeMatrixString(PazCheckDbContext context, Diagram diagram)
+        public override string? GetCeMatrixString(PazCheckDbContext context, CeMatrix diagram)
         {
             return null;
         }
 
-        public override string? GetCeMatrixRuntimeString(PazCheckDbContext context, DiagResult diagResult)
+        public override string? GetCeMatrixRuntimeString(PazCheckDbContext context, CeMatrixResult diagResult)
         {
             return null;
         }

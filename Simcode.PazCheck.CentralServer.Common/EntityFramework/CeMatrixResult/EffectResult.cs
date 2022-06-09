@@ -30,7 +30,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public UInt64 MaxDelayMs { get; set; } = 0;
 
         [HasOne(PublicName="diagresult")]
-        public DiagResult DiagResult { get; set; } = null!;
+        public CeMatrixResult DiagResult { get; set; } = null!;
 
         [Attr(PublicName = "num")]
         public int Num { get; set; } = 0;

@@ -30,7 +30,7 @@ namespace Simcode.PazCheck.CentralServer
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Architecture", "DV2002:Unmapped types", Justification = "System Class")]
     public class Startup
     {
-#region public functions
+        #region public functions
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -136,6 +136,6 @@ namespace Simcode.PazCheck.CentralServer
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
 
-#endregion
+        #endregion
     }
 }

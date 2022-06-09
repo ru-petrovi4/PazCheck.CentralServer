@@ -5,7 +5,7 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    public class Log : Identifiable<int>
+    public class Log : VersionEntity
     {
         [Attr(PublicName = "name")]
         public string Name { get; set; } = @"";
@@ -19,6 +19,6 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public DateTime End { get; set; }
 
         [HasMany(PublicName = "logevents")]
-        public List<Logevent> Logevents { get; set; } = new();
+        public List<UnitEvent> Logevents { get; set; } = new();
     }
 }

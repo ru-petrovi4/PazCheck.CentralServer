@@ -29,14 +29,16 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                 reader.Read();
                 switch (propName)
                 {
-                    case "Name": tag.Name = reader.GetString();
+                    case "Name": tag.TagName = reader.GetString();
                         break;
-                    case "Descr": tag.Descr = reader.GetString();
+                    case "Descr": tag.Desc = reader.GetString();
                         break;
                     case "Identities":
-                        tag.Identities = JsonSerializer.Deserialize<List<Identity>>(ref reader, options);
+                        tag.TagConditions = JsonSerializer.Deserialize<List<TagCondition>>(ref reader, options);
                         break;
-                    case "Key": tag.Key = reader.GetInt32();
+                    case "Key":
+                        //tag.Key = reader.GetInt32();
+                        reader.GetInt32();
                         break;
                 }
             }
@@ -46,10 +48,10 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         public override void Write(Utf8JsonWriter writer, Tag tag, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            writer.WriteString("Name", tag.Name);
-            writer.WriteString("Descr", tag.Descr);
+            writer.WriteString("Name", tag.TagName);
+            writer.WriteString("Descr", tag.Desc);
             writer.WritePropertyName("Identities");
-            JsonSerializer.Serialize(writer, tag.Identities, options);
+            JsonSerializer.Serialize(writer, tag.TagConditions, options);
             writer.WriteNumber("Key", tag.Id);
             writer.WriteEndObject();
         }

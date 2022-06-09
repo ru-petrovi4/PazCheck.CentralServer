@@ -95,35 +95,46 @@ namespace Simcode.PazCheck.CentralServer
         {
             if (!context.Units.Any())
             {
-                var avtUnit = new Unit { Name = "АВТ-6", Descr = "Установка АВТ-6" };
+                var avtUnit = new Unit { Title = "АВТ-6", Desc = "Установка АВТ-6" };
                 context.Units.Add(avtUnit);
-                var someUnit = new Unit { Name = "Гидроочистка", Descr = "Гидроочистка дизельных топлив" };
+                var someUnit = new Unit { Title = "Гидроочистка", Desc = "Гидроочистка дизельных топлив" };
                 context.Units.Add(someUnit);
                 context.SaveChanges();
-                var mlspProject = new Project { Name = "Основной", Descr = "Установка АВТ-6", Unit = avtUnit, ByUser = Simuser };
-                var uralProject = new Project { Name = "Второй", Descr = "Гидроочистка дизельных топлив", Unit = avtUnit, ByUser = Simuser };
-                var saratovProject = new Project { Name = "Третий", Descr = "Производство элементарной серы", Unit = avtUnit, ByUser = Simuser };
-                context.Projects.Add(mlspProject);
-                context.Projects.Add(uralProject);
-                context.Projects.Add(saratovProject);
+
+                var mainProject = new Project { Title = "Основной", Desc = "Установка АВТ-6", Unit = avtUnit, ByUser = Simuser };
+                var p2Project = new Project { Title = "Второй", Desc = "Гидроочистка дизельных топлив", Unit = avtUnit, ByUser = Simuser };
+                var p3Project = new Project { Title = "Третий", Desc = "Производство элементарной серы", Unit = avtUnit, ByUser = Simuser };
+                context.Projects.Add(mainProject);
+                context.Projects.Add(p2Project);
+                context.Projects.Add(p3Project);
                 context.SaveChanges();
-                var act = new Actuator { Name = "Отсечной клапан", Type = ActuatorTypes.Valve.ToString(), Project = mlspProject };
-                var param = new Actuatorparams { Name = "MaxSafeSpeed", Value = "5" };
-                act.Actuatorparams.Add(param);
-                param = new Actuatorparams { Name = "SafeSpeed", Value = "2" };
-                act.Actuatorparams.Add(param);
-                context.Actuators.Add(act);
+
+                var baseActuator = new BaseActuator { Title = "Отсечной клапан", Project = mainProject };
+                var param = new BaseActuatorParam { ParamName = "MaxSafeSpeed", Value = "5" };
+                baseActuator.BaseActuatorParams.Add(param);
+                param = new BaseActuatorParam { ParamName = "SafeSpeed", Value = "2" };
+                baseActuator.BaseActuatorParams.Add(param);
+                context.BaseActuators.Add(baseActuator);
+
+                //var actuator = new Actuator { Title = "Отсечной клапан", BaseActuator = baseActuator, Project = mainProject };
+                //var param = new ActuatorParam { Name = "MaxSafeSpeed", Value = "5" };
+                //baseActuator.ActuatorParams.Add(param);
+                //param = new ActuatorParam { Name = "SafeSpeed", Value = "2" };
+                //baseActuator.ActuatorParams.Add(param);
+                //context.Actuators.Add(baseActuator);
                 context.SaveChanges();
-                avtUnit.ActiveProject = mlspProject;
+
+                avtUnit.ActiveProject = mainProject;
                 avtUnit.ByUser = Simuser;
                 avtUnit.LoadedDate = DateTime.UtcNow;
                 context.SaveChanges();
-                ImportQdbTags(configuration, serviceProvider, context, mlspProject);
+
+                ImportQdbTags(configuration, serviceProvider, context, mainProject);
 
                 var ceMatrixRuntimeAddon = addonsManager.GetInitializedAddons<CeMatrixRuntimeAddonBase>(null).FirstOrDefault();
                 if (ceMatrixRuntimeAddon is not null)
                 {
-                    ceMatrixRuntimeAddon.LoadFixtures(configuration, serviceProvider, context, mlspProject);
+                    ceMatrixRuntimeAddon.LoadFixtures(configuration, serviceProvider, context, mainProject);
                 }
 
                 //var directoryInfo = new DirectoryInfo(Path.Combine(AppContext.BaseDirectory, "Resource"));
@@ -160,22 +171,22 @@ namespace Simcode.PazCheck.CentralServer
 
         private static void LoadDiagram(PazCheckDbContext context, Project project, string name)
         {
-            var diagram01 = new Diagram { Name = name + " " + project.Name, Project = project, ProjectId = project.Id };
+            var diagram01 = new CeMatrix { Title = name + " " + project.Title, Project = project, ProjectId = project.Id };
             context.Diagrams.Add(diagram01);
             context.SaveChanges();
         }
 
         private static Tag LoadTag(PazCheckDbContext context, Project project, string name)
         {
-            var tag = new Tag() { Name = name, Project = project, ProjectId = project.Id };
+            var tag = new Tag() { TagName = name, Project = project };
             project.Tags.Add(tag);
-            var ident = new Identity
+            var ident = new TagCondition
             {
-                Identifier = "Alarm",
-                EventType = "ALARM",
+                ElementName = "Alarm",
+                Type = "ALARM",
                 Value = "CLOSE"
             };
-            tag.Identities.Add(ident);
+            tag.TagConditions.Add(ident);
             context.SaveChanges();
             return tag;
         }

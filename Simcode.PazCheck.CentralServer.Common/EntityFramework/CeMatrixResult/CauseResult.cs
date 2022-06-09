@@ -18,7 +18,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public DateTime? TriggeredTimeUtc { get; set; }
 
         [HasOne(PublicName="diagresult")]
-        public DiagResult DiagResult { get; set; } = null!;
+        public CeMatrixResult DiagResult { get; set; } = null!;
 
         [Attr(PublicName = "num")]
         public int Num { get; set; } = 0;

@@ -29,10 +29,10 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         public override async Task<Actuator> CreateAsync(Actuator resource, CancellationToken cancellationToken)
         {
             var act = await base.CreateAsync(resource, cancellationToken);
-            var param = new Actuatorparams {Name = "MaxSafeSpeed", Value = "5"};
-            act.Actuatorparams.Add(param);
-            param = new Actuatorparams { Name = "SafeSpeed", Value = "2" };
-            act.Actuatorparams.Add(param);
+            var param = new ActuatorParam {ParamName = "MaxSafeSpeed", Value = "5"};
+            act.ActuatorParams.Add(param);
+            param = new ActuatorParam { ParamName = "SafeSpeed", Value = "2" };
+            act.ActuatorParams.Add(param);
             await _context.SaveChangesAsync(cancellationToken); //ToDo: Сделать по человечески. Тут явно должно как-то работать через классы json api
 
             return act;

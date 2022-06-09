@@ -15,8 +15,10 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         [Attr(PublicName = "descr")]
         public string Descr { get; set; } = @"";
+
         [Attr(PublicName="logfile")]
         public string LogFile { get; set; } = @"";
+
         [Attr(PublicName="projectname")]
         public string ProjectName { get; set; } = @"";
 
@@ -25,15 +27,19 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         [Attr(PublicName = "issaved")]
         public bool IsSaved { get; set; } = false;
+
         [Attr(PublicName = "start")]
         public DateTime Start { get; set; }
+
         [Attr(PublicName = "end")]
         public DateTime End { get; set; }
+
         [HasMany(PublicName="diagresults")]
-        public List<DiagResult> DiagResults { get; set; } = new();
-        public int UnitId { get; set; }
+        public List<CeMatrixResult> DiagResults { get; set; } = new();
+
         [HasOne(PublicName = "unit")]
         public Unit Unit { get; set; } = null!;
+
         [HasMany(PublicName="timeevents")]
         public List<Timeevent> Timeevents { get; set; } = new();
     }

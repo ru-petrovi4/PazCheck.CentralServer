@@ -5,7 +5,7 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    public class Simuser : Identifiable<int>
+    public class Simuser : VersionEntity
     {
         [NotMapped]
         public string SubjectId => Id.ToString();

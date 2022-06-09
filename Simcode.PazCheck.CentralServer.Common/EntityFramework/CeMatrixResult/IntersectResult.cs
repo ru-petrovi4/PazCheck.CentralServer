@@ -19,6 +19,6 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr(PublicName = "triggeredtype")]
         public TriggeredTypes TriggeredType { get; set; } = 0;
         [HasOne(PublicName="diagresult")]
-        public DiagResult DiagResult { get; set; } = null!;
+        public CeMatrixResult DiagResult { get; set; } = null!;
     }
 }
