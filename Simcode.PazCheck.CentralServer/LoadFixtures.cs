@@ -168,12 +168,12 @@ namespace Simcode.PazCheck.CentralServer
             }
         }
 
-        private static void LoadDiagram(PazCheckDbContext context, Project project, string name)
-        {
-            var diagram01 = new CeMatrix { Title = name + " " + project.Title, Project = project, ProjectId = project.Id };
-            context.Diagrams.Add(diagram01);
-            context.SaveChanges();
-        }
+        //private static void LoadDiagram(PazCheckDbContext context, Project project, string name)
+        //{
+        //    var diagram01 = new CeMatrix { Title = name + " " + project.Title, Project = project, ProjectId = project.Id };
+        //    context.Diagrams.Add(diagram01);
+        //    context.SaveChanges();
+        //}
 
         private static Tag LoadTag(PazCheckDbContext context, Project project, string name)
         {
@@ -197,15 +197,27 @@ namespace Simcode.PazCheck.CentralServer
             var tagsImporterAddon = addonsManager.GetInitializedAddons<TagsImporterAddonBase>(null, a => String.Equals(a.Name, "ExperionTagsImporter", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
             if (tagsImporterAddon is not null)
             {
-                using (var stream = File.OpenRead(Path.Combine(ServerConfigurationHelper.GetExamplesDirectoryFullName(configuration), @"ExampleExperionTags.csv")))
+                try
                 {
-                    tagsImporterAddon.ImportTags(stream, context, project, Simuser!.User);
+                    using (var stream = File.OpenRead(Path.Combine(ServerConfigurationHelper.GetExamplesDirectoryFullName(configuration), @"ExampleExperionTags.csv")))
+                    {
+                        tagsImporterAddon.ImportTags(stream, context, project, Simuser!.User);
+                    }
+                }
+                catch
+                {
                 }
 
-                using (var stream = File.OpenRead(Path.Combine(ServerConfigurationHelper.GetExamplesDirectoryFullName(configuration), @"ExampleDeltaSimTags.csv")))
-                {
-                    tagsImporterAddon.ImportTags(stream, context, project, Simuser!.User);
-                }
+                //try
+                //{
+                //    using (var stream = File.OpenRead(Path.Combine(ServerConfigurationHelper.GetExamplesDirectoryFullName(configuration), @"ExampleDeltaSimTags.csv")))
+                //    {
+                //        tagsImporterAddon.ImportTags(stream, context, project, Simuser!.User);
+                //    }
+                //}
+                //catch
+                //{
+                //}
             }
         }
 

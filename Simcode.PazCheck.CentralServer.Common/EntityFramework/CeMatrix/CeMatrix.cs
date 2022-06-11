@@ -15,7 +15,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         /// <summary>
         ///     Guid.Version - unique identifier of matrix state
         /// </summary>
-        public string Version { get; set; } = @"";
+        public int Version { get; set; }
 
         [Attr(PublicName="name")]
         public string Title { get; set; } = @"";
@@ -27,8 +27,6 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Status { get; set; } = @"";
 
         public string Source { get; set; } = @"";
-
-        public int ProjectId { get; set; }
 
         [HasOne(PublicName = "project")]
         public Project Project { get; set; } = null!;

@@ -14,7 +14,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr(PublicName = "name")]
         public string Guid { get; set; } = @"";
 
-        public string Version { get; set; } = @"";
+        public int Version { get; set; }
 
         [HasOne(PublicName="result")]
         public Result Result { get; set; } = null!;

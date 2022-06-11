@@ -20,6 +20,8 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string TagConditionString { get; set; } = @"";
 
         [Attr(PublicName = "descr")]
-        public string CustomFieldValues { get; set; } = @"";        
+        public string CustomFieldValues { get; set; } = @"";
+
+        public CeMatrix CeMatrix { get; set; } = null!;
     }
 }

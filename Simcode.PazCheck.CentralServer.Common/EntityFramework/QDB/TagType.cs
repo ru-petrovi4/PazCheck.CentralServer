@@ -1,6 +1,6 @@
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    public enum TagTypes
+    public enum TagType
     {
         Undefined,
         StatusPoint,

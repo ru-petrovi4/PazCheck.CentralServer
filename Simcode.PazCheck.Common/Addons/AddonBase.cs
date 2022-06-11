@@ -45,6 +45,10 @@ namespace Simcode.PazCheck.Common
         {
             Logger = logger;
             UserFriendlyLogger = userFriendlyLogger;
+            var loggersList = new List<ILogger>() { Logger };
+            if (UserFriendlyLogger is not null)
+                loggersList.Add(UserFriendlyLogger);
+            WrapperUserFriendlyLogger = new WrapperUserFriendlyLogger(loggersList.ToArray());
             Configuration = configuration;
             ServiceProvider = serviceProvider;
             InstanceName = instanceName;
@@ -65,9 +69,21 @@ namespace Simcode.PazCheck.Common
 
         #region protected functions
 
+        /// <summary>
+        ///     Has value after Initialize()
+        /// </summary>
         protected ILogger Logger { get; private set; } = null!;
 
+        /// <summary>
+        ///     May have value after Initialize()
+        /// </summary>
         protected IUserFriendlyLogger? UserFriendlyLogger { get; private set; }
+
+        /// <summary>
+        ///     Writes to Logger and UserFriendlyLogger, if any.
+        ///     Has value after Initialize()
+        /// </summary>
+        protected WrapperUserFriendlyLogger WrapperUserFriendlyLogger { get; private set; } = null!;
 
         protected IConfiguration Configuration { get; private set; } = null!;
 

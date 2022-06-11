@@ -14,10 +14,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr(PublicName = "num")]
         public int Num { get; set; }
 
-        [HasOne(PublicName = "project")]
-        public Project Project { get; set; } = null!;       
-
         [HasMany(PublicName = "subcauses")]
         public List<SubCause> SubCauses { get; set; } = new();
+
+        public CeMatrix CeMatrix { get; set; } = null!;
     }
 }
