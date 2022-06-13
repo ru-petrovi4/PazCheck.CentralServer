@@ -8,37 +8,37 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    [Resource(PublicName = "effectresults")]
+    [Resource]
     public class EffectResult : Identifiable<int>
     {
-        [Attr(PublicName = "num")]
+        [Attr]
         public int Num { get; set; } = 0;
 
         /// <summary>
         ///     Имя тега
         /// </summary>
-        [Attr(PublicName = "name")]
+        [Attr]
         public string TagName { get; set; } = @"";
 
         /// <summary>
         ///     Положение в котором он срабатыает
         /// </summary>
-        [Attr(PublicName = "state")]
+        [Attr]
         public string TagConditionString { get; set; } = @"";
 
-        [Attr(PublicName = "descr")]
+        [Attr]
         public string CustomFieldValues { get; set; } = @"";  
 
-        [Attr(PublicName = "triggeredtype")]
+        [Attr]
         public TriggeredTypes TriggeredType { get; set; } = 0;
 
-        [Attr(PublicName = "triggeredtime")]
+        [Attr]
         public DateTime? TriggeredTimeUtc { get; set; }
 
-        [Attr(PublicName = "maxdelayms")]
+        [Attr]
         public UInt64 MaxDelayMs { get; set; } = 0;
 
-        [HasOne(PublicName="diagresult")]
+        [HasOne]
         public CeMatrixResult CeMatrixResult { get; set; } = null!;        
     }
 }

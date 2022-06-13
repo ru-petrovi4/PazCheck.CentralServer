@@ -5,23 +5,25 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    [Resource]
     public class Effect : VersionEntity
     {
         /// <summary>
         ///     Порядковый номер внутри диаграммы
         /// </summary>
-        [Attr(PublicName = "num")]
+        [Attr]
         public int Num { get; set; }
 
-        [Attr(PublicName="name")]
+        [Attr]
         public string TagName { get; set; } = @"";        
 
-        [Attr(PublicName = "state")]
+        [Attr]
         public string TagConditionString { get; set; } = @"";
 
-        [Attr(PublicName = "descr")]
+        [Attr]
         public string CustomFieldValues { get; set; } = @"";
 
+        [HasOne]
         public CeMatrix CeMatrix { get; set; } = null!;
     }
 }

@@ -6,17 +6,19 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    [Resource]
     public class Cause : VersionEntity
     {
         /// <summary>
         ///     Порядковый номер внутри диаграммы
         /// </summary>
-        [Attr(PublicName = "num")]
+        [Attr]
         public int Num { get; set; }
 
-        [HasMany(PublicName = "subcauses")]
+        [HasMany]
         public List<SubCause> SubCauses { get; set; } = new();
 
+        [HasOne]
         public CeMatrix CeMatrix { get; set; } = null!;
     }
 }

@@ -5,16 +5,19 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     public class TagElement : VersionEntity
     {
-        [Attr(PublicName="name")]
+        [Attr]
         public string ElementName { get; set; } = @"";
 
-        [Attr(PublicName="value")]
+        [Attr]
         public string Value { get; set; } = @"";
 
+        [Attr]
         public string Type { get; set; } = @"";
 
+        [Attr]
         public string Desc { get; set; } = @"";
-       
+
+        [HasOne]
         public Tag Tag { get; set; } = null!;
     }
 }

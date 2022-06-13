@@ -8,25 +8,30 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    [Resource(PublicName = "diagresults")]
+    [Resource]
     public class CeMatrixResult : Identifiable<int>
     {
-        [Attr(PublicName = "name")]
+        [Attr]
         public string Guid { get; set; } = @"";
 
+        [Attr]
         public int Version { get; set; }
 
-        [HasOne(PublicName="result")]
+        [HasOne]
         public Result Result { get; set; } = null!;
 
-        [HasMany(PublicName="causeresults")]
+        [HasMany]
+        [InverseProperty(nameof(CauseResult.CeMatrixResult))] // Bacause IntersectResults exists.
         public List<CauseResult> CauseResults { get; set; } = new();
 
-        [HasMany(PublicName="effectresults")]
-        [InverseProperty("DiagResult")]
+        [HasMany]
+        [InverseProperty(nameof(EffectResult.CeMatrixResult))] // Bacause IntersectionResults exists.
         public List<EffectResult> EffectResults { get; set; } = new();
 
-        [HasMany(PublicName = "intersectresults")]
-        public List<IntersectResult> IntersectResults { get; set; } = new();
+        [HasMany]
+        public List<IntersectionResult> IntersectionResults { get; set; } = new();
+
+        [HasOne]
+        public Project Project { get; set; } = null!;
     }
 }

@@ -41,12 +41,12 @@ namespace Simcode.PazCheck.CentralServer
             {
                 var officeZavod = new Office
                 {
-                    Name = "Завод",
+                    Title = "Завод",
                 };
                 context.Offices.Add(officeZavod);
                 var office = new Office
                 {
-                    Name = "Отдел АСУ ТП",
+                    Title = "Отдел АСУ ТП",
                 };
                 context.Offices.Add(office);
                 context.SaveChanges();
@@ -101,9 +101,9 @@ namespace Simcode.PazCheck.CentralServer
                 context.Units.Add(someUnit);
                 context.SaveChanges();
 
-                var mainProject = new Project { Title = "Основной", Desc = "Установка АВТ-6", Unit = avtUnit, _CreateUser = Simuser!.User, _CreateTimeUtc = DateTime.UtcNow };
-                var p2Project = new Project { Title = "Второй", Desc = "Гидроочистка дизельных топлив", Unit = avtUnit, _CreateUser = Simuser!.User, _CreateTimeUtc = DateTime.UtcNow };
-                var p3Project = new Project { Title = "Третий", Desc = "Производство элементарной серы", Unit = avtUnit, _CreateUser = Simuser!.User, _CreateTimeUtc = DateTime.UtcNow };
+                var mainProject = new Project { Title = "Основной", Desc = "Установка АВТ-6", Unit = avtUnit };
+                var p2Project = new Project { Title = "Второй", Desc = "Гидроочистка дизельных топлив", Unit = avtUnit };
+                var p3Project = new Project { Title = "Третий", Desc = "Производство элементарной серы", Unit = avtUnit };
                 context.Projects.Add(mainProject);
                 context.Projects.Add(p2Project);
                 context.Projects.Add(p3Project);

@@ -5,45 +5,54 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    [Resource]
     public class CeMatrix : VersionEntity
     {
         /// <summary>
         ///     Guid.Version - unique identifier of matrix state
         /// </summary>
+        [Attr]
         public string Guid { get; set; } = @"";
 
         /// <summary>
         ///     Guid.Version - unique identifier of matrix state
         /// </summary>
+        [Attr]
         public int Version { get; set; }
 
-        [Attr(PublicName="name")]
+        [Attr]
         public string Title { get; set; } = @"";
 
+        [Attr]
         public string Desc { get; set; } = @"";
 
-        public string Comment { get; set; } = @"";        
+        [Attr]
+        public string Comment { get; set; } = @"";
 
+        [Attr]
         public string Status { get; set; } = @"";
 
+        [Attr]
         public string Source { get; set; } = @"";
 
-        [HasOne(PublicName = "project")]
+        [HasOne]
         public Project Project { get; set; } = null!;
         
-        [HasMany(PublicName = "causes")]
+        [HasMany]
+        [InverseProperty(nameof(Cause.CeMatrix))] // Bacause Intersections exists.
         public List<Cause> Causes { get; set; } = new();
         
-        [HasMany(PublicName = "effects")]
+        [HasMany]
+        [InverseProperty(nameof(Effect.CeMatrix))] // Bacause Intersections exists.
         public List<Effect> Effects { get; set; } = new();
 
-        [HasMany(PublicName="intersections")]
+        [HasMany]
         public List<Intersection> Intersections { get; set; } = new();        
 
-        [Attr(PublicName = "causecustomfieldnames")]
+        [Attr]
         public string CauseCustomFieldNames { get; set; } = @"";
 
-        [Attr(PublicName = "effectcustomfieldnames")]
+        [Attr]
         public string EffectCustomFieldNames { get; set; } = @"";
     }
 }

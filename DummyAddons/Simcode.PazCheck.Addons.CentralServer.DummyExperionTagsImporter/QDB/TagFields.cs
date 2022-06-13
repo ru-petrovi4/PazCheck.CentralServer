@@ -1,4 +1,4 @@
-namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
+namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
 {
     public enum TagFields
     {

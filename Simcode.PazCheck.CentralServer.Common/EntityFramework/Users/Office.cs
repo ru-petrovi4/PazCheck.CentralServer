@@ -4,11 +4,13 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    public class Office : VersionEntity
+    [Resource]
+    public class Office : Identifiable<int>
     {
-        [Attr(PublicName="name")]
-        public string Name { get; set; } = @"";
-        [HasMany(PublicName="users")]
+        [Attr]
+        public string Title { get; set; } = @"";
+
+        [HasMany]
         public List<Simuser> Users { get; set; }
     }
 }

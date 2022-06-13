@@ -13,28 +13,28 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         /// <summary>
         ///     Порядок
         /// </summary>
-        [Attr(PublicName = "order")]
+        [Attr]
         public int Num { get; set; } = 0;
 
-        [Attr(PublicName = "name")]
+        [Attr]
         public string TagName { get; set; } = @"";
 
         /// <summary>
         ///     0 - cause, 1 - effect
         /// </summary>
-        [Attr(PublicName = "type")]
+        [Attr]
         public int Type { get; set; } = 0;
 
-        [Attr(PublicName = "state")]
+        [Attr]
         public string TagConditionString { get; set; } = @"";
 
-        [Attr(PublicName = "triggeredtype")]
+        [Attr]
         public TriggeredTypes TriggeredType { get; set; } = 0;
 
-        [Attr(PublicName = "triggeredtime")]
-        public DateTime TriggeredTime { get; set; } = DateTime.UtcNow;        
+        [Attr]
+        public DateTime TriggeredTimeUtc { get; set; } = DateTime.UtcNow;        
 
-        [HasOne(PublicName = "result")]
+        [HasOne]
         public Result Result { get; set; } = null!;
     }
 }

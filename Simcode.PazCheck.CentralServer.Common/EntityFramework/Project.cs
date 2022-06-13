@@ -9,27 +9,28 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    public class Project : VersionEntity
+    [Resource]
+    public class Project : Identifiable<int>
     {
-        [Attr(PublicName = "name")] 
+        [Attr] 
         public string Title { get; set; } = @"";
 
-        [Attr(PublicName = "descr")] 
+        [Attr] 
         public string Desc { get; set; } = @"";
 
-        [Attr(PublicName = "comment")]
+        [Attr]
         public string Comment { get; set; } = @"";
 
-        [Attr(PublicName = "lastchanged")]
+        [Attr]
         public DateTime LastChanged { get; set; } = DateTime.UtcNow;
 
-        [HasOne(PublicName = "unit")]        
+        [HasOne]        
         public Unit Unit { get; set; } = null!;
 
-        [HasMany(PublicName = "diagrams")] 
+        [HasMany] 
         public List<CeMatrix> CeMatrices { get; set; } = new();
 
-        [HasMany(PublicName = "tags")] 
+        [HasMany] 
         public List<Tag> Tags { get; set; } = new();                
     }
 }

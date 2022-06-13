@@ -7,19 +7,20 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    [Resource]
     public class Unit : Identifiable<int>
     {
-        [Attr(PublicName = "name")]
+        [Attr]
         public string Title { get; set; } = @"";
 
-        [Attr(PublicName = "descr")]
+        [Attr]
         public string Desc { get; set; } = @"";
 
-        [HasMany(PublicName = "projects")]
-        [InverseProperty("Unit")]
+        [HasMany]
+        [InverseProperty("Unit")] // Because ActiveProject property exists.
         public List<Project> Projects { get; set; } = new();
 
-        [HasOne(PublicName = "activeproject")]
+        [HasOne]
         public Project? ActiveProject { get; set; }        
 
         //[Attr(PublicName="loadeddate")]
@@ -31,7 +32,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         //[HasMany(PublicName = "results")]
         //public List<Result> Results { get; set; } = new();
 
-        [HasMany(PublicName = "sections")]
+        [HasMany]
         public List<Section> Sections { get; set; } = new();
     }
 }

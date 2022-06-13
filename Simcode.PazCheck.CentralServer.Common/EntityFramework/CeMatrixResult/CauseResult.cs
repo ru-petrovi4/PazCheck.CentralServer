@@ -8,19 +8,19 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    [Resource(PublicName = "causeresults")]
+    [Resource]
     public class CauseResult : Identifiable<int>
     {
-        [Attr(PublicName = "num")]
+        [Attr]
         public int Num { get; set; } = 0;
 
-        [HasMany(PublicName = "subcauseresults")]
+        [HasMany]
         public List<SubCauseResult> SubCauseResults { get; set; } = new();
 
-        [Attr(PublicName = "triggeredtime")]
+        [Attr]
         public DateTime? TriggeredTimeUtc { get; set; }
 
-        [HasOne(PublicName="diagresult")]
+        [HasOne]
         public CeMatrixResult CeMatrixResult { get; set; } = null!;        
     }
 }

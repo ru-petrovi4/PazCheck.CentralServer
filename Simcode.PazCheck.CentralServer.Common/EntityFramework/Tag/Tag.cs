@@ -6,24 +6,28 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    [Resource]
     public class Tag : VersionEntity
     {
-        [Attr(PublicName = "name")]
+        [Attr]
         public string TagName { get; set; } = @"";
 
-        [Attr(PublicName = "descr")]
+        [Attr]
         public string Desc { get; set; } = @"";
 
-        [HasOne(PublicName = "project")]
+        [HasOne]
         public Project Project { get; set; } = null!;
 
-        [HasMany(PublicName = "identities")]
+        [HasMany]
         public List<TagCondition> TagConditions { get; set; } = new();
 
-        [HasOne(PublicName="actuator")]
+        [HasMany]
+        public List<TagElement> TagElements { get; set; } = new();
+
+        [HasOne]
         public Actuator? Actuator { get; set; }
 
-        [HasMany(PublicName = "tagevents")]
+        [HasMany]
         public List<TagEvent> TagEvents { get; set; } = new();
     }
 }

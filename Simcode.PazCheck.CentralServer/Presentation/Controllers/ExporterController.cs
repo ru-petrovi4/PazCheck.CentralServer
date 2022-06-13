@@ -58,7 +58,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         [HttpGet("diagram/{diagId}")]
         public async Task<IActionResult> ExportDiagram(int diagId)
         {
-            CeMatrix diagram = await _context.Diagrams
+            CeMatrix diagram = await _context.CeMatrices
                 .FirstAsync(d => d.Id == diagId, cancellationToken: _cancellationToken);
 
             await Task.Run(() => _addonsManager.IsInitializedEventWaitHandle.WaitOne());
@@ -90,7 +90,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         [HttpGet("diagramresult/{diagId}")]
         public async Task<IActionResult> ExportDiagramResult(int diagId)
         {
-            CeMatrixResult diagResult = await _context.DiagResults
+            CeMatrixResult diagResult = await _context.CeMatrixResuls
                 .FirstAsync(d => d.Id == diagId, cancellationToken: _cancellationToken);
 
             var ceMatrixRuntimeAddon = _addonsManager.GetInitializedAddons<CeMatrixRuntimeAddonBase>(null).FirstOrDefault();

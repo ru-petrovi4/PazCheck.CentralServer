@@ -4,17 +4,22 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    [Resource]
     public class Job : VersionEntity
     {
-        [Attr(PublicName="guid")]
+        [Attr]
         public string Guid { get; set; } = @"";
-        [Attr(PublicName="name")]
+
+        [Attr]
         public string Name { get; set; } = @"";
-        [Attr(PublicName="issuccess")]
+
+        [Attr]
         public bool IsSuccess { get; set; }
-        [Attr(PublicName="message")]
+
+        [Attr]
         public string Message { get; set; } = @"";
-        [Attr(PublicName="status")]
+
+        [Attr]
         public TaskStatus Status { get; set; }
     }
 }

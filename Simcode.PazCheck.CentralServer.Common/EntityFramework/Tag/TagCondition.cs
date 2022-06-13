@@ -10,33 +10,37 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
      * was triggered. From configuration files we collect possible Identities and
      * when configure matrix we select that identity, that will be used.
      */
+    [Resource]
     public class TagCondition : VersionEntity
     {
         /// <summary>
         ///     Record type idetifier. May be ALARM or PVHI for e.g.
         /// </summary>
-        [Attr(PublicName="identifier")]
+        [Attr]
         public string ElementName { get; set; } = @"";
 
+        [Attr]
         public string MathOperator { get; set; } = @"";
 
         /// <summary>
         ///     Value that the tag reched in this record
         /// </summary>
-        [Attr(PublicName = "value")]
+        [Attr]
         public string Value { get; set; } = @"";
 
         /// <summary>
         ///     Event type that may be for e.g. Alarm or Acknowledge
         /// </summary>
-        [Attr(PublicName="eventtype")]
+        [Attr]
         public string Type { get; set; } = @"";
 
+        [Attr]
         public string SymbolToDisplay { get; set; } = @"";
 
+        [Attr]
         public string Desc { get; set; } = @"";
 
-        [HasOne(PublicName = "tag")]
+        [HasOne]
         public Tag Tag { get; set; } = null!; 
     }
 }

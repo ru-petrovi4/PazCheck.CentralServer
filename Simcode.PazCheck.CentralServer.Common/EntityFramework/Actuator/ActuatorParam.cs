@@ -3,21 +3,22 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    [Resource]
     public class ActuatorParam : VersionEntity
     {
-        [Attr(PublicName="name")]
+        [Attr]
         public string ParamName { get; set; } = @"";
 
-        [Attr(PublicName="value")]
+        [Attr]
         public string Value { get; set; } = @"";
 
+        [Attr]
         public string Type { get; set; } = @"";
 
-        public string Desc { get; set; } = @"";
+        [Attr]
+        public string Desc { get; set; } = @"";        
 
-        public int ActuatorId { get; set; }
-
-        [HasOne(PublicName="actuator")]
+        [HasOne]
         public Actuator Actuator { get; set; } = null!;
     }
 }

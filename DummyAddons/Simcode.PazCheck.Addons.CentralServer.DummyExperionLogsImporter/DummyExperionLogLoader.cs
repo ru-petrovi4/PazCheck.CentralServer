@@ -88,15 +88,15 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionLogsImporter
             if (logevents.Count > 0)
             {
                 logevents = logevents.OrderBy(l => l.EventTimeUtc).ToList();
-                var log = new Log
+                var log = new UnitEventsInterval
                 {
-                    Name = logName,
+                    Title = logName,
                     Unit = unit,
                     Start = logevents.First().EventTimeUtc,
                     End = logevents.Last().EventTimeUtc,
-                    Logevents = logevents
+                    UnitEvents = logevents
                 };
-                context.Logs.Add(log);
+                context.UnitEventsIntervals.Add(log);
 
                 await context.SaveChangesAsync(cancellationToken);
             }

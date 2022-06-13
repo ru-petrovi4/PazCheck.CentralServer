@@ -7,36 +7,42 @@ using JsonApiDotNetCore.Resources;
 using JsonApiDotNetCore.Resources.Annotations;
 using Ssz.Utils.DataAccess;
 
-#nullable enable
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    [Resource]
     public class Section : VersionEntity, IValueSubscription
     {
-        [Attr(PublicName = "name")]
-        public string Name { get; set; } = @"";
-        [Attr(PublicName = "level")]
+        [Attr]
+        public string Title { get; set; } = @"";
+
+        [Attr]
         public int Level { get; set; } = 0;
 
-        [HasMany(PublicName = "children")]
+        [HasMany]
         public List<Section> Children { get; set; } = new();
-        [HasOne(PublicName="parent")]
-        [ForeignKey("ParentId")]
-        public Section? Parent { get; set; }
-        [Attr(PublicName = "alarmlevel")]
-        public int AlarmLevel { get; set; } = 0;
-        [Attr(PublicName = "k")]
-        public double K { get; set; } = 1;
-        [Attr(PublicName = "width")]
-        public double Width { get; set; }
-        [Attr(PublicName = "height")]
-        public double Height{ get; set; }
-        public int UnitId { get; set; }
 
-        [HasOne(PublicName = "unit")]
-        [ForeignKey("UnitId")]
+        [HasOne]
+        [ForeignKey("ParentSectionId")]
+        public Section? Parent { get; set; }
+
+        [Attr]
+        public int AlarmLevel { get; set; } = 0;
+
+        [Attr]
+        public double K { get; set; } = 1;
+
+        [Attr]
+        public double Width { get; set; }
+
+        [Attr]
+        public double Height{ get; set; }
+
+        [HasOne]        
         public Unit Unit { get; set; } = null!;
-        public string MappedElementIdOrConst { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
+        [NotMapped]
+        public string MappedElementIdOrConst { get; set; } = @"";
 
         public void Update(ValueStatusTimestamp vst)
         {

@@ -171,7 +171,7 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
 
                 var tagSection = new Section
                 {
-                    Name = tag,
+                    Title = tag,
                     K = k
                 };
                 unit.Sections.Add(tagSection);
@@ -210,7 +210,7 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
                 if (k == 0.0) k = 1.0;
                 var areaSection = new Section
                 {
-                    Name = area,
+                    Title = area,
                     K = k
                 };
                 unit.Sections.Add(areaSection);

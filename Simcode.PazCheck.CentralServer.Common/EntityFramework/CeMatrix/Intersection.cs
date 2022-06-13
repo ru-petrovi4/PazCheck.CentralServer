@@ -4,27 +4,16 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    [Resource]
     public class Intersection : VersionEntity
     {
-        [HasOne(PublicName="diagram")]
-        public CeMatrix CeMatrix { get; set; }
+        [HasOne]
+        public Cause Cause { get; set; } = null!;
 
-        [HasOne(PublicName="cause")]
-        public Cause Cause { get; set; }
+        [HasOne]
+        public Effect Effect { get; set; } = null!;
 
-        [HasOne(PublicName="effect")]
-        public Effect Effect { get; set; }
-
-        /// <summary>
-        ///     For import/export
-        /// </summary>
-        [NotMapped]
-        public int CauseKey { get; set; }
-
-        /// <summary>
-        ///     For import/export
-        /// </summary>
-        [NotMapped]
-        public int EffectKey { get; set; }
+        [HasOne]
+        public CeMatrix CeMatrix { get; set; } = null!;
     }
 }

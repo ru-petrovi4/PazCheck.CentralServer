@@ -8,41 +8,43 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    [Resource]
     public class Result : Identifiable<int>
     {
-        [Attr(PublicName = "name")]
+        [Attr]
         public string Title { get; set; } = @"";
 
-        [Attr(PublicName = "descr")]
+        [Attr]
         public string Desc { get; set; } = @"";
 
+        [Attr]
         public string Comment { get; set; } = @"";
 
-        [Attr(PublicName="logfile")]
+        [Attr]
         public string LogFile { get; set; } = @"";
 
-        [Attr(PublicName="projectname")]
+        [Attr]
         public string ProjectName { get; set; } = @"";
 
-        [Attr(PublicName = "alalyzedate")]
+        [Attr]
         public DateTime AlalyzeDate { get; set; } = DateTime.UtcNow;
 
-        [Attr(PublicName = "issaved")]
+        [Attr]
         public bool IsSaved { get; set; } = false;
 
-        [Attr(PublicName = "start")]
+        [Attr]
         public DateTime Start { get; set; }
 
-        [Attr(PublicName = "end")]
+        [Attr]
         public DateTime End { get; set; }
 
-        [HasMany(PublicName="diagresults")]
+        [HasMany]
         public List<CeMatrixResult> DiagResults { get; set; } = new();
 
-        [HasOne(PublicName = "unit")]
+        [HasOne]
         public Unit Unit { get; set; } = null!;
 
-        [HasMany(PublicName="timeevents")]
+        [HasMany]
         public List<Timeevent> Timeevents { get; set; } = new();
     }
 }

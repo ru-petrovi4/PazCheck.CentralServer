@@ -7,22 +7,22 @@ using System;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    [Resource(PublicName = "intersectresults")]
-    public class IntersectResult : Identifiable<int>
+    [Resource]
+    public class IntersectionResult : Identifiable<int>
     {
-        [HasOne(PublicName = "causeresult")]
+        [HasOne]
         public CauseResult CauseResult { get; set; } = null!;
 
-        [HasOne(PublicName = "effectresult")]
+        [HasOne]
         public EffectResult EffectResult { get; set; } = null!;
 
-        [Attr(PublicName = "state")]
+        [Attr]
         public string TagConditionString { get; set; } = @"";
 
-        [Attr(PublicName = "triggeredtype")]
+        [Attr]
         public TriggeredTypes TriggeredType { get; set; } = 0;
 
-        [HasOne(PublicName="diagresult")]
+        [HasOne]
         public CeMatrixResult CeMatrixResult { get; set; } = null!;
     }
 }

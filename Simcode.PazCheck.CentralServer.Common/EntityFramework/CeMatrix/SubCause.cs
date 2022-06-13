@@ -12,22 +12,22 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         /// <summary>
         ///     Порядковый номер внутри причины
         /// </summary>
-        [Attr(PublicName = "num")]
+        [Attr]
         public int Num { get; set; }
 
-        [Attr(PublicName = "name")]
+        [Attr]
         public string TagName { get; set; } = @"";
 
         /// <summary>
         ///     Положение в котором он срабатыает
         /// </summary>
-        [Attr(PublicName = "state")]
+        [Attr]
         public string TagConditionString { get; set; } = @"";        
 
-        [Attr(PublicName = "descr")]
+        [Attr]
         public string CustomFieldValues { get; set; } = @"";
         
-        [HasOne(PublicName = "cause")]
+        [HasOne]
         public Cause Cause { get; set; } = null!;
     }
 }
