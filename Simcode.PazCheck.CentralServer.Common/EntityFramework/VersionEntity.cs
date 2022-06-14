@@ -34,7 +34,10 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr]
         public DateTime? _DeleteDateTimeUtc { get; set; }
 
+        /// <summary>
+        ///     Configured as calculated in DB property.
+        /// </summary>
         [Attr]
-        public bool IsActive => _CreateTimeUtc is not null && _DeleteDateTimeUtc is null;
+        public bool IsActive { get; set; }
     }
 }

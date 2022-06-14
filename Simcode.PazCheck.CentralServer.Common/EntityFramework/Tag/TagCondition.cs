@@ -41,6 +41,6 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Desc { get; set; } = @"";
 
         [HasOne]
-        public Tag Tag { get; set; } = null!; 
+        public Tag Tag { get; set; } = null!;         
     }
 }

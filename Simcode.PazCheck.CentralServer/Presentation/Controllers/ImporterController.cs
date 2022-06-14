@@ -90,7 +90,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
 
                                 using (var dbContext = new PazCheckDbContext())
                                 {
-                                    var stream = System.IO.File.OpenRead(fileFullName);
+                                    using var stream = System.IO.File.OpenRead(fileFullName);
                                     await logsImporterAddon.ImportLogsAsync(stream, formFile.FileName, dbContext, prjId, cancellationToken, jobProgress);
                                 }                                
                             });

@@ -52,7 +52,7 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
 
                 if (Enum.TryParse(csv.GetField(csv.GetFieldIndex("Class")), out TagType tagType))
                 {
-                    var tag = new Tag() { Project = project, _CreateTimeUtc = DateTime.UtcNow, _CreateUser = user };
+                    var tag = new Tag() { _CreateTimeUtc = DateTime.UtcNow, _CreateUser = user, Project = project };
                     switch (tagType)
                     {
                         case TagType.StatusPoint:
@@ -72,6 +72,7 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
                                             csv.GetFieldIndex(TagFields.DescriptorState.ToString() + i.ToString()));
                                         var tagCondition = new TagCondition()
                                         {
+                                            _CreateTimeUtc = DateTime.UtcNow,
                                             ElementName = "ALARM", //ToDo: Configuration! Move to config varibles
                                             Type = "Alarm", //ToDo: Configuration! Move to config varibles
                                             Value = tmpValue
@@ -116,6 +117,7 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
                                     {
                                         var tagCondition = new TagCondition()
                                         {
+                                            _CreateTimeUtc = DateTime.UtcNow,
                                             ElementName = tmpAlarm,
                                             Type = "Alarm", //ToDo: Configuration! Move to config varibles
                                             Value = ""

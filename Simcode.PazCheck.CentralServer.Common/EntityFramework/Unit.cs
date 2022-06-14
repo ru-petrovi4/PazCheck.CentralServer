@@ -21,16 +21,16 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public List<Project> Projects { get; set; } = new();
 
         [HasOne]
-        public Project? ActiveProject { get; set; }        
+        public Project? ActiveProject { get; set; }
 
         //[Attr(PublicName="loadeddate")]
         //public DateTime LoadedDate { get; set; }
 
-        //[HasMany(PublicName = "logs")]
-        //public List<Log> Logs { get; set; } = new();
+        [HasMany]
+        public List<UnitEventsInterval> UnitEventsIntervals { get; set; } = new();
 
-        //[HasMany(PublicName = "results")]
-        //public List<Result> Results { get; set; } = new();
+        [HasMany]
+        public List<Result> Results { get; set; } = new();
 
         [HasMany]
         public List<Section> Sections { get; set; } = new();

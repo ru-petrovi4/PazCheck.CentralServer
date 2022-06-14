@@ -19,7 +19,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [HasMany]
         public List<ActuatorParam> ActuatorParams { get; set; } = new();
 
-        [HasOne]
-        public Tag Tag { get; set; } = null!;
+        //[HasOne]
+        //public Tag Tag { get; set; } = null!;
     }
 }

@@ -15,7 +15,7 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionLogsImporter
     {
         public static readonly Guid AddonGuid = new Guid(@"344EE0F7-311B-49D2-8AA3-4EF4FCE7D1BA");
 
-        public static readonly string AddonName = @"ExperionLogsImporter";
+        public static readonly string AddonName = @"DummyExperionLogsImporter";
 
         public override Guid Guid => AddonGuid;
 

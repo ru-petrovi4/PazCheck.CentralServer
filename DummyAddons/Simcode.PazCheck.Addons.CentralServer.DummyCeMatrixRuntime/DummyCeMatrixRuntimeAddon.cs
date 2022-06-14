@@ -5,6 +5,7 @@ using Simcode.PazCheck.Common;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,16 +37,20 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyCeMatrixRuntime
 
         public override string? GetCeMatrixString(PazCheckDbContext context, CeMatrix diagram)
         {
-            return null;
+            return "Example CeMatrix String";
         }
 
         public override string? GetCeMatrixRuntimeString(PazCheckDbContext context, CeMatrixResult diagResult)
         {
-            return null;
+            return "Example CeMatrixRuntime String";
         }
 
-        public override void LoadFixtures(IConfiguration configuration, IServiceProvider serviceProvider, PazCheckDbContext context, Project project)
+        public override void LoadFixtures(IConfiguration configuration, IServiceProvider serviceProvider, PazCheckDbContext dbContext, Project project)
         {
+            //foreach (int ceMatrixIndex in Enumerable.Range(0, 2))
+            //{
+            //    CeMatrixHelper.SaveCeMatrixToDb(dbContext, project, ceMatrixIndex, WrapperUserFriendlyLogger);
+            //}
         }
 
         public override Task CalculateResultsAsync(PazCheckDbContext dbContext, int logId, DateTime startTimeUtc, DateTime endTimeUtc,

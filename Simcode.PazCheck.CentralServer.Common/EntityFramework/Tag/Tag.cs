@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using JsonApiDotNetCore.Resources;
 using JsonApiDotNetCore.Resources.Annotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     [Resource]
+    [Index(nameof(IsActive), nameof(TagName))]
     public class Tag : VersionEntity
     {
         [Attr]

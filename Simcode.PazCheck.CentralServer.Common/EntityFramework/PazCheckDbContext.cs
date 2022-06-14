@@ -30,7 +30,19 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {            
-            optionsBuilder.UseNpgsql(@"Host=localhost;Username=postgres;Password=postgres;Database=PazCheck");
+            optionsBuilder.UseNpgsql(@"Host=localhost;Username=postgres;Password=postgres;Database=PazCheck");            
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasCollation(@"case_insensitive_collation", locale: "en-u-ks-primary", provider: "icu", deterministic: false);
+
+            modelBuilder.Entity<Tag>().Property(t => t.TagName)
+                    .UseCollation(@"case_insensitive_collation");
+
+            modelBuilder.Entity<VersionEntity>()
+                .Property(p => p.IsActive)
+                .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
         }
     }
 }

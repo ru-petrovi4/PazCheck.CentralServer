@@ -13,7 +13,7 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
     {
         public static readonly Guid AddonGuid = new Guid(@"3DC1FC70-3941-4A30-BD36-71D6EA355743");
 
-        public static readonly string AddonName = @"ExperionTagsImporter";
+        public static readonly string AddonName = @"DummyExperionTagsImporter";
 
         public override Guid Guid => AddonGuid;
 

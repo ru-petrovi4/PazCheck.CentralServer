@@ -39,7 +39,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public DateTime End { get; set; }
 
         [HasMany]
-        public List<CeMatrixResult> DiagResults { get; set; } = new();
+        public List<CeMatrixResult> CeMatrixResults { get; set; } = new();
 
         [HasOne]
         public Unit Unit { get; set; } = null!;
