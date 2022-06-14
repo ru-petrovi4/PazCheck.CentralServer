@@ -59,7 +59,7 @@ namespace Simcode.PazCheck.CentralServer
 
             _addonsManager.Initialize(null);
 
-            await LoadFixtures.Fixtures(ServiceProvider, Configuration, _addonsManager);
+            await LoadFixtures.Fixtures(ServiceProvider, Configuration, _addonsManager, true);
 
             while (true)
             {

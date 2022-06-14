@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -20,17 +21,105 @@ namespace Simcode.PazCheck.CentralServer
     {
         #region public functions
 
-        public static async Task Fixtures(IServiceProvider serviceProvider, IConfiguration configuration, AddonsManager addonsManager)
+        public static async Task Fixtures(IServiceProvider serviceProvider, IConfiguration configuration, AddonsManager addonsManager, bool loadFromDumpFile)
         {
-            using var dbContext = new PazCheckDbContext();
-
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
-
-            LoadUsers(dbContext);
-
-            if (!dbContext.Units.Any())
+            try
             {
+                using var dbContext = new PazCheckDbContext();
+                if (dbContext.Units.Any())
+                    return;
+            }
+            catch
+            {
+            }
+
+            if (loadFromDumpFile)
+            {
+                var startInfo = new ProcessStartInfo();                
+                // All environment variables of the created process are inherited from the
+                // current process
+                startInfo.EnvironmentVariables["PGPASSWORD"] = @"postgres";
+                // Required for EnvironmentVariables to be set
+                startInfo.UseShellExecute = false;     
+                // The executable will be search in directories that are specified
+                // in the PATH variable of the current process
+                startInfo.FileName = @"psql.exe";
+
+                startInfo.Arguments = @"-U postgres -w -c ""DROP DATABASE pazcheck""";
+                // Starts process
+                var process = Process.Start(startInfo);
+                process!.WaitForExit();
+
+                startInfo.Arguments = @"-U postgres -w -c ""CREATE DATABASE pazcheck""";
+                // Starts process
+                process = Process.Start(startInfo);
+                process!.WaitForExit();
+                
+                startInfo.Arguments = @"-U postgres -w -d pazcheck -f PazCheck.sql";
+                // Starts process
+                process = Process.Start(startInfo);
+                process!.WaitForExit();
+
+                return;
+            }
+
+            using (var dbContext = new PazCheckDbContext())
+            {
+                dbContext.Database.EnsureDeleted();
+                dbContext.Database.EnsureCreated();
+
+                // Users and offices
+                var officeZavod = new Office
+                {
+                    Title = "Завод",
+                };
+                dbContext.Offices.Add(officeZavod);
+                var office = new Office
+                {
+                    Title = "Отдел АСУ ТП",
+                };
+                dbContext.Offices.Add(office);
+                dbContext.SaveChanges();
+                var userMngr = new Simuser
+                {
+                    User = "mngr",
+                    Password = "mngr1",
+                    FirstName = "Александр",
+                    MiddleName = "Сергеевич",
+                    LastName = "Пушкин",
+                    PersonnelNumber = "27",
+                    Office = officeZavod,
+                    Role = SimRole.RoleAdmin
+                };
+                dbContext.SimUsers.Add(userMngr);
+                //var userEng = new Simuser
+                //{
+                //    Username = "eng",
+                //    Password = "eng1",
+                //    FirstName = "Иван",
+                //    MiddleName = "Иванович",
+                //    LastName = "Иванов",
+                //    PersonnelNumber = "51",
+                //    Office = office,
+                //    Role = SimRole.RoleEng
+                //};
+                //context.SimUsers.Add(userEng);
+                //var userOrd = new Simuser
+                //{
+                //    Username = "user",
+                //    Password = "user1",
+                //    FirstName = "Петр",
+                //    MiddleName = "Петрович",
+                //    LastName = "Петров",
+                //    PersonnelNumber = "62",
+                //    Office = office,
+                //    Role = SimRole.RoleUser
+                //};
+                //context.SimUsers.Add(userOrd);
+                dbContext.SaveChanges();
+
+                Simuser = userMngr;
+
                 // Units
                 var avtUnit = new Unit { Title = "АВТ-6", Desc = "Установка АВТ-6" };
                 dbContext.Units.Add(avtUnit);
@@ -116,8 +205,8 @@ namespace Simcode.PazCheck.CentralServer
                 if (ceMatrixRuntimeAddon is not null)
                 {
                     ceMatrixRuntimeAddon.LoadFixtures(configuration, serviceProvider, dbContext, mainProject);
-                }                
-            }
+                }
+            }                
         }
 
         #endregion
@@ -125,62 +214,6 @@ namespace Simcode.PazCheck.CentralServer
         #region private functions
 
         private static Simuser? Simuser { get; set; }
-
-        private static void LoadUsers(PazCheckDbContext dbContext)
-        {
-            if (!dbContext.SimUsers.Any())
-            {
-                var officeZavod = new Office
-                {
-                    Title = "Завод",
-                };
-                dbContext.Offices.Add(officeZavod);
-                var office = new Office
-                {
-                    Title = "Отдел АСУ ТП",
-                };
-                dbContext.Offices.Add(office);
-                dbContext.SaveChanges();
-                var userMngr = new Simuser
-                {
-                    User = "mngr",
-                    Password = "mngr1",
-                    FirstName = "Александр",
-                    MiddleName = "Сергеевич",
-                    LastName = "Пушкин",
-                    PersonnelNumber = "27",
-                    Office = officeZavod,
-                    Role = SimRole.RoleAdmin
-                };
-                dbContext.SimUsers.Add(userMngr);
-                //var userEng = new Simuser
-                //{
-                //    Username = "eng",
-                //    Password = "eng1",
-                //    FirstName = "Иван",
-                //    MiddleName = "Иванович",
-                //    LastName = "Иванов",
-                //    PersonnelNumber = "51",
-                //    Office = office,
-                //    Role = SimRole.RoleEng
-                //};
-                //context.SimUsers.Add(userEng);
-                //var userOrd = new Simuser
-                //{
-                //    Username = "user",
-                //    Password = "user1",
-                //    FirstName = "Петр",
-                //    MiddleName = "Петрович",
-                //    LastName = "Петров",
-                //    PersonnelNumber = "62",
-                //    Office = office,
-                //    Role = SimRole.RoleUser
-                //};
-                //context.SimUsers.Add(userOrd);
-                dbContext.SaveChanges();
-                Simuser = userMngr;
-            }
-        }             
 
         #endregion        
     }

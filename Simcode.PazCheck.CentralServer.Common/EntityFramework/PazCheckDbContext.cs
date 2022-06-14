@@ -30,7 +30,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {            
-            optionsBuilder.UseNpgsql(@"Host=localhost;Username=postgres;Password=postgres;Database=PazCheck");            
+            optionsBuilder.UseNpgsql(@"Host=localhost;Username=postgres;Password=postgres;Database=pazcheck");            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
