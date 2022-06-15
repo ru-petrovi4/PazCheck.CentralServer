@@ -24,7 +24,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string LogFile { get; set; } = @"";
 
         [Attr]
-        public string ProjectName { get; set; } = @"";
+        public string ProjectGuid { get; set; } = @"";
 
         [Attr]
         public DateTime AlalyzeDate { get; set; } = DateTime.UtcNow;
@@ -33,10 +33,10 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public bool IsSaved { get; set; } = false;
 
         [Attr]
-        public DateTime Start { get; set; }
+        public DateTime StartTimeUtc { get; set; }
 
         [Attr]
-        public DateTime End { get; set; }
+        public DateTime EndTimeUtc { get; set; }
 
         [HasMany]
         public List<CeMatrixResult> CeMatrixResults { get; set; } = new();

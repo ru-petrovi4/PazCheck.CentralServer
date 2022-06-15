@@ -12,7 +12,7 @@ namespace Simcode.PazCheck.CentralServer.Common
 {
     public abstract class CeMatrixRuntimeAddonBase : AddonBase
     {
-        public abstract void LoadFixtures(IConfiguration configuration, IServiceProvider serviceProvider, PazCheckDbContext context, Project project);
+        public abstract Task LoadFixturesAsync(IConfiguration configuration, IServiceProvider serviceProvider, PazCheckDbContext context, Project project);
 
         public abstract string? GetCeMatrixString(PazCheckDbContext context, CeMatrix diagram);
 

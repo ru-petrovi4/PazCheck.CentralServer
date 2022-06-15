@@ -12,10 +12,10 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Title { get; set; } = @"";        
 
         [Attr]
-        public DateTime Start { get; set; }
+        public DateTime StartTimeUtc { get; set; }
 
         [Attr]
-        public DateTime End { get; set; }
+        public DateTime EndTimeUtc { get; set; }
 
         [HasMany]
         public List<UnitEvent> UnitEvents { get; set; } = new();

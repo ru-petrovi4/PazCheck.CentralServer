@@ -12,7 +12,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public class CeMatrixResult : Identifiable<int>
     {
         [Attr]
-        public string Guid { get; set; } = @"";
+        public string CeMatrixGuid { get; set; } = @"";
 
         [Attr]
         public int Version { get; set; }
@@ -30,8 +30,5 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         [HasMany]
         public List<IntersectionResult> IntersectionResults { get; set; } = new();
-
-        [HasOne]
-        public Project Project { get; set; } = null!;
     }
 }

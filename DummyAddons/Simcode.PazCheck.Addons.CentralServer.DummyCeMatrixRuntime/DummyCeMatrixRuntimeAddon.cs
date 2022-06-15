@@ -45,12 +45,13 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyCeMatrixRuntime
             return "Example CeMatrixRuntime String";
         }
 
-        public override void LoadFixtures(IConfiguration configuration, IServiceProvider serviceProvider, PazCheckDbContext dbContext, Project project)
+        public override Task LoadFixturesAsync(IConfiguration configuration, IServiceProvider serviceProvider, PazCheckDbContext dbContext, Project project)
         {
             //foreach (int ceMatrixIndex in Enumerable.Range(0, 2))
             //{
             //    CeMatrixHelper.SaveCeMatrixToDb(dbContext, project, ceMatrixIndex, WrapperUserFriendlyLogger);
             //}
+            return Task.CompletedTask;
         }
 
         public override Task CalculateResultsAsync(PazCheckDbContext dbContext, int logId, DateTime startTimeUtc, DateTime endTimeUtc,

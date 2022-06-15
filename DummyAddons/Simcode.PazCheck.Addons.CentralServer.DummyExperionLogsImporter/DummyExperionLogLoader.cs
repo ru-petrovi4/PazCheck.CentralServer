@@ -92,8 +92,8 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionLogsImporter
                 {
                     Title = logName,
                     Unit = unit,
-                    Start = logevents.First().EventTimeUtc,
-                    End = logevents.Last().EventTimeUtc,
+                    StartTimeUtc = logevents.First().EventTimeUtc,
+                    EndTimeUtc = logevents.Last().EventTimeUtc,
                     UnitEvents = logevents
                 };
                 context.UnitEventsIntervals.Add(log);

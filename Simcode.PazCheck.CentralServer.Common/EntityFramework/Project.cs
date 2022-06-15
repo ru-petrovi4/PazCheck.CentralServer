@@ -12,6 +12,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     [Resource]
     public class Project : Identifiable<int>
     {
+        [Attr]
+        public string Guid { get; set; } = @"";
+
         [Attr] 
         public string Title { get; set; } = @"";
 
