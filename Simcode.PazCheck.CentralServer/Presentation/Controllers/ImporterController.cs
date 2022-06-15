@@ -55,13 +55,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             }
 
             return Ok(new { count = files.Count, filesSize = size, guids = jobIds.ToArray() });
-        }
-
-        public IActionResult Import()
-        {
-            var path = HttpContext.Request.Path;
-            return Ok(path);
-        }
+        }        
 
         [HttpPost("log/{prjId}")]
         public async Task<IActionResult> ImportLogAsync(List<IFormFile> files, int prjId)
@@ -200,3 +194,10 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         #endregion
     }
 }
+
+
+//public IActionResult Import()
+//{
+//    var path = HttpContext.Request.Path;
+//    return Ok(path);
+//}

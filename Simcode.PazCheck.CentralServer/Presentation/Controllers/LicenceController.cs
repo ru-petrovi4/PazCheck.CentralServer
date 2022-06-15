@@ -14,6 +14,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             _licence = licence;
         }
 
+        [HttpGet("licence")]
         public async Task<IActionResult> GetLicence()
         {
             var licence = await _licence.GetLicenceData();

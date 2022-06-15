@@ -29,32 +29,6 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             _addonsManager = addonsManager;
         }
 
-        public IActionResult Export()
-        {
-            var ret = new {data = $"This is an empty test data for save in file"};
-            return Ok(ret);
-        }
-
-        //[HttpGet("project/{prjId}")]
-        //public async Task<IActionResult> ExportProject(int prjId)
-        //{
-        //    var project = await _context.Projects
-        //        .Include(prj => prj.Tags)
-        //        .ThenInclude(tag => tag.TagConditions)
-        //        .Include(prj => prj.Effects)
-        //        .Include(prj => prj.Causes)
-        //        .ThenInclude(c => c.Identities)
-        //        .Include(prj => prj.Diagrams)
-        //        .ThenInclude(d => d.Causes)                
-        //        .Include(prj => prj.Diagrams)
-        //        .ThenInclude(d => d.Effects)                
-        //        .Include(prj => prj.Diagrams)
-        //        .ThenInclude(d => d.Intersections)                
-        //        .FirstAsync(prj => prj.Id==prjId, cancellationToken: _cancellationToken);
-        //    var ret = _unitHelper.ExportUnit(project, _cancellationToken);
-        //    return Ok(ret);
-        //}
-
         [HttpGet("diagram/{diagId}")]
         public async Task<IActionResult> ExportDiagram(int diagId)
         {
@@ -113,3 +87,30 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         #endregion        
     }
 }
+
+
+//public IActionResult Export()
+//{
+//    var ret = new {data = $"This is an empty test data for save in file"};
+//    return Ok(ret);
+//}
+
+//[HttpGet("project/{prjId}")]
+//public async Task<IActionResult> ExportProject(int prjId)
+//{
+//    var project = await _context.Projects
+//        .Include(prj => prj.Tags)
+//        .ThenInclude(tag => tag.TagConditions)
+//        .Include(prj => prj.Effects)
+//        .Include(prj => prj.Causes)
+//        .ThenInclude(c => c.Identities)
+//        .Include(prj => prj.Diagrams)
+//        .ThenInclude(d => d.Causes)                
+//        .Include(prj => prj.Diagrams)
+//        .ThenInclude(d => d.Effects)                
+//        .Include(prj => prj.Diagrams)
+//        .ThenInclude(d => d.Intersections)                
+//        .FirstAsync(prj => prj.Id==prjId, cancellationToken: _cancellationToken);
+//    var ret = _unitHelper.ExportUnit(project, _cancellationToken);
+//    return Ok(ret);
+//}

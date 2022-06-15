@@ -19,6 +19,7 @@ using Simcode.PazCheck.CentralServer.BusinessLogic;
 using Ssz.Utils;
 using Simcode.PazCheck.Common;
 using Simcode.PazCheck.CentralServer.Presentation;
+using Microsoft.OpenApi.Models;
 #if LOCAL_IDENTITY_SERVER
 using Simcode.IdentityServer;
 using IdentityServer4;
@@ -91,15 +92,21 @@ namespace Simcode.PazCheck.CentralServer
 
             services.AddDbContext<PazCheckDbContext>();
 
-            var mvcBuilder = services.AddMvcCore();
+            IMvcCoreBuilder mvcBuilder = services.AddMvcCore()
+                .AddApiExplorer(); // For Swagger
             services.AddJsonApi<PazCheckDbContext>(
                 options =>
                 {
-                    options.Namespace = "api/v1";
+                    options.Namespace = "api/v3";
                     options.DefaultPageSize = null;
                     options.IncludeTotalResourceCount = true;
                 },
                 discover => discover.AddCurrentAssembly(), mvcBuilder: mvcBuilder);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v3", new OpenApiInfo { Title = "PazCheck API", Version = "v3.0.0" });
+            });
 
             services.AddCors();
 #if LOCAL_IDENTITY_SERVER
@@ -127,6 +134,12 @@ namespace Simcode.PazCheck.CentralServer
             app.UseCors(a => a.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseRouting();
             app.UseJsonApi();
+            app.UseSwagger(); // http://localhost:5000/swagger/v3/swagger.json
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v3/swagger.json", "v3");
+                //options.RoutePrefix = string.Empty;
+            }); // http://localhost:5000/swagger            
             app.UseAuthentication();
             app.UseAuthorization();
 #if LOCAL_IDENTITY_SERVER
