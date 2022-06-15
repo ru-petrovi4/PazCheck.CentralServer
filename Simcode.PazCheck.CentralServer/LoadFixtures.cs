@@ -128,9 +128,9 @@ namespace Simcode.PazCheck.CentralServer
                 dbContext.SaveChanges();
 
                 // Projects
-                var mainProject = new Project { Title = "Основной", Desc = "Установка АВТ-6", Unit = avtUnit };
-                var p2Project = new Project { Title = "Второй", Desc = "Гидроочистка дизельных топлив", Unit = avtUnit };
-                var p3Project = new Project { Title = "Третий", Desc = "Производство элементарной серы", Unit = avtUnit };
+                var mainProject = new Project { Guid = Guid.NewGuid().ToString(), Title = "Основной", Desc = "Установка АВТ-6", Unit = avtUnit };
+                var p2Project = new Project { Guid = Guid.NewGuid().ToString(), Title = "Второй", Desc = "Гидроочистка дизельных топлив", Unit = avtUnit };
+                var p3Project = new Project { Guid = Guid.NewGuid().ToString(), Title = "Третий", Desc = "Производство элементарной серы", Unit = avtUnit };
                 dbContext.Projects.Add(mainProject);
                 dbContext.Projects.Add(p2Project);
                 dbContext.Projects.Add(p3Project);
@@ -204,7 +204,7 @@ namespace Simcode.PazCheck.CentralServer
                 var ceMatrixRuntimeAddon = addonsManager.GetInitializedAddons<CeMatrixRuntimeAddonBase>(null).FirstOrDefault();
                 if (ceMatrixRuntimeAddon is not null)
                 {
-                    ceMatrixRuntimeAddon.LoadFixtures(configuration, serviceProvider, dbContext, mainProject);
+                    await ceMatrixRuntimeAddon.LoadFixturesAsync(configuration, serviceProvider, dbContext, mainProject);
                 }
             }                
         }
