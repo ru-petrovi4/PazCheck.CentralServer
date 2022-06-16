@@ -20,6 +20,7 @@ using Ssz.Utils;
 using Simcode.PazCheck.Common;
 using Simcode.PazCheck.CentralServer.Presentation;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authorization;
 #if LOCAL_IDENTITY_SERVER
 using Simcode.IdentityServer;
 using IdentityServer4;
@@ -116,6 +117,8 @@ namespace Simcode.PazCheck.CentralServer
             };
             services.AddSingleton<ICorsPolicyService>(cors);
 #endif
+            //services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
+            //services.AddScoped<IAuthorizationHandler, AuthorizationHandler>();
 
             services.AddSingleton<AddonsManager>();
             services.AddSingleton<JobsManager>();
