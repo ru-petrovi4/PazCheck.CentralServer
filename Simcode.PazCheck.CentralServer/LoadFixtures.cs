@@ -141,10 +141,10 @@ namespace Simcode.PazCheck.CentralServer
 
                 // Base Actuators
                 var baseActuator = new BaseActuator { Title = "Отсечной клапан", Project = mainProject };
-                var param = new BaseActuatorParam { ParamName = "MaxSafeSpeed", Value = "5", _CreateTimeUtc = DateTime.UtcNow };
-                baseActuator.BaseActuatorParams.Add(param);
-                param = new BaseActuatorParam { ParamName = "SafeSpeed", Value = "2" };
-                baseActuator.BaseActuatorParams.Add(param);
+                var param = new Param { ParamName = "MaxSafeSpeed", Value = "5", _CreateTimeUtc = DateTime.UtcNow };
+                baseActuator.Params.Add(param);
+                param = new Param { ParamName = "SafeSpeed", Value = "2" };
+                baseActuator.Params.Add(param);
                 dbContext.BaseActuators.Add(baseActuator);
                 //var actuator = new Actuator { Title = "Отсечной клапан", BaseActuator = baseActuator, Project = mainProject };
                 //var param = new ActuatorParam { Name = "MaxSafeSpeed", Value = "5" };

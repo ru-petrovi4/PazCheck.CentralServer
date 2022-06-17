@@ -11,13 +11,16 @@ using Ssz.Utils.DataAccess;
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     [Resource]
-    public class Section : VersionEntity, IValueSubscription
+    public class Section : Identifiable<int>, IValueSubscription
     {
         [Attr]
         public string Title { get; set; } = @"";
 
         [Attr]
         public int Level { get; set; } = 0;
+
+        [Attr]
+        public string Calculation { get; set; } = @"";
 
         [HasMany]
         public List<Section> Children { get; set; } = new();

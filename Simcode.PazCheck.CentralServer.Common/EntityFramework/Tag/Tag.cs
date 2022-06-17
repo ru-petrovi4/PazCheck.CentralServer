@@ -11,25 +11,40 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     [Index(nameof(IsActive), nameof(TagName))]
     public class Tag : VersionEntity
     {
+        /// <summary>        
+        ///     <para>Текстовое поле RW: Имя тэга</para>
+        /// </summary>
         [Attr]
         public string TagName { get; set; } = @"";
 
+        /// <summary>        
+        ///     <para>Текстовое поле RW: Описание</para>
+        /// </summary>
         [Attr]
-        public string Desc { get; set; } = @"";
+        public string Desc { get; set; } = @"";        
 
-        [HasOne]
-        public Project Project { get; set; } = null!;
-
+        /// <summary>        
+        ///     Состояния тэга.
+        /// </summary>
         [HasMany]
         public List<TagCondition> TagConditions { get; set; } = new();
 
+        /// <summary>
+        ///     Свойства тэга.
+        /// </summary>
         [HasMany]
-        public List<TagElement> TagElements { get; set; } = new();
+        public List<Param> Params { get; set; } = new();
 
+        /// <summary>
+        ///     Исполнительный механимзм.
+        /// </summary>
         [HasOne]
         public Actuator? Actuator { get; set; }
 
         [HasMany]
         public List<TagEvent> TagEvents { get; set; } = new();
+
+        [HasOne]
+        public Project Project { get; set; } = null!;
     }
 }

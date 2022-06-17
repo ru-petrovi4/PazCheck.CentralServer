@@ -10,9 +10,15 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     [Resource]
     public class Unit : Identifiable<int>
     {
+        /// <summary>
+        ///     <para>Текстовое поле RW: Название установки</para>
+        /// </summary>
         [Attr]
         public string Title { get; set; } = @"";
 
+        /// <summary>
+        ///     <para>Текстовое поле RW: Описание установки</para>
+        /// </summary>
         [Attr]
         public string Desc { get; set; } = @"";
 
@@ -20,11 +26,11 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [InverseProperty("Unit")] // Because ActiveProject property exists.
         public List<Project> Projects { get; set; } = new();
 
+        /// <summary>
+        ///     <para>Текстовое поле R: Основной проект</para>
+        /// </summary>
         [HasOne]
         public Project? ActiveProject { get; set; }
-
-        //[Attr(PublicName="loadeddate")]
-        //public DateTime LoadedDate { get; set; }
 
         [HasMany]
         public List<UnitEventsInterval> UnitEventsIntervals { get; set; } = new();

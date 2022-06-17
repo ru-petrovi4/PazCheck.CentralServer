@@ -5,16 +5,14 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    /**
-     * Identity are used to be compared with LogRecord to find out is the tag
-     * was triggered. From configuration files we collect possible Identities and
-     * when configure matrix we select that identity, that will be used.
-     */
+    /// <summary>
+    ///     Состояние тэга.
+    /// </summary>
     [Resource]
     public class TagCondition : VersionEntity
     {
         /// <summary>
-        ///     Record type idetifier. May be ALARM or PVHI for e.g.
+        ///     <para>Текстовое поле RW: Идентификатор</para>
         /// </summary>
         [Attr]
         public string ElementName { get; set; } = @"";

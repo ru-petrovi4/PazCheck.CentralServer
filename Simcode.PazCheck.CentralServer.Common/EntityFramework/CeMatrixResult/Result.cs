@@ -18,19 +18,10 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Desc { get; set; } = @"";
 
         [Attr]
-        public string Comment { get; set; } = @"";
+        public string Comment { get; set; } = @"";        
 
         [Attr]
-        public string LogFile { get; set; } = @"";
-
-        [Attr]
-        public string ProjectGuid { get; set; } = @"";
-
-        [Attr]
-        public DateTime AlalyzeDate { get; set; } = DateTime.UtcNow;
-
-        [Attr]
-        public bool IsSaved { get; set; } = false;
+        public DateTime AlalyzeTimeUtc { get; set; } = DateTime.UtcNow;
 
         [Attr]
         public DateTime StartTimeUtc { get; set; }
@@ -45,6 +36,6 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public Unit Unit { get; set; } = null!;
 
         [HasMany]
-        public List<Timeevent> Timeevents { get; set; } = new();
+        public List<ResultEvent> ResultEvents { get; set; } = new();
     }
 }

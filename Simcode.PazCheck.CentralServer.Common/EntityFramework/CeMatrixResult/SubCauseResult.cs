@@ -10,28 +10,28 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     [Resource(PublicName = "subcauseresults")]
     public class SubCauseResult : Identifiable<int>
     {
-        [Attr(PublicName = "num")]
+        [Attr]
         public int Num { get; set; } = 0;
 
         /// <summary>
         ///     Имя тега
         /// </summary>
-        [Attr(PublicName = "name")]
+        [Attr]
         public string TagName { get; set; } = @"";
 
         /// <summary>
         ///     Положение в котором он срабатыает
         /// </summary>
-        [Attr(PublicName = "state")]
+        [Attr]
         public string TagConditionString { get; set; } = @"";
 
-        [Attr(PublicName = "descr")]
+        [Attr]
         public string CustomFieldValues { get; set; } = @"";
 
-        [Attr(PublicName = "triggeredtime")]
-        public DateTime? TriggeredTime { get; set; }
+        [Attr]
+        public DateTime? TriggeredTimeUtc { get; set; }
 
-        [HasOne(PublicName = "causeresult")]
+        [Attr]
         public CauseResult CauseResult { get; set; } = null!;        
     }
 }

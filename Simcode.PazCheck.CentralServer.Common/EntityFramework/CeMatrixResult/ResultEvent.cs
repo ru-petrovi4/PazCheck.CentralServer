@@ -8,7 +8,7 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    public class Timeevent : Identifiable<int>
+    public class ResultEvent : Identifiable<int>
     {
         /// <summary>
         ///     Порядок

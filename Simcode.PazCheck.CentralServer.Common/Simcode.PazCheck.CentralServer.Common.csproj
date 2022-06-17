@@ -16,6 +16,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Ssz.Utils\Ssz.Utils\Ssz.Utils.csproj" />
     <ProjectReference Include="..\Simcode.PazCheck.Common\Simcode.PazCheck.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="EntityFramework\Actuator\" />
   </ItemGroup>  
 
 </Project>

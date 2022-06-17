@@ -15,7 +15,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string CeMatrixGuid { get; set; } = @"";
 
         [Attr]
-        public int Version { get; set; }
+        public int CeMatrixVersion { get; set; }
 
         [HasOne]
         public Result Result { get; set; } = null!;

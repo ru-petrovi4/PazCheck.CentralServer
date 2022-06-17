@@ -14,6 +14,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public DbSet<BaseActuator> BaseActuators { get; set; } = null!;
         public DbSet<Actuator> Actuators { get; set; } = null!;
         public DbSet<UnitEventsInterval> UnitEventsIntervals { get; set; } = null!;
+        public DbSet<UnitEvent> UnitEvents { get; set; } = null!;
         public DbSet<Job> Jobs { get; set; } = null!;
         public DbSet<Simuser> SimUsers { get; set; } = null!;
         public DbSet<Office> Offices { get; set; } = null!;        
