@@ -139,19 +139,114 @@ namespace Simcode.PazCheck.CentralServer
                 avtUnit.ActiveProject = mainProject;
                 dbContext.SaveChanges();
 
+                // EngineeringUnits
+                dbContext.EngineeringUnits.Add(new EngineeringUnit
+                {
+                    Eu = "с",
+                    Desc = "Секунды"
+                });
+                dbContext.EngineeringUnits.Add(new EngineeringUnit
+                {
+                    Eu = "мин",
+                    Desc = "Минуты"
+                });
+                dbContext.SaveChanges();
+
+                // Base Actuator types
+                var valve_BaseActuatorType = new BaseActuatorType
+                {
+                    Type = "Отсечной клапан",
+                };
+                valve_BaseActuatorType.StandardParams.Add(new StandardParam
+                {
+                    ParamName = "MaxSafeSpeed",
+                    Desc = "Максимально допустимое время срабатывания"
+                });
+                dbContext.BaseActuatorTypes.Add(valve_BaseActuatorType);
+                var pump_BaseActuatorType = new BaseActuatorType
+                {
+                    Type = "Насос",
+                };
+                pump_BaseActuatorType.StandardParams.Add(new StandardParam
+                {
+                    ParamName = "MaxSafeSpeed",
+                    Desc = "Максимально допустимое время срабатывания"
+                });
+                dbContext.BaseActuatorTypes.Add(pump_BaseActuatorType);
+                dbContext.SaveChanges();
+
                 // Base Actuators
-                var baseActuator = new BaseActuator { Title = "Отсечной клапан", Project = mainProject };
-                var param = new Param { ParamName = "MaxSafeSpeed", Value = "5", _CreateTimeUtc = DateTime.UtcNow };
-                baseActuator.Params.Add(param);
-                param = new Param { ParamName = "SafeSpeed", Value = "2" };
-                baseActuator.Params.Add(param);
-                dbContext.BaseActuators.Add(baseActuator);
-                //var actuator = new Actuator { Title = "Отсечной клапан", BaseActuator = baseActuator, Project = mainProject };
-                //var param = new ActuatorParam { Name = "MaxSafeSpeed", Value = "5" };
-                //baseActuator.ActuatorParams.Add(param);
-                //param = new ActuatorParam { Name = "SafeSpeed", Value = "2" };
-                //baseActuator.ActuatorParams.Add(param);
-                //context.Actuators.Add(baseActuator);
+                var valveBaseActuator = new BaseActuator { 
+                    Title = "Отсечной клапан V202", 
+                    Code = "V202",
+                    Manufacturer = "Honeywell",
+                    BaseActuatorType = valve_BaseActuatorType,
+                    Project = mainProject 
+                };              
+                valveBaseActuator.BaseActuatorParams.Add(new BaseActuatorParam
+                {
+                    ParamName = "MaxSafeSpeed",
+                    Desc = "Максимально допустимое время срабатывания",
+                    Value = "30",
+                    Eu = "с"
+                });
+                valveBaseActuator.BaseActuatorParams.Add(new BaseActuatorParam
+                {
+                    ParamName = "SafeSpeed",
+                    Desc = "Среднее время срабатывания",
+                    Value = "15",
+                    Eu = "с"
+                });                                
+                dbContext.BaseActuators.Add(valveBaseActuator);
+                var pumpBaseActuator = new BaseActuator
+                {
+                    Title = "Насос P2K3",
+                    Code = "P2K3",
+                    Manufacturer = "Honeywell",
+                    BaseActuatorType = pump_BaseActuatorType,
+                    Project = mainProject
+                };
+                pumpBaseActuator.BaseActuatorParams.Add(new BaseActuatorParam
+                {
+                    ParamName = "MaxSafeSpeed",
+                    Desc = "Максимально допустимое время срабатывания",
+                    Value = "3",
+                    Eu = "с"
+                });                
+                dbContext.BaseActuators.Add(pumpBaseActuator);
+                dbContext.SaveChanges();
+
+                // TagConditionElementName
+                dbContext.TagConditionElementNames.Add(new TagConditionIdentifier
+                {
+                    Identifier = @"PVHighHigh",
+                    Type = "Alarm",
+                    Desc = "Параметр: PV, сигнализация: High High",
+                });
+                dbContext.TagConditionElementNames.Add(new TagConditionIdentifier
+                {
+                    Identifier = @"PVHigh",
+                    Type = "Alarm",
+                    Desc = "Параметр: PV, сигнализация: High",
+                });
+                dbContext.TagConditionElementNames.Add(new TagConditionIdentifier
+                {
+                    Identifier = @"PVLow",
+                    Type = "Alarm",
+                    Desc = "Параметр: PV, сигнализация: Low",
+                });
+                dbContext.TagConditionElementNames.Add(new TagConditionIdentifier
+                {
+                    Identifier = @"PVLowLow",
+                    Type = "Alarm",
+                    Desc = "Параметр: PV, сигнализация: Low Low",
+                });
+                dbContext.TagConditionElementNames.Add(new TagConditionIdentifier
+                {
+                    Identifier = @"ALARM",
+                    Type = "Alarm",
+                    Desc = "Сигнализация дискретного параметра",
+                });
                 dbContext.SaveChanges();
 
                 var examplesDirectoryFullName = ServerConfigurationHelper.GetExamplesDirectoryFullName(configuration);

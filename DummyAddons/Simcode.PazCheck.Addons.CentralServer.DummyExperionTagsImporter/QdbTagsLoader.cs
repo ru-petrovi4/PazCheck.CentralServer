@@ -73,8 +73,7 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
                                         var tagCondition = new TagCondition()
                                         {
                                             _CreateTimeUtc = DateTime.UtcNow,
-                                            ElementName = "ALARM", //ToDo: Configuration! Move to config varibles
-                                            Type = "Alarm", //ToDo: Configuration! Move to config varibles
+                                            Identifier = "ALARM",                                      
                                             Value = tmpValue
                                         };
                                         tagCondition.Tag = tag;
@@ -118,8 +117,7 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
                                         var tagCondition = new TagCondition()
                                         {
                                             _CreateTimeUtc = DateTime.UtcNow,
-                                            ElementName = tmpAlarm,
-                                            Type = "Alarm", //ToDo: Configuration! Move to config varibles
+                                            Identifier = tmpAlarm,                                            
                                             Value = ""
                                         };
                                         tagCondition.Tag = tag;

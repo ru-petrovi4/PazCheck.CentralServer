@@ -4,6 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>    
     <Nullable>enable</Nullable>
 	<LangVersion>Latest</LangVersion>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,9 +19,5 @@
     <ProjectReference Include="..\..\Ssz.Utils\Ssz.Utils\Ssz.Utils.csproj" />
     <ProjectReference Include="..\Simcode.PazCheck.Common\Simcode.PazCheck.Common.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="EntityFramework\Actuator\" />
-  </ItemGroup>  
-
+  
 </Project>

@@ -15,16 +15,13 @@ namespace Simcode.PazCheck.CentralServer.Presentation
     [Route("exporter")]
     public class ExporterController : ControllerBase
     {
-        private readonly PazCheckDbContext _context;
-        private readonly IUnitHelper _unitHelper;
+        private readonly PazCheckDbContext _context;        
         private readonly CancellationToken _cancellationToken;
 
-        public ExporterController(PazCheckDbContext context,
-            IUnitHelper unitHelper,
+        public ExporterController(PazCheckDbContext context,            
             IHostApplicationLifetime applicationLifetime, AddonsManager addonsManager)
         {
-            _context = context;
-            _unitHelper = unitHelper;
+            _context = context;            
             _cancellationToken = applicationLifetime.ApplicationStopping;
             _addonsManager = addonsManager;
         }

@@ -6,9 +6,9 @@ using Simcode.PazCheck.Common;
 
 namespace Simcode.PazCheck.CentralServer.Presentation
 {
-    public interface IUnitHelper
-    {
-        public string ExportUnit(Project project, CancellationToken cancellationToken);
-        public Task ImportUnitAsync(string filePath, CancellationToken cancellationToken, IJobProgress jobProgress);
-    }
+    //public interface IUnitHelper
+    //{
+    //    public string ExportUnit(Project project, CancellationToken cancellationToken);
+    //    public Task ImportUnitAsync(string filePath, CancellationToken cancellationToken, IJobProgress jobProgress);
+    //}
 }

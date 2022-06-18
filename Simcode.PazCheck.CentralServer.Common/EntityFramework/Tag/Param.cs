@@ -1,12 +1,13 @@
 using JsonApiDotNetCore.Resources;
 using JsonApiDotNetCore.Resources.Annotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     /// <summary>
     ///     Свойство тэга или исполнительного механизма.
-    /// </summary>
-    public class Param : VersionEntity
+    /// </summary>    
+    public abstract class Param : VersionEntity
     {
         /// <summary>
         ///     <para>Текстовое поле RW: Имя свойства</para>
@@ -21,7 +22,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Value { get; set; } = @"";
 
         /// <summary>
-        ///     <para>Текстовое поле RW (выбор из списка либо свое значение): Единицы измерения</para>
+        ///     <para>Текстовое поле RW (выбор из списка (таблица EngineeringUnit) либо свое значение): Единицы измерения</para>
         /// </summary>
         [Attr]
         public string Eu { get; set; } = @"";
@@ -37,5 +38,26 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         /// </summary>
         [Attr]
         public string Desc { get; set; } = @"";
+    }
+
+    [Resource]
+    public class TagParam : Param
+    {
+        [HasOne]
+        public Tag Tag { get; set; } = null!;
+    }
+
+    [Resource]
+    public class ActuatorParam : Param
+    {
+        [HasOne]
+        public Actuator Actuator { get; set; } = null!;
+    }
+
+    [Resource]
+    public class BaseActuatorParam : Param
+    {
+        [HasOne]
+        public BaseActuator BaseActuator { get; set; } = null!;
     }
 }

@@ -27,9 +27,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
                 return elementName + mathOperator + value;
             }
             else
-            {
-                if (!String.IsNullOrEmpty(mathOperator))
-                    throw new InvalidOperationException();
+            {                
                 return elementName;
             }
         }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    public class VersionEntity : Identifiable<int>
+    public abstract class VersionEntity : Identifiable<int>
     {
         [Attr]
         public string _ProposalCreateUser { get; set; } = @"";

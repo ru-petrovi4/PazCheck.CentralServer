@@ -12,33 +12,34 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public class TagCondition : VersionEntity
     {
         /// <summary>
-        ///     <para>Текстовое поле RW: Идентификатор</para>
+        ///     <para>Текстовое поле RW (выбор из списка (таблица TagConditionIdentifier) либо свое значение): Идентификатор состояния</para>
+        ///     <example>ALARM</example><example>PVHighHigh</example>
         /// </summary>
         [Attr]
-        public string ElementName { get; set; } = @"";
+        public string Identifier { get; set; } = @"";
 
+        /// <summary>
+        ///     Reserved
+        /// </summary>
         [Attr]
         public string MathOperator { get; set; } = @"";
 
         /// <summary>
-        ///     Value that the tag reched in this record
+        ///     <para>Текстовое поле RW: Значение состояния</para>
+        ///     <example>пусто</example><example>ЗАКР</example>
         /// </summary>
         [Attr]
-        public string Value { get; set; } = @"";
+        public string Value { get; set; } = @"";        
 
         /// <summary>
-        ///     Event type that may be for e.g. Alarm or Acknowledge
+        ///     <para>Текстовое поле RW: Караткое имя</para>
+        ///     <para>Tooltip: Краткое имя состояния для отображения в матрицах ПСС</para>
+        ///     <example>Alarm</example>  
         /// </summary>
         [Attr]
-        public string Type { get; set; } = @"";
-
-        [Attr]
-        public string SymbolToDisplay { get; set; } = @"";
-
-        [Attr]
-        public string Desc { get; set; } = @"";
+        public string SymbolToDisplay { get; set; } = @"";        
 
         [HasOne]
-        public Tag Tag { get; set; } = null!;         
+        public Tag Tag { get; set; } = null!;
     }
 }

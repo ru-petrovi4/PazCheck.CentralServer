@@ -19,7 +19,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string TagName { get; set; } = @"";
 
         /// <summary>
-        ///     Положение в котором он срабатыает
+        ///     Положение в котором он срабатыает        
+        ///     <example>PVHighHigh</example>
+        ///     <example>ALARM=ЗАКР</example>        
         /// </summary>
         [Attr]
         public string TagConditionString { get; set; } = @"";        

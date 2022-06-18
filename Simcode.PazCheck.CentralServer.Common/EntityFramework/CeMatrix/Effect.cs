@@ -15,8 +15,12 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public int Num { get; set; }
 
         [Attr]
-        public string TagName { get; set; } = @"";        
+        public string TagName { get; set; } = @"";
 
+        /// <summary>
+        ///     <example>PVHighHigh</example>
+        ///     <example>ALARM=ЗАКР</example>
+        /// </summary>
         [Attr]
         public string TagConditionString { get; set; } = @"";
 

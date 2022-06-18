@@ -21,6 +21,8 @@ using Simcode.PazCheck.Common;
 using Simcode.PazCheck.CentralServer.Presentation;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Reflection;
+using System.IO;
 #if LOCAL_IDENTITY_SERVER
 using Simcode.IdentityServer;
 using IdentityServer4;
@@ -104,9 +106,12 @@ namespace Simcode.PazCheck.CentralServer
                 },
                 discover => discover.AddCurrentAssembly(), mvcBuilder: mvcBuilder);
 
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v3", new OpenApiInfo { Title = "PazCheck API", Version = "v3.0.0" });
+                options.SwaggerDoc("v3", new OpenApiInfo { Title = "PazCheck API", Version = "v3.0.0" });
+
+                var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
             });
 
             services.AddCors();
@@ -123,8 +128,7 @@ namespace Simcode.PazCheck.CentralServer
             services.AddSingleton<AddonsManager>();
             services.AddSingleton<JobsManager>();
             services.AddSingleton<Licence>();
-            services.AddScoped<TagsImporter>();                                           
-            services.AddScoped<CreateActuatorService>();
+            services.AddScoped<TagsImporter>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IConfiguration configuration)

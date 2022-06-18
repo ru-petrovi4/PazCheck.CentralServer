@@ -9,24 +9,48 @@ using System.Threading.Tasks;
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     /// <summary>
-    ///     Класс исполнительных механизмов.
+    ///     Модель исполнительного механизма.
     /// </summary>
+    [Resource]
     public class BaseActuator : Identifiable<int>
     {
         /// <summary>        
-        ///     <para>Текстовое поле RW: Название класса исполнительных механизмов</para>
+        ///     <para>Текстовое поле RW: Наименование модели</para>
+        ///     <para>Tooltip: Наименование модели оборудования</para>
         /// </summary>
         [Attr]
         public string Title { get; set; } = @"";
 
+        /// <summary>                
+        ///     <para>Текстовое поле RW: Код модели</para>
+        ///     <para>Tooltip: Номер модели оборудования в каталоге производителя</para>
+        /// </summary>
+        [Attr]
+        public string Code { get; set; } = @"";
+
         /// <summary>        
-        ///     <para>Текстовое поле RW: Описание</para>
+        ///     <para>Текстовое поле RW: Производитель</para>
+        ///     <para>Tooltip: Производитель оборудования</para>
+        /// </summary>
+        [Attr]
+        public string Manufacturer { get; set; } = @"";
+
+        /// <summary>        
+        ///     <para>Текстовое поле RW: Примечание</para>
+        ///     <para>Tooltip: Комментарий, дополнительная информация о модели</para>
         /// </summary>
         [Attr]
         public string Desc { get; set; } = @"";
 
+        /// <summary>
+        ///     <para>Текстовое поле RW (выбор из списка (таблица BaseActuatorType) либо свое значение): Тип устройства</para>
+        ///     <para>Tooltip: Вид оборудования</para>
+        /// </summary>        
+        [Attr]
+        public BaseActuatorType BaseActuatorType { get; set; } = null!;
+
         [HasMany]
-        public List<Param> Params { get; set; } = new List<Param>();
+        public List<BaseActuatorParam> BaseActuatorParams { get; set; } = new();
 
         [HasOne]
         public Project Project { get; set; } = null!;

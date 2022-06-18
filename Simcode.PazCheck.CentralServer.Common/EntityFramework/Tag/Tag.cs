@@ -33,7 +33,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         ///     Свойства тэга.
         /// </summary>
         [HasMany]
-        public List<Param> Params { get; set; } = new();
+        public List<TagParam> TagParams { get; set; } = new();
 
         /// <summary>
         ///     Исполнительный механимзм.
