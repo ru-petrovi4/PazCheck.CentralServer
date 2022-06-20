@@ -32,7 +32,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Value { get; set; } = @"";        
 
         /// <summary>
-        ///     <para>Текстовое поле RW: Караткое имя</para>
+        ///     <para>Текстовое поле RW: Краткое имя</para>
         ///     <para>Tooltip: Краткое имя состояния для отображения в матрицах ПСС</para>
         ///     <example>Alarm</example>  
         /// </summary>

@@ -8,9 +8,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     /// </summary>
     [Resource]
     public class StandardParam : Identifiable<int>
-    {        
+    {
         /// <summary>
-        ///     <para>Текстовое поле RW: Имя свойства</para>
+        ///     Имя свойства
         /// </summary>
         [Attr]
         public string ParamName { get; set; } = @"";        
@@ -22,7 +22,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Type { get; set; } = @"";
 
         /// <summary>
-        ///     <para>Текстовое поле RW: Описание свойства</para>
+        ///     Описание свойства
         /// </summary>
         [Attr]
         public string Desc { get; set; } = @"";

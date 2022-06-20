@@ -10,7 +10,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public abstract class Param : VersionEntity
     {
         /// <summary>
-        ///     <para>Текстовое поле RW: Имя свойства</para>
+        ///     Имя свойства
         /// </summary>
         [Attr]
         public string ParamName { get; set; } = @"";
