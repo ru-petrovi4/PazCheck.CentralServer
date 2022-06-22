@@ -42,40 +42,6 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
             modelBuilder.Entity<Tag>().Property(t => t.TagName)
                     .UseCollation(@"case_insensitive_collation");
-
-            modelBuilder.Entity<Cause>()
-                           .Property(p => p.IsActive)
-                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
-            modelBuilder.Entity<CeMatrix>()
-                           .Property(p => p.IsActive)
-                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
-            modelBuilder.Entity<Effect>()
-                           .Property(p => p.IsActive)
-                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
-            modelBuilder.Entity<Intersection>()
-                           .Property(p => p.IsActive)
-                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
-            modelBuilder.Entity<SubCause>()
-                           .Property(p => p.IsActive)
-                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);                        
-            modelBuilder.Entity<Param>()
-                           .Property(p => p.IsActive)
-                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
-            modelBuilder.Entity<TagParam>()
-                           .Property(p => p.IsActive)
-                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
-            modelBuilder.Entity<ActuatorParam>()
-                           .Property(p => p.IsActive)
-                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
-            modelBuilder.Entity<BaseActuatorParam>()
-                           .Property(p => p.IsActive)
-                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
-            modelBuilder.Entity<Tag>()
-                           .Property(p => p.IsActive)
-                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
-            modelBuilder.Entity<TagCondition>()
-                           .Property(p => p.IsActive)
-                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);            
         }
     }
 }
@@ -84,5 +50,39 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 //{
 //    opt.UseNpgsql(@"Host=localhost;Username=postgres;Password=postgres;Database=PazCheck");
 //});
+
+//modelBuilder.Entity<Cause>()
+//                           .Property(p => p.IsActive)
+//                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+//modelBuilder.Entity<CeMatrix>()
+//               .Property(p => p.IsActive)
+//               .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+//modelBuilder.Entity<Effect>()
+//               .Property(p => p.IsActive)
+//               .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+//modelBuilder.Entity<Intersection>()
+//               .Property(p => p.IsActive)
+//               .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+//modelBuilder.Entity<SubCause>()
+//               .Property(p => p.IsActive)
+//               .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+//modelBuilder.Entity<Param>()
+//               .Property(p => p.IsActive)
+//               .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+//modelBuilder.Entity<TagParam>()
+//               .Property(p => p.IsActive)
+//               .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+//modelBuilder.Entity<ActuatorParam>()
+//               .Property(p => p.IsActive)
+//               .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+//modelBuilder.Entity<BaseActuatorParam>()
+//               .Property(p => p.IsActive)
+//               .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+//modelBuilder.Entity<Tag>()
+//               .Property(p => p.IsActive)
+//               .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+//modelBuilder.Entity<TagCondition>()
+//               .Property(p => p.IsActive)
+//               .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
 
 

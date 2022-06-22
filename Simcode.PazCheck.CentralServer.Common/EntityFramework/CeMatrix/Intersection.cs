@@ -7,6 +7,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     [Resource]
     public class Intersection : VersionEntityBase
     {
+        [Attr]
+        public string TagConditionString_SymbolToDisplay { get; set; } = @"";
+
         [HasOne]
         public Cause Cause { get; set; } = null!;
 

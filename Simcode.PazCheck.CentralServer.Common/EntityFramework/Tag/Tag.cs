@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     [Resource]
-    [Index(nameof(IsActive), nameof(TagName))]
+    [Index(nameof(TagName))]
     public class Tag : VersionEntityBase
     {
         /// <summary>        

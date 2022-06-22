@@ -23,14 +23,14 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Desc { get; set; } = @"";
 
         [HasMany]
-        [InverseProperty("Unit")] // Because ActiveProject property exists.
+        [InverseProperty(nameof(Project.Unit))] // Because ActiveProject property exists.
         public List<Project> Projects { get; set; } = new();
 
         /// <summary>
         ///     <para>Текстовое поле R: Основной проект</para>
         /// </summary>
         [HasOne]
-        public Project? ActiveProject { get; set; }
+        public Project? ActiveProject { get; set; } = null!;
 
         [HasMany]
         public List<UnitEventsInterval> UnitEventsIntervals { get; set; } = new();

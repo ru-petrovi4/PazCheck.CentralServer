@@ -26,6 +26,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string TagConditionString { get; set; } = @"";
 
         [Attr]
+        public string TagConditionString_SymbolToDisplay { get; set; } = @"";
+
+        [Attr]
         public string CustomFieldValues { get; set; } = @"";
 
         [Attr]

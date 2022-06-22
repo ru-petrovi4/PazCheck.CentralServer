@@ -25,7 +25,10 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         ///     <example>ALARM=«¿ –</example>        
         /// </summary>
         [Attr]
-        public string TagConditionString { get; set; } = @"";        
+        public string TagConditionString { get; set; } = @"";
+        
+        [Attr]
+        public string TagConditionString_SymbolToDisplay { get; set; } = @"";
 
         [Attr]
         public string CustomFieldValues { get; set; } = @"";

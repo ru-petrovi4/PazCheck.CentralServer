@@ -125,19 +125,28 @@ namespace Simcode.PazCheck.CentralServer
                 var avtUnit = new Unit { Title = "АВТ-6", Desc = "Установка АВТ-6" };
                 dbContext.Units.Add(avtUnit);
                 var someUnit = new Unit { Title = "Гидроочистка", Desc = "Гидроочистка дизельных топлив" };
-                dbContext.Units.Add(someUnit);
-                dbContext.SaveChanges();
+                dbContext.Units.Add(someUnit);                
 
                 // Projects
-                var mainProject = new Project { Guid = Guid.NewGuid().ToString(), Title = "Основной", Desc = "Установка АВТ-6", Unit = avtUnit };
-                var p2Project = new Project { Guid = Guid.NewGuid().ToString(), Title = "Второй", Desc = "Гидроочистка дизельных топлив", Unit = avtUnit };
-                var p3Project = new Project { Guid = Guid.NewGuid().ToString(), Title = "Третий", Desc = "Производство элементарной серы", Unit = avtUnit };
-                dbContext.Projects.Add(mainProject);
-                dbContext.Projects.Add(p2Project);
-                dbContext.Projects.Add(p3Project);
+                var mainProject_Empty_ProjectVersion = new ProjectVersion { TimeUtc = DateTime.UtcNow };
+                var mainProject = new Project { Title = "Основной", Desc = "" };
+                mainProject.ProjectVersions.Add(mainProject_Empty_ProjectVersion);                
+                var p2Project_Empty_ProjectVersion = new ProjectVersion { TimeUtc = DateTime.UtcNow };
+                var p2Project = new Project { Title = "Второй", Desc = "" };
+                p2Project.ProjectVersions.Add(p2Project_Empty_ProjectVersion);                
+                avtUnit.Projects.Add(mainProject);
+                avtUnit.Projects.Add(p2Project);                
+                var main2Project_Empty_ProjectVersion = new ProjectVersion { TimeUtc = DateTime.UtcNow };
+                var main2Project = new Project { Title = "Второй", Desc = "" };
+                main2Project.ProjectVersions.Add(main2Project_Empty_ProjectVersion);                
+                someUnit.Projects.Add(main2Project);                                
                 dbContext.SaveChanges();
 
+                mainProject.ActiveProjectVersion = mainProject_Empty_ProjectVersion;
+                p2Project.ActiveProjectVersion = p2Project_Empty_ProjectVersion;
+                main2Project.ActiveProjectVersion = main2Project_Empty_ProjectVersion;
                 avtUnit.ActiveProject = mainProject;
+                someUnit.ActiveProject = main2Project;
                 dbContext.SaveChanges();
 
                 // EngineeringUnits

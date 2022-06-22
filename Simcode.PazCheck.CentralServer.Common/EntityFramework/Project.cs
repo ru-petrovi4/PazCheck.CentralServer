@@ -11,13 +11,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     [Resource]
     public class Project : Identifiable<int>
-    {
-        /// <summary>
-        ///     Уникальный ID проекта
-        /// </summary>
-        [Attr]
-        public string Guid { get; set; } = @"";
-
+    {        
         /// <summary>        
         ///     <para>Текстовое поле RW: Название</para>
         /// </summary>
@@ -36,11 +30,12 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr]
         public string Comment { get; set; } = @"";
 
-        /// <summary>        
-        ///     <para>Текстовое поле R: Дата последнего изменения</para>
-        /// </summary>
-        [Attr]
-        public DateTime LastChanged { get; set; } = DateTime.UtcNow;
+        [HasMany]
+        [InverseProperty(nameof(ProjectVersion.Project))] // Because ActiveProjectVersion property exists.
+        public List<ProjectVersion> ProjectVersions { get; set; } = new();
+
+        [HasOne]
+        public ProjectVersion? ActiveProjectVersion { get; set; } = null!;
 
         [HasOne]        
         public Unit Unit { get; set; } = null!;
