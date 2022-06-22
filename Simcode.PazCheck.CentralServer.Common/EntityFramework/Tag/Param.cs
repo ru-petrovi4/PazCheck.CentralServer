@@ -7,7 +7,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     /// <summary>
     ///     Свойство тэга или исполнительного механизма.
     /// </summary>    
-    public abstract class Param : VersionEntity
+    public abstract class Param : VersionEntityBase
     {
         /// <summary>
         ///     Имя свойства
@@ -51,7 +51,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public class ActuatorParam : Param
     {
         [HasOne]
-        public Actuator Actuator { get; set; } = null!;
+        public Tag Tag { get; set; } = null!;
     }
 
     [Resource]

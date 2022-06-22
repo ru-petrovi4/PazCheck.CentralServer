@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CsvHelper;
@@ -25,6 +26,8 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
 
         public TagImportInfo LoadTags(StreamReader reader, Project project, string user)
         {
+            var empty_BaseActuator = _context.BaseActuators.Single(ba => ba.BaseActuatorType.Type == @"");
+
             var st = new Stopwatch();
             st.Start();
             var cfg = new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -52,13 +55,18 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
 
                 if (Enum.TryParse(csv.GetField(csv.GetFieldIndex("Class")), out TagType tagType))
                 {
-                    var tag = new Tag() { _CreateTimeUtc = DateTime.UtcNow, _CreateUser = user, Project = project };
+                    var tag = new Tag() 
+                    {
+                        _CreateTimeUtc = DateTime.UtcNow, 
+                        Project = project,
+                        BaseActuator = empty_BaseActuator
+                    };
                     switch (tagType)
                     {
                         case TagType.StatusPoint:
                             {
                                 ret.TotalTags++;
-                                var tmpTag = csv.GetRecord<QdbStatusTag>();
+                                var tmpTag = csv.GetRecord<QdbStatusTag>();                                
                                 tag.TagName = tmpTag.Name;
                                 tag.Desc = tmpTag.Descr;
                                 int numIdentities = new Any(csv.GetField(csv.GetFieldIndex(TagFields.StatusNumStates.ToString()))).ValueAsInt32(false);

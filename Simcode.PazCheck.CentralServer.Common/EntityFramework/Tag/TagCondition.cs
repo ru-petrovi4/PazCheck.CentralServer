@@ -9,7 +9,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     ///     Состояние тэга.
     /// </summary>
     [Resource]
-    public class TagCondition : VersionEntity
+    public class TagCondition : VersionEntityBase
     {
         /// <summary>
         ///     <para>Текстовое поле RW (выбор из списка (таблица TagConditionIdentifier) либо свое значение): Идентификатор состояния</para>

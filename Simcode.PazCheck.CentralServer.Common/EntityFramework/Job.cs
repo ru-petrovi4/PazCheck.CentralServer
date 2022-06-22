@@ -5,7 +5,7 @@ using JsonApiDotNetCore.Resources.Annotations;
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     [Resource]
-    public class Job : VersionEntity
+    public class Job : Identifiable<int>
     {
         [Attr]
         public string Guid { get; set; } = @"";

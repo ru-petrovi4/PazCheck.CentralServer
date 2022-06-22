@@ -5,7 +5,7 @@ using JsonApiDotNetCore.Resources.Annotations;
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     [Resource]
-    public class Intersection : VersionEntity
+    public class Intersection : VersionEntityBase
     {
         [HasOne]
         public Cause Cause { get; set; } = null!;

@@ -6,7 +6,7 @@ using JsonApiDotNetCore.Resources.Annotations;
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     [Resource]
-    public class CeMatrix : VersionEntity
+    public class CeMatrix : VersionEntityBase
     {
         /// <summary>
         ///     Guid.Version - unique identifier of matrix state

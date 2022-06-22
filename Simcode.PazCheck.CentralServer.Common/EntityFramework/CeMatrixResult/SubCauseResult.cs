@@ -7,7 +7,7 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    [Resource(PublicName = "subcauseresults")]
+    [Resource]
     public class SubCauseResult : Identifiable<int>
     {
         [Attr]

@@ -11,8 +11,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public DbSet<Cause> Causes { get; set; } = null!;
         public DbSet<Effect> Effects { get; set; } = null!;
         public DbSet<Tag> Tags { get; set; } = null!;
-        public DbSet<BaseActuator> BaseActuators { get; set; } = null!;
-        public DbSet<Actuator> Actuators { get; set; } = null!;
+        public DbSet<BaseActuator> BaseActuators { get; set; } = null!;        
         public DbSet<BaseActuatorType> BaseActuatorTypes { get; set; } = null!;
         public DbSet<EngineeringUnit> EngineeringUnits { get; set; } = null!;
         public DbSet<TagConditionIdentifier> TagConditionElementNames { get; set; } = null!;
@@ -44,9 +43,39 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
             modelBuilder.Entity<Tag>().Property(t => t.TagName)
                     .UseCollation(@"case_insensitive_collation");
 
-            modelBuilder.Entity<VersionEntity>()
-                .Property(p => p.IsActive)
-                .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+            modelBuilder.Entity<Cause>()
+                           .Property(p => p.IsActive)
+                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+            modelBuilder.Entity<CeMatrix>()
+                           .Property(p => p.IsActive)
+                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+            modelBuilder.Entity<Effect>()
+                           .Property(p => p.IsActive)
+                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+            modelBuilder.Entity<Intersection>()
+                           .Property(p => p.IsActive)
+                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+            modelBuilder.Entity<SubCause>()
+                           .Property(p => p.IsActive)
+                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);                        
+            modelBuilder.Entity<Param>()
+                           .Property(p => p.IsActive)
+                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+            modelBuilder.Entity<TagParam>()
+                           .Property(p => p.IsActive)
+                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+            modelBuilder.Entity<ActuatorParam>()
+                           .Property(p => p.IsActive)
+                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+            modelBuilder.Entity<BaseActuatorParam>()
+                           .Property(p => p.IsActive)
+                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+            modelBuilder.Entity<Tag>()
+                           .Property(p => p.IsActive)
+                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);
+            modelBuilder.Entity<TagCondition>()
+                           .Property(p => p.IsActive)
+                           .HasComputedColumnSql(@"""_CreateTimeUtc"" IS NOT NULL AND ""_DeleteDateTimeUtc"" IS NULL", stored: true);            
         }
     }
 }
@@ -55,3 +84,5 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 //{
 //    opt.UseNpgsql(@"Host=localhost;Username=postgres;Password=postgres;Database=PazCheck");
 //});
+
+

@@ -7,7 +7,8 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    public class SubCause : VersionEntity
+    [Resource]
+    public class SubCause : VersionEntityBase
     {
         /// <summary>
         ///     Порядковый номер внутри причины

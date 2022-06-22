@@ -9,7 +9,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     [Resource]
     [Index(nameof(IsActive), nameof(TagName))]
-    public class Tag : VersionEntity
+    public class Tag : VersionEntityBase
     {
         /// <summary>        
         ///     <para>Текстовое поле RW: Имя тэга</para>
@@ -36,10 +36,17 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public List<TagParam> TagParams { get; set; } = new();
 
         /// <summary>
-        ///     Исполнительный механимзм.
-        /// </summary>
+        ///     Модель исполнительного механимзма.
+        ///     Всегда ровно одна (может указывать на 'пустой' механизм)
+        /// </summary>        
         [HasOne]
-        public Actuator? Actuator { get; set; }
+        public BaseActuator BaseActuator { get; set; } = null!;
+
+        /// <summary>
+        ///     Может перекрывать или добавлять свойства модели исполнительного механизма
+        /// </summary>
+        [HasMany]
+        public List<ActuatorParam> ActuatorParams { get; set; } = new();
 
         [HasMany]
         public List<TagEvent> TagEvents { get; set; } = new();

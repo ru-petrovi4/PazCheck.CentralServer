@@ -33,13 +33,10 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public int AlarmLevel { get; set; } = 0;
 
         [Attr]
+        public double AlarmOpacity { get; set; } = 0;
+
+        [Attr]
         public double K { get; set; } = 1;
-
-        [Attr]
-        public double Width { get; set; }
-
-        [Attr]
-        public double Height{ get; set; }
 
         [HasOne]        
         public Unit Unit { get; set; } = null!;

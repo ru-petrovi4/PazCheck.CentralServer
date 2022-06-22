@@ -23,6 +23,7 @@ namespace Simcode.PazCheck.CentralServer
 
         public static async Task Fixtures(IServiceProvider serviceProvider, IConfiguration configuration, AddonsManager addonsManager, bool loadFromDumpFile)
         {
+            //loadFromDumpFile = false;
             try
             {
                 using var dbContext = new PazCheckDbContext();
@@ -153,6 +154,11 @@ namespace Simcode.PazCheck.CentralServer
                 dbContext.SaveChanges();
 
                 // Base Actuator types
+                var empty_BaseActuatorType = new BaseActuatorType
+                {
+                    Type = "",
+                };                
+                dbContext.BaseActuatorTypes.Add(empty_BaseActuatorType);
                 var valve_BaseActuatorType = new BaseActuatorType
                 {
                     Type = "Отсечной клапан",
@@ -176,6 +182,13 @@ namespace Simcode.PazCheck.CentralServer
                 dbContext.SaveChanges();
 
                 // Base Actuators
+                var emptyBaseActuator = new BaseActuator
+                {
+                    Title = "Нет исполнительного механизма",                    
+                    BaseActuatorType = empty_BaseActuatorType,
+                    Project = mainProject
+                };                
+                dbContext.BaseActuators.Add(emptyBaseActuator);
                 var valveBaseActuator = new BaseActuator { 
                     Title = "Отсечной клапан V202", 
                     Code = "V202",
