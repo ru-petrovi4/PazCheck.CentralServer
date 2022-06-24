@@ -11,20 +11,26 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public abstract class VersionEntityBase : Identifiable<int>
     {
         [Attr]
-        public DateTime _CreateTimeUtc { get; set; }
+        public UInt32? _CreateProjectVersionNum { get; set; }
 
         [Attr]
-        public DateTime? _DeleteTimeUtc { get; set; }
-        
-        public bool IsActive(DateTime? timeUtc)
+        public UInt32? _DeleteProjectVersionNum { get; set; }
+
+        [Attr]
+        public bool _IsDeleted { get; set; }
+
+        [Attr]
+        public string _LastChangeUser { get; set; } = @"";
+
+        public bool IsActive(UInt32? projectVersionNum)
         {
-            if (timeUtc is null)
+            if (projectVersionNum is null)
             {
-                return _DeleteTimeUtc is null;
+                return !_IsDeleted;
             }
             else
             {
-                return _CreateTimeUtc <= timeUtc && (_DeleteTimeUtc is null || _DeleteTimeUtc > timeUtc);
+                return (_CreateProjectVersionNum is not null && _CreateProjectVersionNum <= projectVersionNum) && (_DeleteProjectVersionNum is null || _DeleteProjectVersionNum > projectVersionNum);
             }
         }
     }

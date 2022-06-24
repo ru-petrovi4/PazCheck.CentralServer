@@ -17,7 +17,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Simcode.PazCheck.CentralServer.BusinessLogic;
 using Ssz.Utils;
-using Simcode.PazCheck.Common;
 using Simcode.PazCheck.CentralServer.Presentation;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authorization;

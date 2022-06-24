@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Simcode.PazCheck.Addons.CentralServer.DummyCeMatrixRuntime.Properties {
+namespace Simcode.PazCheck.Addons.DummyExperionLogsImporter.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyCeMatrixRuntime.Properties 
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Simcode.PazCheck.Addons.CentralServer.DummyCeMatrixRuntime.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Simcode.PazCheck.Addons.DummyExperionLogsImporter.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,11 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyCeMatrixRuntime.Properties 
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dummy CE Matrix Runtime.
+        ///   Looks up a localized string similar to DummyExperion Dcs Config Importer.
         /// </summary>
-        public static string DummyCeMatrixRuntimeAddon_Desc {
+        public static string DummyExperionLogsImporterAddon_Desc {
             get {
-                return ResourceManager.GetString("DummyCeMatrixRuntimeAddon_Desc", resourceCulture);
+                return ResourceManager.GetString("DummyExperionLogsImporterAddon_Desc", resourceCulture);
             }
         }
     }

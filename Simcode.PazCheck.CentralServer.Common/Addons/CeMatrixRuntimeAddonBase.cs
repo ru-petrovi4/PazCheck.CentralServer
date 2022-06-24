@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
-using Simcode.PazCheck.Common;
+using Ssz.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

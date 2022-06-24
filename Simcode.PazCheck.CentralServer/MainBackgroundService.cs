@@ -12,9 +12,9 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
 using Simcode.PazCheck.CentralServer.BusinessLogic;
 using Simcode.PazCheck.CentralServer.Presentation;
-using Simcode.PazCheck.Common;
 using Ssz.Utils;
 using Ssz.Utils.Logging;
+using Simcode.PazCheck.CentralServer.Common;
 
 namespace Simcode.PazCheck.CentralServer
 {
@@ -57,7 +57,7 @@ namespace Simcode.PazCheck.CentralServer
             CsvDb = ActivatorUtilities.CreateInstance<CsvDb>(
                 ServiceProvider, ServerConfigurationHelper.GetProgramDataDirectoryInfo(Configuration), ThreadSafeDispatcher);            
 
-            _addonsManager.Initialize(null);
+            _addonsManager.Initialize(null, @"Simcode.PazCheck.Addons.*.dll", CsvDb);
 
             await LoadFixtures.Fixtures(ServiceProvider, Configuration, _addonsManager, true);
 

@@ -15,19 +15,25 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         ///     Дата создания.
         /// </summary>
         [Attr]
-        public DateTime TimeUtc { get; set; }
+        public UInt32 VersionNum { get; set; }
 
         /// <summary>        
-        ///     <para>Текстовое поле RW: Комментарий</para>
+        ///     Дата создания.
         /// </summary>
         [Attr]
-        public string Comment { get; set; } = @"";
+        public DateTime TimeUtc { get; set; }
 
         /// <summary>
         ///     Создавший пользователь
         /// </summary>
         [Attr]
         public string User { get; set; } = @"";
+
+        /// <summary>        
+        ///     <para>Текстовое поле RW: Комментарий</para>
+        /// </summary>
+        [Attr]
+        public string Comment { get; set; } = @"";        
 
         [HasMany]
         public List<DbFile> DbFiles { get; set; } = new();        

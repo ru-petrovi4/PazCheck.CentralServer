@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Simcode.PazCheck.Common
+namespace Simcode.PazCheck.CentralServer.Common
 {
     public interface IJobProgress
     {        

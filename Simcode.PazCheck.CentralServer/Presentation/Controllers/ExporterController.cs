@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging.Abstractions;
 using Simcode.PazCheck.CentralServer.Common;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
-using Simcode.PazCheck.Common;
+using Ssz.Utils;
 
 namespace Simcode.PazCheck.CentralServer.Presentation
 {
@@ -32,9 +32,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             CeMatrix diagram = await _context.CeMatrices
                 .FirstAsync(d => d.Id == diagId, cancellationToken: _cancellationToken);
 
-            await Task.Run(() => _addonsManager.IsInitializedEventWaitHandle.WaitOne());
-
-            var ceMatrixRuntimeAddon = _addonsManager.GetInitializedAddons<CeMatrixRuntimeAddonBase>(null).FirstOrDefault();            
+            var ceMatrixRuntimeAddon = _addonsManager.Addons.OfType<CeMatrixRuntimeAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();            
             if (ceMatrixRuntimeAddon is not null)
             {
                 string? s = ceMatrixRuntimeAddon.GetCeMatrixString(_context, diagram);
@@ -64,7 +62,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             CeMatrixResult diagResult = await _context.CeMatrixResuls
                 .FirstAsync(d => d.Id == diagId, cancellationToken: _cancellationToken);
 
-            var ceMatrixRuntimeAddon = _addonsManager.GetInitializedAddons<CeMatrixRuntimeAddonBase>(null).FirstOrDefault();
+            var ceMatrixRuntimeAddon = _addonsManager.Addons.OfType<CeMatrixRuntimeAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
             if (ceMatrixRuntimeAddon is not null)
             {
                 string? s = ceMatrixRuntimeAddon.GetCeMatrixRuntimeString(_context, diagResult);

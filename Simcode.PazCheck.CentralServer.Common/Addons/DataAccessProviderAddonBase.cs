@@ -1,7 +1,7 @@
-using Simcode.PazCheck.Common;
+using Ssz.Utils;
 using Ssz.Utils.DataAccess;
 
-namespace Simcode.PazCheck.Common
+namespace Simcode.PazCheck.CentralServer.Common
 {
     public abstract class DataAccessProviderAddonBase : AddonBase
     {
@@ -11,6 +11,6 @@ namespace Simcode.PazCheck.Common
         ///     Gets initialized IDataAccessProvider or writes to log and returns null.        
         /// </summary>
         /// <returns></returns>
-        public abstract IDataAccessProvider? GetDataAccessProvider();
+        public abstract IDataAccessProvider? GetDataAccessProvider(IDispatcher dispatcher);
     }
 }

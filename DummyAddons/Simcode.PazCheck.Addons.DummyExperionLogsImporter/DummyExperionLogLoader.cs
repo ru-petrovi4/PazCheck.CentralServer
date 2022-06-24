@@ -11,9 +11,9 @@ using Simcode.PazCheck.CentralServer.Common.EntityFramework;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Ssz.Utils;
-using Simcode.PazCheck.Common;
+using Simcode.PazCheck.CentralServer.Common;
 
-namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionLogsImporter
+namespace Simcode.PazCheck.Addons.DummyExperionLogsImporter
 {
     public class DummyExperionLogLoader
     {        

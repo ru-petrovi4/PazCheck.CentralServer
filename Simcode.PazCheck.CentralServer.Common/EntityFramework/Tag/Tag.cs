@@ -18,6 +18,12 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string TagName { get; set; } = @"";
 
         /// <summary>        
+        ///     <para>Текстовое поле RW: Тип</para>
+        /// </summary>
+        [Attr]
+        public string Type { get; set; } = @"";
+
+        /// <summary>        
         ///     <para>Текстовое поле RW: Описание</para>
         /// </summary>
         [Attr]

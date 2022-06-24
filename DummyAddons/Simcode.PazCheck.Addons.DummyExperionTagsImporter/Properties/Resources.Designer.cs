@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionLogsImporter.Properties {
+namespace Simcode.PazCheck.Addons.DummyExperionTagsImporter.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionLogsImporter.Proper
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Simcode.PazCheck.Addons.CentralServer.DummyExperionLogsImporter.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Simcode.PazCheck.Addons.DummyExperionTagsImporter.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,9 +63,9 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionLogsImporter.Proper
         /// <summary>
         ///   Looks up a localized string similar to DummyExperion Dcs Config Importer.
         /// </summary>
-        public static string DummyExperionLogsImporterAddon_Desc {
+        public static string DummyExperionTagsImporterAddon_Desc {
             get {
-                return ResourceManager.GetString("DummyExperionLogsImporterAddon_Desc", resourceCulture);
+                return ResourceManager.GetString("DummyExperionTagsImporterAddon_Desc", resourceCulture);
             }
         }
     }

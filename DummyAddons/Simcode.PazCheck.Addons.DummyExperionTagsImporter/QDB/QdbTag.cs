@@ -1,6 +1,6 @@
 using CsvHelper.Configuration.Attributes;
 
-namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
+namespace Simcode.PazCheck.Addons.DummyExperionTagsImporter
 {
     public class QdbTag : ITagRecord
     {

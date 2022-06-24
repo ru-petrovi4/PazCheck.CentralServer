@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
 using Ssz.Utils;
 using Ssz.Utils.DataAccess;
-using Simcode.PazCheck.Common;
 using Simcode.PazCheck.CentralServer.Common;
 
 namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
@@ -49,22 +48,20 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
                 $"Safety Hosted Service is running.{Environment.NewLine}");
 
             CsvDb = ActivatorUtilities.CreateInstance<CsvDb>(
-                _serviceProvider, ServerConfigurationHelper.GetProgramDataDirectoryInfo(_configuration), ThreadSafeDispatcher);
+                _serviceProvider, ServerConfigurationHelper.GetProgramDataDirectoryInfo(_configuration), ThreadSafeDispatcher);            
 
-            await Task.Run(() => _addonsManager.IsInitializedEventWaitHandle.WaitOne());
-
-            var dataAccessProviderAddonsCollection = _addonsManager.GetInitializedAddons<DataAccessProviderAddonBase>(ThreadSafeDispatcher);
+            var dataAccessProviderAddonsCollection = _addonsManager.Addons.OfType<DataAccessProviderAddonBase>().OrderBy(a => a.IsDummy).ToArray();
             if (dataAccessProviderAddonsCollection.Length == 0)
             {
                 // TODO Logging
                 return;
             }
 
-            _eventMessagesProcessingAddons = _addonsManager.GetInitializedAddons<EventMessagesProcessingAddonBase>(ThreadSafeDispatcher);            
+            _eventMessagesProcessingAddons = _addonsManager.Addons.OfType<EventMessagesProcessingAddonBase>().OrderBy(a => a.IsDummy).ToArray();            
             
             foreach (var dataAccessProviderAddon in dataAccessProviderAddonsCollection)
             {                
-                var dataAccessProvider = dataAccessProviderAddon.GetDataAccessProvider();
+                var dataAccessProvider = dataAccessProviderAddon.GetDataAccessProvider(ThreadSafeDispatcher);
                 if (dataAccessProvider is null)
                     continue;
                 var eventSourceModel = new EventSourceModel();

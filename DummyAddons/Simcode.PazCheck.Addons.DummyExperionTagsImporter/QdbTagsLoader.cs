@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
 using Ssz.Utils;
 
-namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
+namespace Simcode.PazCheck.Addons.DummyExperionTagsImporter
 {
     public class QdbTagsLoader
     {
@@ -56,8 +56,7 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
                 if (Enum.TryParse(csv.GetField(csv.GetFieldIndex("Class")), out TagType tagType))
                 {
                     var tag = new Tag() 
-                    {
-                        _CreateTimeUtc = DateTime.UtcNow, 
+                    {                        
                         Project = project,
                         BaseActuator = empty_BaseActuator
                     };
@@ -79,8 +78,7 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
                                         var tmpValue = csv.GetField(
                                             csv.GetFieldIndex(TagFields.DescriptorState.ToString() + i.ToString()));
                                         var tagCondition = new TagCondition()
-                                        {
-                                            _CreateTimeUtc = DateTime.UtcNow,
+                                        {                                            
                                             Identifier = "ALARM",                                      
                                             Value = tmpValue
                                         };
@@ -123,8 +121,7 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
                                     if (!tmpAlarm.Equals("None") && tmpAlarm.Length > 0)
                                     {
                                         var tagCondition = new TagCondition()
-                                        {
-                                            _CreateTimeUtc = DateTime.UtcNow,
+                                        {                                            
                                             Identifier = tmpAlarm,                                            
                                             Value = ""
                                         };

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Simcode.PazCheck.CentralServer.Common;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
-using Simcode.PazCheck.Common;
+using Ssz.Utils;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Simcode.PazCheck.Addons.CentralServer.DummyCeMatrixRuntime
+namespace Simcode.PazCheck.Addons.DummyCeMatrixRuntime
 {
     [Export(typeof(AddonBase))]
     public class DummyCeMatrixRuntimeAddon : CeMatrixRuntimeAddonBase
@@ -25,11 +25,6 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyCeMatrixRuntime
         public override string Desc => Properties.Resources.DummyCeMatrixRuntimeAddon_Desc;
 
         public override string Version => "1.0";
-
-        public override string SimcodePazCheckServerVersion
-        {
-            get { return SimcodePazCheckServerVersionConst; }
-        }
 
         public override (string, string)[] OptionsInfo => new (string, string)[0];
 

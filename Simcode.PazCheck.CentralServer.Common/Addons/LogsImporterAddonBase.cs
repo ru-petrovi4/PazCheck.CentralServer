@@ -1,5 +1,5 @@
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
-using Simcode.PazCheck.Common;
+using Ssz.Utils;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;

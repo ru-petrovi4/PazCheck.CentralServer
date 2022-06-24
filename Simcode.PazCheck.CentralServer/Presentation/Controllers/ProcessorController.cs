@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Simcode.PazCheck.CentralServer.BusinessLogic;
 using Simcode.PazCheck.CentralServer.Common;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
-using Simcode.PazCheck.Common;
+using Ssz.Utils;
 
 namespace Simcode.PazCheck.CentralServer.Presentation
 {
@@ -37,7 +37,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                 _jobsManager.QueueJob(jobId, "Import Log",
                             async (cancellationToken, jobProgress) =>
                             {
-                                var ceMatrixRuntimeAddonBase = _addonsManager.GetInitializedAddons<CeMatrixRuntimeAddonBase>(null).FirstOrDefault();
+                                var ceMatrixRuntimeAddonBase = _addonsManager.Addons.OfType<CeMatrixRuntimeAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
                                 if (ceMatrixRuntimeAddonBase is null)
                                 {
                                     return;

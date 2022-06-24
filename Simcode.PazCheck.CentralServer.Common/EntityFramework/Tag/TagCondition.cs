@@ -37,7 +37,21 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         ///     <example>Alarm</example>  
         /// </summary>
         [Attr]
-        public string SymbolToDisplay { get; set; } = @"";        
+        public string SymbolToDisplay { get; set; } = @"";
+
+        /// <summary>
+        ///     <para>Чекбокс RW: Может быть причиной</para>
+        ///     <para>Tooltip: Может быть причиной в матрицах ПСС</para>
+        /// </summary>
+        [Attr]
+        public bool CanBeCause { get; set; } = true;
+
+        /// <summary>
+        ///     <para>Чекбокс RW: Может быть следствием</para>
+        ///     <para>Tooltip: Может быть следствием в матрицах ПСС</para>
+        /// </summary>
+        [Attr]
+        public bool CanBeEffect { get; set; } = true;
 
         [HasOne]
         public Tag Tag { get; set; } = null!;

@@ -14,12 +14,6 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr]
         public string Guid { get; set; } = @"";
 
-        /// <summary>
-        ///     Guid.Version - unique identifier of matrix state
-        /// </summary>
-        [Attr]
-        public int Version { get; set; }
-
         [Attr]
         public string Title { get; set; } = @"";
 

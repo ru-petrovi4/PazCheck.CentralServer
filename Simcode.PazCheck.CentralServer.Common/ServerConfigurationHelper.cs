@@ -4,7 +4,7 @@ using Ssz.Utils;
 using System;
 using System.IO;
 
-namespace Simcode.PazCheck.Common
+namespace Simcode.PazCheck.CentralServer.Common
 {
     public static class ServerConfigurationHelper
     {
@@ -31,19 +31,7 @@ namespace Simcode.PazCheck.Common
                 programDataDirectory = Path.Combine(AppContext.BaseDirectory, programDataDirectory);
 
             return new DirectoryInfo(programDataDirectory);
-        }
-
-        /// <summary>
-        ///     Throws, if ProgramDataDirectory is not configured.
-        /// </summary>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static string GetAddonsConfigurationDirectoryFullName(IConfiguration configuration)
-        {
-            DirectoryInfo programDataDirectoryInfo = GetProgramDataDirectoryInfo(configuration);           
-            return Path.Combine(programDataDirectoryInfo.FullName, @"Addons");
-        }
+        }        
 
         /// <summary>
         ///     Throws, if ProgramDataDirectory is not configured.

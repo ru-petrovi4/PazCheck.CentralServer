@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Simcode.PazCheck.CentralServer.Common;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
-using Simcode.PazCheck.Common;
+using Ssz.Utils;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
 
-namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
+namespace Simcode.PazCheck.Addons.DummyExperionTagsImporter
 {
     [Export(typeof(AddonBase))]
     public class DummyExperionTagsImporterAddon : TagsImporterAddonBase
@@ -21,12 +21,7 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionTagsImporter
 
         public override string Desc => Properties.Resources.DummyExperionTagsImporterAddon_Desc;
 
-        public override string Version => "1.0";
-
-        public override string SimcodePazCheckServerVersion
-        {
-            get { return SimcodePazCheckServerVersionConst; }
-        }
+        public override string Version => "1.0";        
 
         public override (string, string)[] OptionsInfo => new (string, string)[0]; // { ("%(ServerAddress)", Properties.Resources.ServerAddress_Option) };
 

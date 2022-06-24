@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Simcode.PazCheck.CentralServer.Common;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
-using Simcode.PazCheck.Common;
 using Ssz.Utils;
 
 namespace Simcode.PazCheck.CentralServer
@@ -274,7 +273,7 @@ namespace Simcode.PazCheck.CentralServer
                 var examplesDirectoryFullName = ServerConfigurationHelper.GetExamplesDirectoryFullName(configuration);
 
                 // TAGs                
-                var tagsImporterAddon = addonsManager.GetInitializedAddons<TagsImporterAddonBase>(null).FirstOrDefault();
+                var tagsImporterAddon = addonsManager.Addons.OfType<TagsImporterAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
                 if (tagsImporterAddon is not null)
                 {
                     foreach (string fileFullName in Directory.EnumerateFiles(examplesDirectoryFullName))
@@ -297,7 +296,7 @@ namespace Simcode.PazCheck.CentralServer
                 }
 
                 // Logs                
-                var logsImporterAddon = addonsManager.GetInitializedAddons<LogsImporterAddonBase>(null).FirstOrDefault();
+                var logsImporterAddon = addonsManager.Addons.OfType<LogsImporterAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
                 if (logsImporterAddon is not null)
                 {
                     foreach (string fileFullName in Directory.EnumerateFiles(examplesDirectoryFullName))
@@ -318,7 +317,7 @@ namespace Simcode.PazCheck.CentralServer
                 }
 
                 // CE Matrices, CE Matrices Runtimes
-                var ceMatrixRuntimeAddon = addonsManager.GetInitializedAddons<CeMatrixRuntimeAddonBase>(null).FirstOrDefault();
+                var ceMatrixRuntimeAddon = addonsManager.Addons.OfType<CeMatrixRuntimeAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
                 if (ceMatrixRuntimeAddon is not null)
                 {
                     await ceMatrixRuntimeAddon.LoadFixturesAsync(configuration, serviceProvider, dbContext, mainProject);

@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using Simcode.PazCheck.CentralServer.BusinessLogic;
 using Simcode.PazCheck.CentralServer.Common;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
-using Simcode.PazCheck.Common;
+using Ssz.Utils;
 
 namespace Simcode.PazCheck.CentralServer.Presentation
 {
@@ -76,7 +76,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         _jobsManager.QueueJob(jobId, "Import Log",
                             async (cancellationToken, jobProgress) =>
                             {
-                                var logsImporterAddon = _addonsManager.GetInitializedAddons<LogsImporterAddonBase>(null).FirstOrDefault();
+                                var logsImporterAddon = _addonsManager.Addons.OfType<LogsImporterAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
                                 if (logsImporterAddon is null)
                                 {
                                     return;

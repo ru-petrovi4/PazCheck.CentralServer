@@ -1,6 +1,7 @@
 // Copyright (c) 2021
 // All rights reserved by Simcode
 #nullable enable
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using JsonApiDotNetCore.Resources;
@@ -15,7 +16,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string CeMatrixGuid { get; set; } = @"";
 
         [Attr]
-        public int CeMatrixVersion { get; set; }
+        public UInt32? ProjectVersionNum { get; set; }
 
         [HasOne]
         public Result Result { get; set; } = null!;

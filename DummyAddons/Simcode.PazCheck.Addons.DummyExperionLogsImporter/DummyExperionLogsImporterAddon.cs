@@ -1,14 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Simcode.PazCheck.CentralServer.Common;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
-using Simcode.PazCheck.Common;
+using Ssz.Utils;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionLogsImporter
+namespace Simcode.PazCheck.Addons.DummyExperionLogsImporter
 {
     [Export(typeof(AddonBase))]
     public class DummyExperionLogsImporterAddon : LogsImporterAddonBase
@@ -24,11 +24,6 @@ namespace Simcode.PazCheck.Addons.CentralServer.DummyExperionLogsImporter
         public override string Desc => Properties.Resources.DummyExperionLogsImporterAddon_Desc;
 
         public override string Version => "1.0";
-
-        public override string SimcodePazCheckServerVersion
-        {
-            get { return SimcodePazCheckServerVersionConst; }
-        }
 
         public override (string, string)[] OptionsInfo => new (string, string)[0]; // { ("%(ServerAddress)", Properties.Resources.ServerAddress_Option) };
 
