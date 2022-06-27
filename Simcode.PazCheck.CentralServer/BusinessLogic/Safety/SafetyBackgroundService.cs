@@ -13,6 +13,7 @@ using Simcode.PazCheck.CentralServer.Common.EntityFramework;
 using Ssz.Utils;
 using Ssz.Utils.DataAccess;
 using Simcode.PazCheck.CentralServer.Common;
+using Ssz.Utils.Addons;
 
 namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
 {

@@ -1,5 +1,6 @@
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
 using Ssz.Utils;
+using Ssz.Utils.Addons;
 using System.IO;
 
 namespace Simcode.PazCheck.CentralServer.Common

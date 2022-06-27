@@ -2,6 +2,7 @@
 using Simcode.PazCheck.CentralServer.Common;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
 using Ssz.Utils;
+using Ssz.Utils.Addons;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
