@@ -42,6 +42,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr]
         public string Desc { get; set; } = @"";
 
+        [Attr]
+        public string _LockedByUser { get; set; } = @"";
+
         /// <summary>
         ///     <para>Текстовое поле RW (выбор из списка (таблица BaseActuatorType) либо свое значение): Тип устройства</para>
         ///     <para>Tooltip: Вид оборудования</para>

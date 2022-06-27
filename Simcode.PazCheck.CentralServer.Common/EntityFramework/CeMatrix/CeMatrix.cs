@@ -26,8 +26,11 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr]
         public string Status { get; set; } = @"";
 
-        [Attr]
+        [Attr]        
         public string Source { get; set; } = @"";
+
+        [Attr]
+        public string _LockedByUser { get; set; } = @"";
 
         [HasOne]
         public Project Project { get; set; } = null!;

@@ -27,7 +27,10 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         ///     <para>Текстовое поле RW: Описание</para>
         /// </summary>
         [Attr]
-        public string Desc { get; set; } = @"";        
+        public string Desc { get; set; } = @"";
+
+        [Attr]
+        public string _LockedByUser { get; set; } = @"";
 
         /// <summary>        
         ///     Состояния тэга.
