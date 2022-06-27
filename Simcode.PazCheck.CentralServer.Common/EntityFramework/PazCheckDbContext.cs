@@ -24,6 +24,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public DbSet<CeMatrixResult> CeMatrixResuls { get; set; } = null!;
         public DbSet<CauseResult> CauseResults { get; set; } = null!;
         public DbSet<EffectResult> EffectResults { get; set; } = null!;
+        public DbSet<SetActiveProjectVersionRequest> SetActiveProjectVersionRequests { get; set; } = null!;
 
         public PazCheckDbContext(DbContextOptions<PazCheckDbContext> options) : base(options)
         { }
