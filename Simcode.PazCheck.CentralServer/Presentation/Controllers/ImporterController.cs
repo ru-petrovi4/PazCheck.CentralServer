@@ -77,7 +77,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         _jobsManager.QueueJob(jobId, "Import Log",
                             async (cancellationToken, jobProgress) =>
                             {
-                                var logsImporterAddon = _addonsManager.Addons.OfType<LogsImporterAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
+                                var logsImporterAddon = _addonsManager.Addons.OfType<EventsImporterAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
                                 if (logsImporterAddon is null)
                                 {
                                     return;

@@ -297,7 +297,7 @@ namespace Simcode.PazCheck.CentralServer
                 }
 
                 // Logs                
-                var logsImporterAddon = addonsManager.Addons.OfType<LogsImporterAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
+                var logsImporterAddon = addonsManager.Addons.OfType<EventsImporterAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
                 if (logsImporterAddon is not null)
                 {
                     foreach (string fileFullName in Directory.EnumerateFiles(examplesDirectoryFullName))
