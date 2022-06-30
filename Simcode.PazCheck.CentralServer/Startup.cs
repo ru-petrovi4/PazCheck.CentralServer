@@ -62,6 +62,7 @@ namespace Simcode.PazCheck.CentralServer
                     policy.RequireRole("Admin");
                 });
             });
+            
 #else
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
@@ -109,9 +110,11 @@ namespace Simcode.PazCheck.CentralServer
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v3", new OpenApiInfo { Title = "PazCheck API", Version = "v3.0.0" });
+                
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, @"Simcode.PazCheck.CentralServer.Common.xml"));
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, @"Simcode.PazCheck.CentralServer.xml"));
 
-                var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
+                options.OperationFilter<SwaggerOperationFilter>();                
             });
 
             services.AddCors();
