@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>    
-    <ProjectReference Include="..\..\..\Ssz.Utils\Ssz.DataAccessGrpc.Client\Ssz.DataAccessGrpc.Client.csproj" />    
     <ProjectReference Include="..\..\Simcode.PazCheck.CentralServer.Common\Simcode.PazCheck.CentralServer.Common.csproj" />
   </ItemGroup>
 

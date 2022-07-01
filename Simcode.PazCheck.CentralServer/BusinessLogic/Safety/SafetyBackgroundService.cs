@@ -14,6 +14,7 @@ using Ssz.Utils;
 using Ssz.Utils.DataAccess;
 using Simcode.PazCheck.CentralServer.Common;
 using Ssz.Utils.Addons;
+using Ssz.DataAccessGrpc.Client;
 
 namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
 {
@@ -61,7 +62,20 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
             _eventMessagesProcessingAddons = _addonsManager.Addons.OfType<EventMessagesProcessingAddonBase>().OrderBy(a => a.IsDummy).ToArray();            
             
             foreach (var dataAccessProviderAddon in dataAccessProviderAddonsCollection)
-            {                
+            {
+                //IDataAccessProvider dataAccessProvider = ActivatorUtilities.CreateInstance<GrpcDataAccessProvider>(_serviceProvider, ThreadSafeDispatcher);
+
+                //dataAccessProvider.Initialize(
+                //    null,
+                //    true,
+                //    true,
+                //    @"http://localhost:60060/",
+                //    @"Simcode.PazCheck.Addons.DataAccessClient",
+                //    Environment.MachineName,
+                //    @"DCS",
+                //    new CaseInsensitiveDictionary<string?>()
+                //    );
+
                 var dataAccessProvider = dataAccessProviderAddon.GetDataAccessProvider(ThreadSafeDispatcher);
                 if (dataAccessProvider is null)
                     continue;

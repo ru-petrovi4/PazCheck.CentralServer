@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Simcode.PazCheck.CentralServer.Common;
-using Ssz.DataAccessGrpc.Client;
 using Ssz.Utils;
 using Ssz.Utils.Addons;
 using Ssz.Utils.DataAccess;
@@ -35,28 +34,8 @@ namespace Simcode.PazCheck.Addons.DummyDataAccessClient
         };
 
         public override IDataAccessProvider? GetDataAccessProvider(IDispatcher dispatcher)
-        {
-            string? serverAddress = CsvDb.GetValue(OptionsCsvFileName, ServerAddress_OptionName, 1);
-            if (String.IsNullOrEmpty(serverAddress))
-            {
-                Logger.LogError("ServerAddress is null or empty.");
-                return null;
-            }
-
-            IDataAccessProvider dataAccessProvider = ActivatorUtilities.CreateInstance<GrpcDataAccessProvider>(ServiceProvider, dispatcher);
-
-            dataAccessProvider.Initialize(
-                null,
-                true,
-                true,
-                serverAddress,
-                @"Simcode.PazCheck.Addons.DataAccessClient",
-                Environment.MachineName,
-                @"DCS",
-                new CaseInsensitiveDictionary<string?>()
-                );
-
-            return dataAccessProvider;
+        {            
+            return null;
         }        
     }
 }
