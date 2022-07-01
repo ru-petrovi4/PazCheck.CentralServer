@@ -363,17 +363,25 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
 
         private async void DataAccessProviderOnEventMessagesCallback(IDataAccessProvider dataAccessProvider, EventMessage[] newEventMessages)
         {
+            using var dbContext = new PazCheckDbContext();
+
             var eventSourceModel = (EventSourceModel)dataAccessProvider.Obj!;
             //List<AlarmInfoViewModelBase> newAlarmInfoViewModels = new List<AlarmInfoViewModelBase>();
             foreach (EventMessage eventMessage in newEventMessages.Where(em => em != null).OrderBy(em => em.OccurrenceTimeUtc))
             {
-                string? eventMessagesProcessingAddonName = eventMessage.ClientRequestedFields?.TryGetValue(DataAccessProviderAddonBase.EventMessagesProcessingAddonName_OptionName);
-                if (!String.IsNullOrEmpty(eventMessagesProcessingAddonName))
+                string? sourceSystemId = eventMessage.ClientRequestedFields?.TryGetValue(@"SourceSystemId");
+                if (!String.IsNullOrEmpty(sourceSystemId))
                 {
-                    var eventMessagesProcessingAddon = _eventMessagesProcessingAddons?.FirstOrDefault(a => String.Equals(a.Name, eventMessagesProcessingAddonName, StringComparison.InvariantCultureIgnoreCase));
+                    var eventMessagesProcessingAddon = _eventMessagesProcessingAddons?.FirstOrDefault(a => a.CanAddToEventSourceModelEventMessageFrom(sourceSystemId));
                     if (eventMessagesProcessingAddon is not null)
                     {
-                        await eventMessagesProcessingAddon.ProcessEventMessage(eventSourceModel, eventMessage, _logger);
+                        await eventMessagesProcessingAddon.AddToEventSourceModelAsync(eventSourceModel, eventMessage);
+                    }
+
+                    eventMessagesProcessingAddon = _eventMessagesProcessingAddons?.FirstOrDefault(a => a.CanSaveToDbEventMessageFrom(sourceSystemId));
+                    if (eventMessagesProcessingAddon is not null)
+                    {
+                        await eventMessagesProcessingAddon.SaveToDbAsync(dbContext, eventMessage, CancellationToken.None, null);
                     }
                 }                
             }

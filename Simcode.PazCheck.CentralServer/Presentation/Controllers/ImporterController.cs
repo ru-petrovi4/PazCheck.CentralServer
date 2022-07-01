@@ -77,7 +77,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         _jobsManager.QueueJob(jobId, "Import Log",
                             async (cancellationToken, jobProgress) =>
                             {
-                                var logsImporterAddon = _addonsManager.Addons.OfType<EventsImporterAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
+                                var logsImporterAddon = _addonsManager.Addons.OfType<EventMessagesProcessingAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
                                 if (logsImporterAddon is null)
                                 {
                                     return;
@@ -86,7 +86,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                                 using (var dbContext = new PazCheckDbContext())
                                 {
                                     using var stream = System.IO.File.OpenRead(fileFullName);
-                                    await logsImporterAddon.ImportLogsAsync(stream, formFile.FileName, dbContext, prjId, cancellationToken, jobProgress);
+                                    //await logsImporterAddon.SaveToDbAsync(stream, formFile.FileName, dbContext, prjId, cancellationToken, jobProgress);
                                 }                                
                             });
                     }

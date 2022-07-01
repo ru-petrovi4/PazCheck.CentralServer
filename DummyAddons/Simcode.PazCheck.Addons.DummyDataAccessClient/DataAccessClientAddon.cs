@@ -30,8 +30,7 @@ namespace Simcode.PazCheck.Addons.DummyDataAccessClient
 
         public override (string, string)[] OptionsInfo => new (string, string)[] 
         {
-            (ServerAddress_OptionName, Properties.Resources.ServerAddress_Option),
-            (EventMessagesProcessingAddonName_OptionName, Properties.Resources.EventMessagesProcessingAddonName_Option)
+            (ServerAddress_OptionName, Properties.Resources.ServerAddress_Option)            
         };
 
         public override IDataAccessProvider? GetDataAccessProvider(IDispatcher dispatcher)

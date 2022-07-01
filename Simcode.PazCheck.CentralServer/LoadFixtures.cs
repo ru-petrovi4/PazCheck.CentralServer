@@ -297,7 +297,7 @@ namespace Simcode.PazCheck.CentralServer
                 }
 
                 // Logs                
-                var logsImporterAddon = addonsManager.Addons.OfType<EventsImporterAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
+                var logsImporterAddon = addonsManager.Addons.OfType<EventMessagesProcessingAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
                 if (logsImporterAddon is not null)
                 {
                     foreach (string fileFullName in Directory.EnumerateFiles(examplesDirectoryFullName))
@@ -308,7 +308,7 @@ namespace Simcode.PazCheck.CentralServer
                             try
                             {
                                 using var stream = System.IO.File.OpenRead(fileFullName);
-                                await logsImporterAddon.ImportLogsAsync(stream, fileName, dbContext, avtUnit.Id, CancellationToken.None, DummyJobProgress.Dafault);
+                                //await logsImporterAddon.SaveToDbAsync(stream, fileName, dbContext, avtUnit.Id, CancellationToken.None, DummyJobProgress.Dafault);
                             }
                             catch
                             {

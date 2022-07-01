@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DummyAddons", "DummyAddons"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simcode.PazCheck.Addons.DummyExperionTagsImporter", "DummyAddons\Simcode.PazCheck.Addons.DummyExperionTagsImporter\Simcode.PazCheck.Addons.DummyExperionTagsImporter.csproj", "{73306720-9BAD-4FBE-9A49-D830D6B4CC3D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simcode.PazCheck.Addons.DummyExperionEventsImporter", "DummyAddons\Simcode.PazCheck.Addons.DummyExperionEventsImporter\Simcode.PazCheck.Addons.DummyExperionEventsImporter.csproj", "{88C65260-C27E-4771-A715-574988762A6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simcode.PazCheck.Addons.DummyExperionEventMessagesProcessing", "DummyAddons\Simcode.PazCheck.Addons.DummyExperionEventMessagesProcessing\Simcode.PazCheck.Addons.DummyExperionEventMessagesProcessing.csproj", "{88C65260-C27E-4771-A715-574988762A6D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simcode.IdentityServer", "..\IdentityServer\Simcode.IdentityServer\Simcode.IdentityServer.csproj", "{C262ABD5-F375-4DD8-8F23-7A62510C1D7C}"
 EndProject

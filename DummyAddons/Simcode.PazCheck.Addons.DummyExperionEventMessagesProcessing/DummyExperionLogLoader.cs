@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Ssz.Utils;
 using Simcode.PazCheck.CentralServer.Common;
 
-namespace Simcode.PazCheck.Addons.DummyExperionEventsImporter
+namespace Simcode.PazCheck.Addons.DummyExperionEventMessagesProcessing
 {
     public class DummyExperionLogLoader
     {        
