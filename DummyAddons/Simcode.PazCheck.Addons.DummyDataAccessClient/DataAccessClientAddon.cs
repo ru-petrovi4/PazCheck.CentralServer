@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Simcode.PazCheck.CentralServer.Common;
+using Ssz.DataAccessGrpc.Client;
 using Ssz.Utils;
 using Ssz.Utils.Addons;
 using Ssz.Utils.DataAccess;
@@ -26,7 +27,7 @@ namespace Simcode.PazCheck.Addons.DummyDataAccessClient
 
         public override string Version => "1.0";        
 
-        public static readonly string ServerAddress_OptionName = @"%(ServerAddress)";        
+        public static readonly string ServerAddress_OptionName = @"%(DataAccess_ServerAddress)";        
 
         public override (string, string)[] OptionsInfo => new (string, string)[] 
         {
@@ -42,7 +43,20 @@ namespace Simcode.PazCheck.Addons.DummyDataAccessClient
                 return null;
             }
 
-            return null;
+            IDataAccessProvider dataAccessProvider = ActivatorUtilities.CreateInstance<GrpcDataAccessProvider>(ServiceProvider, dispatcher);
+
+            dataAccessProvider.Initialize(
+                null,
+                true,
+                true,
+                serverAddress,
+                @"Simcode.PazCheck.Addons.DataAccessClient",
+                Environment.MachineName,
+                @"DCS",
+                new CaseInsensitiveDictionary<string?>()
+                );
+
+            return dataAccessProvider;
         }        
     }
 }
