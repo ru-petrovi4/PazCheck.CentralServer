@@ -16,6 +16,14 @@ namespace Simcode.PazCheck.CentralServer.Common
             return false;
         }
 
+        /// <summary>
+        ///     You sholdn't dbContext.SaveChanges()
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <param name="eventMessage"></param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="jobProgress"></param>
+        /// <returns></returns>
         public virtual Task SaveToDbAsync(PazCheckDbContext dbContext, EventMessage eventMessage, CancellationToken cancellationToken, IJobProgress? jobProgress)
         {
             return Task.CompletedTask;

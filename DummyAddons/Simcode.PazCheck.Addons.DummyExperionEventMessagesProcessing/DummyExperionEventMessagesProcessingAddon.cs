@@ -27,11 +27,5 @@ namespace Simcode.PazCheck.Addons.DummyExperionEventMessagesProcessing
         public override string Version => "1.0";
 
         public override (string, string)[] OptionsInfo => new (string, string)[0];
-
-        //public override async Task SaveToDbAsync(Stream stream, string logName, PazCheckDbContext context, int unitId, CancellationToken cancellationToken, IJobProgress jobProgress)
-        //{
-        //    var logLoader = ActivatorUtilities.CreateInstance<DummyExperionLogLoader>(ServiceProvider);
-        //    await logLoader.ImportFileLogAsync(CsvDb, stream, logName, context, unitId, cancellationToken, jobProgress);
-        //}
     }
 }

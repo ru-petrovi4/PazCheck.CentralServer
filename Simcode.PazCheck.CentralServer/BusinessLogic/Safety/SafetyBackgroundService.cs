@@ -375,30 +375,37 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
                         active, true, DateTime.UtcNow, out bool alarmConditionChanged, out bool unackedChanged);
         }
 
-        private async void DataAccessProviderOnEventMessagesCallback(IDataAccessProvider dataAccessProvider, EventMessage[] newEventMessages)
+        private async void DataAccessProviderOnEventMessagesCallback(IDataAccessProvider dataAccessProvider, EventMessagesCollection eventMessagesCollection)
         {
             using var dbContext = new PazCheckDbContext();
 
-            var eventSourceModel = (EventSourceModel)dataAccessProvider.Obj!;
-            //List<AlarmInfoViewModelBase> newAlarmInfoViewModels = new List<AlarmInfoViewModelBase>();
-            foreach (EventMessage eventMessage in newEventMessages.Where(em => em != null).OrderBy(em => em.OccurrenceTimeUtc))
+            string? sourceSystemId = eventMessagesCollection.CommonFields?.TryGetValue(@"SourceSystemId");
+            if (!String.IsNullOrEmpty(sourceSystemId))
             {
-                string? sourceSystemId = eventMessage.ClientRequestedFields?.TryGetValue(@"SourceSystemId");
-                if (!String.IsNullOrEmpty(sourceSystemId))
+                var eventMessagesProcessingAddon = _eventMessagesProcessingAddons?.FirstOrDefault(a => a.CanAddToEventSourceModelEventMessageFrom(sourceSystemId));
+                if (eventMessagesProcessingAddon is not null)
                 {
-                    var eventMessagesProcessingAddon = _eventMessagesProcessingAddons?.FirstOrDefault(a => a.CanAddToEventSourceModelEventMessageFrom(sourceSystemId));
-                    if (eventMessagesProcessingAddon is not null)
+                    var eventSourceModel = (EventSourceModel)dataAccessProvider.Obj!;
+                    foreach (EventMessage eventMessage in eventMessagesCollection.EventMessages.Where(em => em != null).OrderBy(em => em.OccurrenceTimeUtc))
                     {
                         await eventMessagesProcessingAddon.AddToEventSourceModelAsync(eventSourceModel, eventMessage);
-                    }
+                    }                    
+                }
 
-                    eventMessagesProcessingAddon = _eventMessagesProcessingAddons?.FirstOrDefault(a => a.CanSaveToDbEventMessageFrom(sourceSystemId));
-                    if (eventMessagesProcessingAddon is not null)
+                eventMessagesProcessingAddon = _eventMessagesProcessingAddons?.FirstOrDefault(a => a.CanSaveToDbEventMessageFrom(sourceSystemId));
+                if (eventMessagesProcessingAddon is not null)
+                {
+                    var eventSourceModel = (EventSourceModel)dataAccessProvider.Obj!;
+                    foreach (EventMessage eventMessage in eventMessagesCollection.EventMessages.Where(em => em != null).OrderBy(em => em.OccurrenceTimeUtc))
                     {
                         await eventMessagesProcessingAddon.SaveToDbAsync(dbContext, eventMessage, CancellationToken.None, null);
-                    }
-                }                
+                    }                    
+                }
             }
+
+            await dbContext.SaveChangesAsync();
+
+            //dataAccessProvider.PassthroughAsync();
         }
 
         #endregion        
