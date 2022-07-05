@@ -15,6 +15,7 @@ using Ssz.Utils.DataAccess;
 using Simcode.PazCheck.CentralServer.Common;
 using Ssz.Utils.Addons;
 using Ssz.DataAccessGrpc.Client;
+using System.Text;
 
 namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
 {
@@ -377,6 +378,9 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
 
         private async void DataAccessProviderOnEventMessagesCallback(IDataAccessProvider dataAccessProvider, EventMessagesCollection eventMessagesCollection)
         {
+            if (eventMessagesCollection.EventMessages.Count == 0)
+                return;
+
             using var dbContext = new PazCheckDbContext();
 
             string? sourceSystemId = eventMessagesCollection.CommonFields?.TryGetValue(@"SourceSystemId");
@@ -386,7 +390,8 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
                 if (eventMessagesProcessingAddon is not null)
                 {
                     var eventSourceModel = (EventSourceModel)dataAccessProvider.Obj!;
-                    foreach (EventMessage eventMessage in eventMessagesCollection.EventMessages.Where(em => em != null).OrderBy(em => em.OccurrenceTimeUtc))
+                    var eventMessagesArray = eventMessagesCollection.EventMessages.Where(em => em != null).OrderBy(em => em.OccurrenceTimeUtc).ToArray();
+                    foreach (EventMessage eventMessage in eventMessagesArray)
                     {
                         await eventMessagesProcessingAddon.AddToEventSourceModelAsync(eventSourceModel, eventMessage);
                     }                    
@@ -396,16 +401,32 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
                 if (eventMessagesProcessingAddon is not null)
                 {
                     var eventSourceModel = (EventSourceModel)dataAccessProvider.Obj!;
-                    foreach (EventMessage eventMessage in eventMessagesCollection.EventMessages.Where(em => em != null).OrderBy(em => em.OccurrenceTimeUtc))
+                    var eventMessagesArray = eventMessagesCollection.EventMessages.Where(em => em != null).OrderBy(em => em.OccurrenceTimeUtc).ToArray();
+                    foreach (EventMessage eventMessage in eventMessagesArray)
                     {
                         await eventMessagesProcessingAddon.SaveToDbAsync(dbContext, eventMessage, CancellationToken.None, null);
-                    }                    
+                    }
+
+                    string? sourceAddonId = eventMessagesCollection.CommonFields?.TryGetValue(@"SourceAddonId");
+                    if (!String.IsNullOrEmpty(sourceAddonId))
+                    {
+                        try
+                        {
+                            var t = dataAccessProvider.PassthroughAsync(sourceAddonId, @"SetAddonOptions", Encoding.UTF8.GetBytes(
+                                NameValueCollectionHelper.GetNameValueCollectionString(new CaseInsensitiveDictionary<string?>()
+                                {
+                                    { @"%(MaxProcessedTimeUtc)", new Any(eventMessagesArray.Last().OccurrenceTimeUtc).ValueAsString(false, @"O") }
+                                })
+                            ));
+                        }
+                        catch
+                        {
+                        }
+                    }
                 }
             }
 
-            await dbContext.SaveChangesAsync();
-
-            //dataAccessProvider.PassthroughAsync();
+            await dbContext.SaveChangesAsync();                      
         }
 
         #endregion        
