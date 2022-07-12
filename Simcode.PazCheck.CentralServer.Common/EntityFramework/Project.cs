@@ -40,6 +40,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [HasOne]
         public ProjectVersion? ActiveProjectVersion { get; set; } = null!;
 
+        [HasOne]
+        public ProjectVersion? LastProjectVersion { get; set; } = null!;
+
         [HasOne]        
         public Unit Unit { get; set; } = null!;
 

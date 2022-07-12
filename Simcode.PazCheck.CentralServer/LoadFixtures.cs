@@ -23,7 +23,7 @@ namespace Simcode.PazCheck.CentralServer
 
         public static async Task Fixtures(IServiceProvider serviceProvider, IConfiguration configuration, AddonsManager addonsManager)
         {
-            string defaultUnitTitle = "АВТ-7";
+            string defaultUnitTitle = "АВТ-8";
 
             bool loadFromDumpFile = true;
             try

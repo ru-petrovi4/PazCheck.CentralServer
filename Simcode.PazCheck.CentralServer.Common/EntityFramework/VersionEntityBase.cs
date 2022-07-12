@@ -23,7 +23,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string _LastChangeUser { get; set; } = @"";
 
         [Attr]
-        public DateTime _LastChangeTimeUtc { get; set; }
+        public DateTime _LastChangeTimeUtc { get; set; } = DateTime.UtcNow;
 
         public bool IsActive(UInt32? projectVersionNum)
         {

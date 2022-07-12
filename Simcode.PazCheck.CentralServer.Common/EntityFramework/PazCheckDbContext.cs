@@ -39,10 +39,15 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasCollation(@"case_insensitive_collation", locale: "en-u-ks-primary", provider: "icu", deterministic: false);
+            // Not working partial search with JSON API
+            //modelBuilder.HasCollation(@"case_insensitive_collation", locale: "en-u-ks-primary", provider: "icu", deterministic: false);
 
-            modelBuilder.Entity<Tag>().Property(t => t.TagName)
-                    .UseCollation(@"case_insensitive_collation");
+            //modelBuilder.Entity<Tag>().Property(t => t.TagName)
+            //        .UseCollation(@"case_insensitive_collation");
+
+            var projectEntry = modelBuilder.Entity<Project>();
+            projectEntry.HasOne(s => s.ActiveProjectVersion);
+            projectEntry.HasOne(s => s.LastProjectVersion);
         }
     }
 }
