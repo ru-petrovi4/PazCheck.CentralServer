@@ -21,13 +21,15 @@ namespace Simcode.PazCheck.CentralServer
     {
         #region public functions
 
-        public static async Task Fixtures(IServiceProvider serviceProvider, IConfiguration configuration, AddonsManager addonsManager, bool loadFromDumpFile)
+        public static async Task Fixtures(IServiceProvider serviceProvider, IConfiguration configuration, AddonsManager addonsManager)
         {
-            //loadFromDumpFile = false;
+            string defaultUnitTitle = "АВТ-7";
+
+            bool loadFromDumpFile = true;
             try
             {
                 using var dbContext = new PazCheckDbContext();
-                if (dbContext.Units.Any())
+                if (dbContext.Units.Any(u => u.Title == defaultUnitTitle))
                     return;
             }
             catch
@@ -122,7 +124,7 @@ namespace Simcode.PazCheck.CentralServer
                 Simuser = userMngr;
 
                 // Units
-                var avtUnit = new Unit { Title = "АВТ-6", Desc = "Установка АВТ-6" };
+                var avtUnit = new Unit { Title = defaultUnitTitle, Desc = "Установка" + defaultUnitTitle };
                 dbContext.Units.Add(avtUnit);
                 var someUnit = new Unit { Title = "Гидроочистка", Desc = "Гидроочистка дизельных топлив" };
                 dbContext.Units.Add(someUnit);                

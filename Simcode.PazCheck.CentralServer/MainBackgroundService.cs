@@ -60,7 +60,7 @@ namespace Simcode.PazCheck.CentralServer
 
             _addonsManager.Initialize(null, @"Simcode.PazCheck.Addons.*.dll", CsvDb);
 
-            await LoadFixtures.Fixtures(ServiceProvider, Configuration, _addonsManager, true);
+            await LoadFixtures.Fixtures(ServiceProvider, Configuration, _addonsManager);
 
             while (true)
             {
