@@ -21,5 +21,7 @@ namespace Simcode.PazCheck.CentralServer.Common
 
         public abstract Task CalculateResultsAsync(PazCheckDbContext dbContext, int logId, DateTime startTimeUtc, DateTime endTimeUtc,
             CancellationToken cancellationToken, IJobProgress jobProgress);
+
+        public abstract string? GetTimelineJson(Result result);
     }
 }

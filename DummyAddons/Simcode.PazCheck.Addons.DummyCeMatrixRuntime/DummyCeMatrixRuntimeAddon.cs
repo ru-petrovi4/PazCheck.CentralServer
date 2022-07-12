@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Simcode.PazCheck.Addons.DummyCeMatrixRuntime
 {
     [Export(typeof(AddonBase))]
-    public class DummyCeMatrixRuntimeAddon : CeMatrixRuntimeAddonBase
+    public partial class DummyCeMatrixRuntimeAddon : CeMatrixRuntimeAddonBase
     {
         public static readonly Guid AddonGuid = new Guid(@"746D6449-241E-438F-A294-399655516673");
 

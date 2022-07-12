@@ -12,30 +12,34 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     ///     Модель исполнительного механизма.
     /// </summary>
     [Resource]
-    public class BaseActuator : Identifiable<int>
+    public class BaseActuator : VersionEntityBase
     {
-        /// <summary>        
+        /// <summary>   
+        ///     Поле не версионируется.
         ///     <para>Текстовое поле RW: Наименование модели</para>
         ///     <para>Tooltip: Наименование модели оборудования</para>
         /// </summary>
         [Attr]
         public string Title { get; set; } = @"";
 
-        /// <summary>                
+        /// <summary>     
+        ///     Поле не версионируется.
         ///     <para>Текстовое поле RW: Код модели</para>
         ///     <para>Tooltip: Номер модели оборудования в каталоге производителя</para>
         /// </summary>
         [Attr]
         public string Code { get; set; } = @"";
 
-        /// <summary>        
+        /// <summary>   
+        ///     Поле не версионируется.
         ///     <para>Текстовое поле RW: Производитель</para>
         ///     <para>Tooltip: Производитель оборудования</para>
         /// </summary>
         [Attr]
         public string Manufacturer { get; set; } = @"";
 
-        /// <summary>        
+        /// <summary>   
+        ///     Поле не версионируется.
         ///     <para>Текстовое поле RW: Примечание</para>
         ///     <para>Tooltip: Комментарий, дополнительная информация о модели</para>
         /// </summary>
@@ -46,7 +50,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string _LockedByUser { get; set; } = @"";
 
         /// <summary>
-        ///     <para>Текстовое поле RW (выбор из списка (таблица BaseActuatorType) либо свое значение): Тип устройства</para>
+        ///     <para>Текстовое поле RW (выбор из списка (таблица BaseActuatorType) либо свое значение): Категория</para>
         ///     <para>Tooltip: Вид оборудования</para>
         /// </summary>        
         [Attr]

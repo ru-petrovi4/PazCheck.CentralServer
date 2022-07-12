@@ -30,6 +30,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr]
         public string Comment { get; set; } = @"";
 
+        [Attr]
+        public bool _IsDeleted { get; set; }
+
         [HasMany]
         [InverseProperty(nameof(ProjectVersion.Project))] // Because ActiveProjectVersion property exists.
         public List<ProjectVersion> ProjectVersions { get; set; } = new();

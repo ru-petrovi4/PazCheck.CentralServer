@@ -25,7 +25,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Desc { get; set; } = @"";
 
         /// <summary>
-        ///     Набор начальных стандартных параметров для данного вида оборудования.
+        ///     Набор начальных стандартных параметров для данной категории.
         /// </summary>
         [HasMany]
         public List<StandardParam> StandardParams { get; set; } = new();

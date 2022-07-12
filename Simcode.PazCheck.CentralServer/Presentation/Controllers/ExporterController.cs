@@ -13,75 +13,83 @@ using Ssz.Utils.Addons;
 
 namespace Simcode.PazCheck.CentralServer.Presentation
 {
-    [Route("exporter")]
-    public class ExporterController : ControllerBase
-    {
-        private readonly PazCheckDbContext _context;        
-        private readonly CancellationToken _cancellationToken;
+    //[Route(@"Exporter")]
+    //public class ExporterController : ControllerBase
+    //{
+    //    #region construction and destruction
 
-        public ExporterController(PazCheckDbContext context,            
-            IHostApplicationLifetime applicationLifetime, AddonsManager addonsManager)
-        {
-            _context = context;            
-            _cancellationToken = applicationLifetime.ApplicationStopping;
-            _addonsManager = addonsManager;
-        }
+    //    public ExporterController(PazCheckDbContext context,
+    //        IHostApplicationLifetime applicationLifetime, AddonsManager addonsManager)
+    //    {
+    //        _context = context;
+    //        _cancellationToken = applicationLifetime.ApplicationStopping;
+    //        _addonsManager = addonsManager;
+    //    }
 
-        [HttpGet("diagram/{diagId}")]
-        public async Task<IActionResult> ExportDiagram(int diagId)
-        {
-            CeMatrix diagram = await _context.CeMatrices
-                .FirstAsync(d => d.Id == diagId, cancellationToken: _cancellationToken);
+    //    #endregion
 
-            var ceMatrixRuntimeAddon = _addonsManager.Addons.OfType<CeMatrixRuntimeAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();            
-            if (ceMatrixRuntimeAddon is not null)
-            {
-                string? s = ceMatrixRuntimeAddon.GetCeMatrixString(_context, diagram);
-                if (!string.IsNullOrEmpty(s))
-                {
-                    try
-                    {
-                        var options = new JsonSerializerOptions()
-                        {
-                            WriteIndented = false
-                        };
-                        string serialized = JsonSerializer.Serialize(s, options);
-                        return Ok(serialized);
-                    }
-                    catch
-                    {
-                    }
-                }                
-            }            
+    //    #region public functions
 
-            return NoContent();
-        }
+    //    [HttpGet("diagram/{diagId}")]
+    //    public async Task<IActionResult> ExportDiagram(int diagId)
+    //    {
+    //        CeMatrix diagram = await _context.CeMatrices
+    //            .FirstAsync(d => d.Id == diagId, cancellationToken: _cancellationToken);
 
-        [HttpGet("diagramresult/{diagId}")]
-        public async Task<IActionResult> ExportDiagramResult(int diagId)
-        {
-            CeMatrixResult diagResult = await _context.CeMatrixResuls
-                .FirstAsync(d => d.Id == diagId, cancellationToken: _cancellationToken);
+    //        var ceMatrixRuntimeAddon = _addonsManager.Addons.OfType<CeMatrixRuntimeAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
+    //        if (ceMatrixRuntimeAddon is not null)
+    //        {
+    //            string? s = ceMatrixRuntimeAddon.GetCeMatrixString(_context, diagram);
+    //            if (!string.IsNullOrEmpty(s))
+    //            {
+    //                try
+    //                {
+    //                    var options = new JsonSerializerOptions()
+    //                    {
+    //                        WriteIndented = false
+    //                    };
+    //                    string serialized = JsonSerializer.Serialize(s, options);
+    //                    return Ok(serialized);
+    //                }
+    //                catch
+    //                {
+    //                }
+    //            }
+    //        }
 
-            var ceMatrixRuntimeAddon = _addonsManager.Addons.OfType<CeMatrixRuntimeAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
-            if (ceMatrixRuntimeAddon is not null)
-            {
-                string? s = ceMatrixRuntimeAddon.GetCeMatrixRuntimeString(_context, diagResult);
-                if (!string.IsNullOrEmpty(s))
-                {
-                    return Ok(s);
-                }
-            }  
+    //        return NoContent();
+    //    }
 
-            return NoContent();
-        }
+    //    [HttpGet("diagramresult/{diagId}")]
+    //    public async Task<IActionResult> ExportDiagramResult(int diagId)
+    //    {
+    //        CeMatrixResult diagResult = await _context.CeMatrixResuls
+    //            .FirstAsync(d => d.Id == diagId, cancellationToken: _cancellationToken);
 
-        #region private fields
+    //        var ceMatrixRuntimeAddon = _addonsManager.Addons.OfType<CeMatrixRuntimeAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
+    //        if (ceMatrixRuntimeAddon is not null)
+    //        {
+    //            string? s = ceMatrixRuntimeAddon.GetCeMatrixRuntimeString(_context, diagResult);
+    //            if (!string.IsNullOrEmpty(s))
+    //            {
+    //                return Ok(s);
+    //            }
+    //        }
 
-        private readonly AddonsManager _addonsManager;
+    //        return NoContent();
+    //    }
 
-        #endregion        
-    }
+    //    #endregion        
+
+    //    #region private fields
+
+    //    private readonly AddonsManager _addonsManager;
+
+    //    private readonly PazCheckDbContext _context;
+    //    private readonly CancellationToken _cancellationToken;
+
+    //    #endregion        
+    //}
 }
 
 
