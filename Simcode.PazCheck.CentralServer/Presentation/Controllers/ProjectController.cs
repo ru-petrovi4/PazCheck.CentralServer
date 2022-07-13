@@ -33,8 +33,8 @@ namespace Simcode.PazCheck.CentralServer.Presentation
 
         #region public functions
 
-        [HttpGet(@"HasUnsavedChanges/{projectId}")]
-        public IActionResult HasUnsavedChanges(int projectId)
+        [HttpGet(@"HasUnversionedChanges/{projectId}")]
+        public IActionResult HasUnversionedChanges(int projectId)
         {            
             try
             {
@@ -66,8 +66,8 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             return Ok(false);
         }
 
-        [HttpPost(@"SaveChanges/{projectId}")]
-        public async Task<IActionResult> SaveChangesAsync(int projectId, string user, string comment)
+        [HttpPost(@"SaveUnversionedChanges/{projectId}")]
+        public async Task<IActionResult> SaveUnversionedChangesAsync(int projectId, string user, string comment)
         {
             try
             {
@@ -165,8 +165,8 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             return Ok();
         }        
 
-        [HttpPost(@"ClearChanges/{projectId}")]
-        public async Task<IActionResult> ClearChangesAsync(int projectId)
+        [HttpPost(@"ClearUnversionedChanges/{projectId}")]
+        public async Task<IActionResult> ClearUnversionedChangesAsync(int projectId)
         {
             try
             {
