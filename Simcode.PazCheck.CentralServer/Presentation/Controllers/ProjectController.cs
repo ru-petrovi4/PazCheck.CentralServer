@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Simcode.PazCheck.CentralServer.Presentation
 {
     [Route("Project")]
-    public class ProjectController : ControllerBase
+    public partial class ProjectController : ControllerBase
     {
         #region construction and destruction
 
@@ -93,11 +93,11 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                     {
                         foreach (var baseActuatorParam in baseActuator.BaseActuatorParams)
                         {
-                            SaveChanges(dbContext, projectVersion.VersionNum, baseActuatorParam);
+                            SaveUnversionedChanges(dbContext, projectVersion.VersionNum, baseActuatorParam);
                         }
 
                         baseActuator._LockedByUser = @"";
-                        SaveChanges(dbContext, projectVersion.VersionNum, baseActuator);
+                        SaveUnversionedChanges(dbContext, projectVersion.VersionNum, baseActuator);
                     }
 
                     foreach (var tag in dbContext.Tags.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
@@ -105,23 +105,23 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         .Include(t => t.TagParams)
                         .Include(t => t.TagConditions))
                     {
-                        foreach (var actuatorParam in tag.ActuatorParams)
-                        {
-                            SaveChanges(dbContext, projectVersion.VersionNum, actuatorParam);
-                        }
-
                         foreach (var tagParam in tag.TagParams)
                         {
-                            SaveChanges(dbContext, projectVersion.VersionNum, tagParam);
+                            SaveUnversionedChanges(dbContext, projectVersion.VersionNum, tagParam);
                         }
+
+                        foreach (var actuatorParam in tag.ActuatorParams)
+                        {
+                            SaveUnversionedChanges(dbContext, projectVersion.VersionNum, actuatorParam);
+                        }                        
 
                         foreach (var tagCondition in tag.TagConditions)
                         {
-                            SaveChanges(dbContext, projectVersion.VersionNum, tagCondition);
+                            SaveUnversionedChanges(dbContext, projectVersion.VersionNum, tagCondition);
                         }
 
                         tag._LockedByUser = @"";
-                        SaveChanges(dbContext, projectVersion.VersionNum, tag);
+                        SaveUnversionedChanges(dbContext, projectVersion.VersionNum, tag);
                     }
 
                     foreach (var ceMatrix in dbContext.CeMatrices.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
@@ -130,28 +130,33 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         .Include(t => t.Effects)
                         .Include(t => t.Intersections))
                     {
+                        foreach (var ceMatrixParam in ceMatrix.CeMatrixParams)
+                        {
+                            SaveUnversionedChanges(dbContext, projectVersion.VersionNum, ceMatrixParam);
+                        }
+
                         foreach (var cause in ceMatrix.Causes)
                         {
                             foreach (var subCause in cause.SubCauses)
                             {
-                                SaveChanges(dbContext, projectVersion.VersionNum, subCause);
+                                SaveUnversionedChanges(dbContext, projectVersion.VersionNum, subCause);
                             }
 
-                            SaveChanges(dbContext, projectVersion.VersionNum, cause);
+                            SaveUnversionedChanges(dbContext, projectVersion.VersionNum, cause);
                         }
 
                         foreach (var effect in ceMatrix.Effects)
                         {
-                            SaveChanges(dbContext, projectVersion.VersionNum, effect);
+                            SaveUnversionedChanges(dbContext, projectVersion.VersionNum, effect);
                         }
 
                         foreach (var intersection in ceMatrix.Intersections)
                         {
-                            SaveChanges(dbContext, projectVersion.VersionNum, intersection);
+                            SaveUnversionedChanges(dbContext, projectVersion.VersionNum, intersection);
                         }
 
                         ceMatrix._LockedByUser = @"";
-                        SaveChanges(dbContext, projectVersion.VersionNum, ceMatrix);
+                        SaveUnversionedChanges(dbContext, projectVersion.VersionNum, ceMatrix);
                     }
 
                     await dbContext.SaveChangesAsync();
@@ -183,11 +188,11 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                     {
                         foreach (var baseActuatorParam in baseActuator.BaseActuatorParams)
                         {
-                            ClearChanges(dbContext, baseActuatorParam);
+                            ClearUnversionedChanges(dbContext, baseActuatorParam);
                         }
 
                         baseActuator._LockedByUser = @"";
-                        ClearChanges(dbContext, baseActuator);
+                        ClearUnversionedChanges(dbContext, baseActuator);
                     }
 
                     foreach (var tag in dbContext.Tags.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
@@ -195,23 +200,23 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         .Include(t => t.TagParams)
                         .Include(t => t.TagConditions))
                     {
-                        foreach (var actuatorParam in tag.ActuatorParams)
-                        {
-                            ClearChanges(dbContext, actuatorParam);
-                        }
-
                         foreach (var tagParam in tag.TagParams)
                         {
-                            ClearChanges(dbContext, tagParam);
+                            ClearUnversionedChanges(dbContext, tagParam);
                         }
+
+                        foreach (var actuatorParam in tag.ActuatorParams)
+                        {
+                            ClearUnversionedChanges(dbContext, actuatorParam);
+                        }                        
 
                         foreach (var tagCondition in tag.TagConditions)
                         {
-                            ClearChanges(dbContext, tagCondition);
+                            ClearUnversionedChanges(dbContext, tagCondition);
                         }
 
                         tag._LockedByUser = @"";
-                        ClearChanges(dbContext, tag);
+                        ClearUnversionedChanges(dbContext, tag);
                     }
 
                     foreach (var ceMatrix in dbContext.CeMatrices.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
@@ -220,28 +225,33 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         .Include(t => t.Effects)
                         .Include(t => t.Intersections))
                     {
+                        foreach (var ceMatrixParam in ceMatrix.CeMatrixParams)
+                        {
+                            ClearUnversionedChanges(dbContext, ceMatrixParam);
+                        }
+
                         foreach (var cause in ceMatrix.Causes)
                         {
                             foreach (var subCause in cause.SubCauses)
                             {
-                                ClearChanges(dbContext, subCause);
+                                ClearUnversionedChanges(dbContext, subCause);
                             }
 
-                            ClearChanges(dbContext, cause);
+                            ClearUnversionedChanges(dbContext, cause);
                         }
 
                         foreach (var effect in ceMatrix.Effects)
                         {
-                            ClearChanges(dbContext, effect);
+                            ClearUnversionedChanges(dbContext, effect);
                         }
 
                         foreach (var intersection in ceMatrix.Intersections)
                         {
-                            ClearChanges(dbContext, intersection);
+                            ClearUnversionedChanges(dbContext, intersection);
                         }
 
                         ceMatrix._LockedByUser = @"";
-                        ClearChanges(dbContext, ceMatrix);
+                        ClearUnversionedChanges(dbContext, ceMatrix);
                     }
 
                     await dbContext.SaveChangesAsync();
@@ -255,47 +265,11 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             return Ok();
         }
 
-        [HttpGet(@"CompareVersions/{projectId}")]
-        public async Task<IActionResult> CompareVersionsAsync(int projectId, uint version1, uint version2)
-        {
-            uint minVersion = Math.Min(version1, version2);
-            uint maxVersion = Math.Max(version1, version2);
-            await Task.Delay(0);
-            //try
-            //{
-            //    using (var dbContext = new PazCheckDbContext())
-            //    {
-            //        Project project = dbContext.Projects.Single(p => p.Id == projectId);
-            //        dbContext.Entry(project)
-            //            .Reference(p => p.LastProjectVersion)
-            //            .Load();
-            //        var lastVersionTimeUtc = project.LastProjectVersion?.TimeUtc ?? DateTime.MinValue;
-            //        bool hasUnsavedChanges = dbContext.BaseActuators.Any(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc);
-            //        if (hasUnsavedChanges)
-            //            return Ok(true);
-            //        hasUnsavedChanges = dbContext.Tags.Any(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc);
-            //        if (hasUnsavedChanges)
-            //            return Ok(true);
-            //        hasUnsavedChanges = dbContext.CeMatrices.Any(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc);
-            //        if (hasUnsavedChanges)
-            //            return Ok(true);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogError(ex, @"Invalid projectId: {0}", projectId);
-
-            //    return NotFound();
-            //}
-
-            return Ok();
-        }
-
         #endregion
 
         #region private functions
 
-        private void SaveChanges(PazCheckDbContext dbContext, uint projectVersionNum, VersionEntityBase versionEntity)
+        private void SaveUnversionedChanges(PazCheckDbContext dbContext, uint projectVersionNum, VersionEntityBase versionEntity)
         {
             if (versionEntity._CreateProjectVersionNum is null)
             {
@@ -317,7 +291,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             }
         }
 
-        private void ClearChanges(PazCheckDbContext dbContext, VersionEntityBase versionEntity)
+        private void ClearUnversionedChanges(PazCheckDbContext dbContext, VersionEntityBase versionEntity)
         {
             if (versionEntity._CreateProjectVersionNum is null)
             {

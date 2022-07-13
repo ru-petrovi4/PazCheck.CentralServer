@@ -13,7 +13,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public class CeMatrixResult : Identifiable<int>
     {
         [Attr]
-        public string CeMatrixGuid { get; set; } = @"";
+        public int? CeMatrixId { get; set; }
 
         [Attr]
         public UInt32? ProjectVersionNum { get; set; }

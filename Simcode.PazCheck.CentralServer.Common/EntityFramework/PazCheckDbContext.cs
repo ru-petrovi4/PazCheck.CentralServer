@@ -10,6 +10,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     {
         public DbSet<Unit> Units { get; set; } = null!;
         public DbSet<Project> Projects { get; set; } = null!;
+        public DbSet<ProjectVersion> ProjectVersions { get; set; } = null!;
         public DbSet<CeMatrix> CeMatrices { get; set; } = null!;
         public DbSet<Cause> Causes { get; set; } = null!;
         public DbSet<Effect> Effects { get; set; } = null!;
@@ -57,45 +58,63 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         {
             DateTime utcNow = DateTime.UtcNow;
 
-            foreach (var entry in ChangeTracker.Entries<BaseActuatorParam>().ToArray())
-                BeforeSaveChanges(entry, utcNow);
-            foreach (var entry in ChangeTracker.Entries<BaseActuator>().ToArray())
-                BeforeSaveChanges(entry, utcNow);
+            var entries = ChangeTracker.Entries().ToArray();
 
-            foreach (var entry in ChangeTracker.Entries<ActuatorParam>().ToArray())
-                BeforeSaveChanges(entry, utcNow);
-            foreach (var entry in ChangeTracker.Entries<TagParam>().ToArray())
-                BeforeSaveChanges(entry, utcNow);
-            foreach (var entry in ChangeTracker.Entries<TagCondition>().ToArray())
-                BeforeSaveChanges(entry, utcNow);            
-            foreach (var entry in ChangeTracker.Entries<Tag>().ToArray())
-                BeforeSaveChanges(entry, utcNow);
-
-            foreach (var entry in ChangeTracker.Entries<SubCause>().ToArray())
-                BeforeSaveChanges(entry, utcNow);
-            foreach (var entry in ChangeTracker.Entries<Cause>().ToArray())
-                BeforeSaveChanges(entry, utcNow);
-            foreach (var entry in ChangeTracker.Entries<Effect>().ToArray())
-                BeforeSaveChanges(entry, utcNow);
-            foreach (var entry in ChangeTracker.Entries<Intersection>().ToArray())
-                BeforeSaveChanges(entry, utcNow);
-            foreach (var entry in ChangeTracker.Entries<CeMatrix>().ToArray())
-                BeforeSaveChanges(entry, utcNow);
+            foreach (var entry in entries)
+            {
+                if (entry.State == EntityState.Added || entry.State == EntityState.Modified || entry.State == EntityState.Deleted) // Deleted needed for updating parent entity timestamp.
+                {
+                    ILastChangeEntity? lastChangeEntity = entry.Entity as ILastChangeEntity;
+                    if (lastChangeEntity is not null)
+                    {
+                        lastChangeEntity._LastChangeTimeUtc = utcNow;
+                        lastChangeEntity.UpdateParentLastChange();
+                    }
+                }
+            }
 
             return base.SaveChanges();
-        }
-
-        private void BeforeSaveChanges(EntityEntry entry, DateTime utcNow)
-        {
-            if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
-            {
-                ILastChangeEntity lastChangeEntity = (ILastChangeEntity)entry.Entity;
-                lastChangeEntity._LastChangeTimeUtc = utcNow;
-                lastChangeEntity.UpdateParentLastChange();
-            }
-        }
+        }        
     }
 }
+
+//private void BeforeSaveChanges(EntityEntry entry, DateTime utcNow)
+//{
+//    if (entry.State == EntityState.Added || entry.State == EntityState.Modified || entry.State == EntityState.Deleted)
+//    {
+//        ILastChangeEntity? lastChangeEntity = entry.Entity as ILastChangeEntity;
+//        if (lastChangeEntity is not null)
+//        {
+//            lastChangeEntity._LastChangeTimeUtc = utcNow;
+//            lastChangeEntity.UpdateParentLastChange();
+//        }
+//    }
+//}
+
+//foreach (var entry in ChangeTracker.Entries<BaseActuatorParam>())
+//    BeforeSaveChanges(entry, utcNow);
+//foreach (var entry in ChangeTracker.Entries<BaseActuator>())
+//    BeforeSaveChanges(entry, utcNow);
+
+//foreach (var entry in ChangeTracker.Entries<ActuatorParam>())
+//    BeforeSaveChanges(entry, utcNow);
+//foreach (var entry in ChangeTracker.Entries<TagParam>())
+//    BeforeSaveChanges(entry, utcNow);
+//foreach (var entry in ChangeTracker.Entries<TagCondition>())
+//    BeforeSaveChanges(entry, utcNow);            
+//foreach (var entry in ChangeTracker.Entries<Tag>())
+//    BeforeSaveChanges(entry, utcNow);
+
+//foreach (var entry in ChangeTracker.Entries<SubCause>())
+//    BeforeSaveChanges(entry, utcNow);
+//foreach (var entry in ChangeTracker.Entries<Cause>())
+//    BeforeSaveChanges(entry, utcNow);
+//foreach (var entry in ChangeTracker.Entries<Effect>())
+//    BeforeSaveChanges(entry, utcNow);
+//foreach (var entry in ChangeTracker.Entries<Intersection>())
+//    BeforeSaveChanges(entry, utcNow);
+//foreach (var entry in ChangeTracker.Entries<CeMatrix>())
+//    BeforeSaveChanges(entry, utcNow);
 
 //try
 //{

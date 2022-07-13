@@ -9,32 +9,26 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public class CeMatrix : VersionEntityBase
     {
         /// <summary>
-        ///     Guid.Version - unique identifier of matrix state
+        ///     Поле не версионируется.
         /// </summary>
-        [Attr]
-        public string Guid { get; set; } = @"";
-
         [Attr]
         public string Title { get; set; } = @"";
 
+        /// <summary>
+        ///     Поле не версионируется.
+        /// </summary>
         [Attr]
-        public string Desc { get; set; } = @"";
-
-        [Attr]
-        public string Comment { get; set; } = @"";
-
-        [Attr]
-        public string Status { get; set; } = @"";
-
-        [Attr]        
-        public string Source { get; set; } = @"";
+        public string Desc { get; set; } = @"";        
 
         [Attr]
         public string _LockedByUser { get; set; } = @"";
 
         [HasOne]
         public Project Project { get; set; } = null!;
-        
+
+        [HasMany]
+        public List<CeMatrixParam> CeMatrixParams { get; set; } = new();
+
         [HasMany]
         [InverseProperty(nameof(Cause.CeMatrix))] // Bacause Intersections exists.
         public List<Cause> Causes { get; set; } = new();
@@ -45,12 +39,6 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         [HasMany]
         public List<Intersection> Intersections { get; set; } = new();        
-
-        [Attr]
-        public string CauseCustomFieldNames { get; set; } = @"";
-
-        [Attr]
-        public string EffectCustomFieldNames { get; set; } = @"";
 
         public override ILastChangeEntity? GetParentForLastChange() => Project;
     }

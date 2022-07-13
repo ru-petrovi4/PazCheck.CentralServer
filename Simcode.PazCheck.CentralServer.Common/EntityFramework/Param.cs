@@ -66,4 +66,13 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         public override ILastChangeEntity? GetParentForLastChange() => BaseActuator;
     }
+
+    [Resource]
+    public class CeMatrixParam : Param
+    {
+        [HasOne]
+        public CeMatrix CeMatrix { get; set; } = null!;
+
+        public override ILastChangeEntity? GetParentForLastChange() => CeMatrix;
+    }
 }

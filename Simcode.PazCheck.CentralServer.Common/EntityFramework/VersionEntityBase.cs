@@ -39,8 +39,8 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
             }
             else
             {
-                return (_CreateProjectVersionNum is not null && _CreateProjectVersionNum <= projectVersionNum) && 
-                    (_DeleteProjectVersionNum is null || _DeleteProjectVersionNum > projectVersionNum);
+                return (_CreateProjectVersionNum != null && _CreateProjectVersionNum <= projectVersionNum) && 
+                    (_DeleteProjectVersionNum == null || _DeleteProjectVersionNum > projectVersionNum);
             }
         }
     }

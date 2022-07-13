@@ -11,19 +11,15 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     [Index(nameof(TagName))]
     public class Tag : VersionEntityBase
     {
-        /// <summary>        
+        /// <summary>  
+        ///     Поле (!)версионируется.
         ///     <para>Текстовое поле RW: Имя тэга</para>
         /// </summary>
         [Attr]
         public string TagName { get; set; } = @"";
 
-        /// <summary>        
-        ///     <para>Текстовое поле RW: Тип</para>
-        /// </summary>
-        [Attr]
-        public string Type { get; set; } = @"";
-
-        /// <summary>        
+        /// <summary>     
+        ///     Поле не версионируется.
         ///     <para>Текстовое поле RW: Описание</para>
         /// </summary>
         [Attr]
