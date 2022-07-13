@@ -254,41 +254,42 @@ namespace Simcode.PazCheck.CentralServer.Presentation
 
             return Ok();
         }
-        
-        //[HttpGet(@"CompareVersions/{projectId}")]
-        //public async Task<IActionResult> CompareVersionsAsync(int projectId, uint version1, uint version2)
-        //{
-        //    uint minVersion = Math.Min(version1, version2);
-        //    uint maxVersion = Math.Max(version1, version2);
-        //    try
-        //    {
-        //        using (var dbContext = new PazCheckDbContext())
-        //        {
-        //            Project project = dbContext.Projects.Single(p => p.Id == projectId);
-        //            dbContext.Entry(project)
-        //                .Reference(p => p.LastProjectVersion)
-        //                .Load();
-        //            var lastVersionTimeUtc = project.LastProjectVersion?.TimeUtc ?? DateTime.MinValue;
-        //            bool hasUnsavedChanges = dbContext.BaseActuators.Any(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc);
-        //            if (hasUnsavedChanges)
-        //                return Ok(true);
-        //            hasUnsavedChanges = dbContext.Tags.Any(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc);
-        //            if (hasUnsavedChanges)
-        //                return Ok(true);
-        //            hasUnsavedChanges = dbContext.CeMatrices.Any(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc);
-        //            if (hasUnsavedChanges)
-        //                return Ok(true);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, @"Invalid projectId: {0}", projectId);
 
-        //        return NotFound();
-        //    }
+        [HttpGet(@"CompareVersions/{projectId}")]
+        public async Task<IActionResult> CompareVersionsAsync(int projectId, uint version1, uint version2)
+        {
+            uint minVersion = Math.Min(version1, version2);
+            uint maxVersion = Math.Max(version1, version2);
+            await Task.Delay(0);
+            //try
+            //{
+            //    using (var dbContext = new PazCheckDbContext())
+            //    {
+            //        Project project = dbContext.Projects.Single(p => p.Id == projectId);
+            //        dbContext.Entry(project)
+            //            .Reference(p => p.LastProjectVersion)
+            //            .Load();
+            //        var lastVersionTimeUtc = project.LastProjectVersion?.TimeUtc ?? DateTime.MinValue;
+            //        bool hasUnsavedChanges = dbContext.BaseActuators.Any(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc);
+            //        if (hasUnsavedChanges)
+            //            return Ok(true);
+            //        hasUnsavedChanges = dbContext.Tags.Any(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc);
+            //        if (hasUnsavedChanges)
+            //            return Ok(true);
+            //        hasUnsavedChanges = dbContext.CeMatrices.Any(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc);
+            //        if (hasUnsavedChanges)
+            //            return Ok(true);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError(ex, @"Invalid projectId: {0}", projectId);
 
-        //    return Ok(false);
-        //}
+            //    return NotFound();
+            //}
+
+            return Ok();
+        }
 
         #endregion
 

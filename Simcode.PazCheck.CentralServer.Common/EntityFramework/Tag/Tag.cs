@@ -62,5 +62,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         [HasOne]
         public Project Project { get; set; } = null!;
+
+        public override ILastChangeEntity? GetParentForLastChange() => Project;
     }
 }

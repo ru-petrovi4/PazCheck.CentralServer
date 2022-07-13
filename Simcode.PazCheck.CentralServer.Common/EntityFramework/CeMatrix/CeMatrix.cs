@@ -51,5 +51,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         [Attr]
         public string EffectCustomFieldNames { get; set; } = @"";
+
+        public override ILastChangeEntity? GetParentForLastChange() => Project;
     }
 }

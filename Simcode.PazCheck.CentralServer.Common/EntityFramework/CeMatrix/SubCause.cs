@@ -35,6 +35,8 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         
         [HasOne]
         public Cause Cause { get; set; } = null!;
+
+        public override ILastChangeEntity? GetParentForLastChange() => Cause;
     }
 }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
-    public abstract class VersionEntityBase : Identifiable<int>
+    public abstract class VersionEntityBase : Identifiable<int>, ILastChangeEntity
     {
         [Attr]
         public UInt32? _CreateProjectVersionNum { get; set; }
@@ -23,7 +23,13 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string _LastChangeUser { get; set; } = @"";
 
         [Attr]
-        public DateTime _LastChangeTimeUtc { get; set; } = DateTime.UtcNow;
+        public DateTime _LastChangeTimeUtc { get; set; }
+
+        /// <summary>
+        ///     Parent for _LastChangeTimeUtc updating.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ILastChangeEntity? GetParentForLastChange() => null;        
 
         public bool IsActive(UInt32? projectVersionNum)
         {

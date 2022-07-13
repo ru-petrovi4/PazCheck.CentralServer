@@ -18,5 +18,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         [HasOne]
         public CeMatrix CeMatrix { get; set; } = null!;
+
+        public override ILastChangeEntity? GetParentForLastChange() => CeMatrix;
     }
 }

@@ -55,5 +55,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         [HasOne]
         public Tag Tag { get; set; } = null!;
+
+        public override ILastChangeEntity? GetParentForLastChange() => Tag;
     }
 }

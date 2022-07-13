@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
+using System;
+using System.Linq;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
@@ -49,8 +52,60 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
             projectEntry.HasOne(s => s.ActiveProjectVersion);
             projectEntry.HasOne(s => s.LastProjectVersion);
         }
+
+        public override int SaveChanges()
+        {
+            DateTime utcNow = DateTime.UtcNow;
+
+            foreach (var entry in ChangeTracker.Entries<BaseActuatorParam>().ToArray())
+                BeforeSaveChanges(entry, utcNow);
+            foreach (var entry in ChangeTracker.Entries<BaseActuator>().ToArray())
+                BeforeSaveChanges(entry, utcNow);
+
+            foreach (var entry in ChangeTracker.Entries<ActuatorParam>().ToArray())
+                BeforeSaveChanges(entry, utcNow);
+            foreach (var entry in ChangeTracker.Entries<TagParam>().ToArray())
+                BeforeSaveChanges(entry, utcNow);
+            foreach (var entry in ChangeTracker.Entries<TagCondition>().ToArray())
+                BeforeSaveChanges(entry, utcNow);            
+            foreach (var entry in ChangeTracker.Entries<Tag>().ToArray())
+                BeforeSaveChanges(entry, utcNow);
+
+            foreach (var entry in ChangeTracker.Entries<SubCause>().ToArray())
+                BeforeSaveChanges(entry, utcNow);
+            foreach (var entry in ChangeTracker.Entries<Cause>().ToArray())
+                BeforeSaveChanges(entry, utcNow);
+            foreach (var entry in ChangeTracker.Entries<Effect>().ToArray())
+                BeforeSaveChanges(entry, utcNow);
+            foreach (var entry in ChangeTracker.Entries<Intersection>().ToArray())
+                BeforeSaveChanges(entry, utcNow);
+            foreach (var entry in ChangeTracker.Entries<CeMatrix>().ToArray())
+                BeforeSaveChanges(entry, utcNow);
+
+            return base.SaveChanges();
+        }
+
+        private void BeforeSaveChanges(EntityEntry entry, DateTime utcNow)
+        {
+            if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
+            {
+                ILastChangeEntity lastChangeEntity = (ILastChangeEntity)entry.Entity;
+                lastChangeEntity._LastChangeTimeUtc = utcNow;
+                lastChangeEntity.UpdateParentLastChange();
+            }
+        }
     }
 }
+
+//try
+//{
+//    ChangeTracker.AutoDetectChangesEnabled = false;
+
+//}
+//finally
+//{
+//    ChangeTracker.AutoDetectChangesEnabled = true;
+//}
 
 //services.AddDbContext<PazCheckDbContext>(opt =>
 //{

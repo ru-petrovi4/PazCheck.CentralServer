@@ -45,6 +45,8 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     {
         [HasOne]
         public Tag Tag { get; set; } = null!;
+
+        public override ILastChangeEntity? GetParentForLastChange() => Tag;
     }
 
     [Resource]
@@ -52,6 +54,8 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     {
         [HasOne]
         public Tag Tag { get; set; } = null!;
+
+        public override ILastChangeEntity? GetParentForLastChange() => Tag;
     }
 
     [Resource]
@@ -59,5 +63,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     {
         [HasOne]
         public BaseActuator BaseActuator { get; set; } = null!;
+
+        public override ILastChangeEntity? GetParentForLastChange() => BaseActuator;
     }
 }
