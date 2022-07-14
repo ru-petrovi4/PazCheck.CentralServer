@@ -38,7 +38,10 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public List<Effect> Effects { get; set; } = new();
 
         [HasMany]
-        public List<Intersection> Intersections { get; set; } = new();        
+        public List<Intersection> Intersections { get; set; } = new();
+
+        [HasMany]
+        public List<CeMatrixDbFileReference> CeMatrixDbFileReferences { get; set; } = new();
 
         public override ILastChangeEntity? GetParentForLastChange() => Project;
     }

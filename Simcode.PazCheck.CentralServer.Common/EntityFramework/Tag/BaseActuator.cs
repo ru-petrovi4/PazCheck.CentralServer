@@ -59,6 +59,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [HasMany]
         public List<BaseActuatorParam> BaseActuatorParams { get; set; } = new();
 
+        [HasMany]
+        public List<BaseActuatorDbFileReference> BaseActuatorDbFileReferences { get; set; } = new();
+
         [HasOne]
         public Project Project { get; set; } = null!;
 

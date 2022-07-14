@@ -32,6 +32,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [HasMany]
         public List<CeMatrixResult> CeMatrixResults { get; set; } = new();
 
+        [HasMany]
+        public List<DbFile> DbFiles { get; set; } = new();
+
         [HasOne]
         public Unit Unit { get; set; } = null!;
 

@@ -96,6 +96,11 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                             SaveUnversionedChanges(dbContext, projectVersion.VersionNum, baseActuatorParam);
                         }
 
+                        foreach (var baseActuatorDbFileReference in baseActuator.BaseActuatorDbFileReferences)
+                        {
+                            SaveUnversionedChanges(dbContext, projectVersion.VersionNum, baseActuatorDbFileReference);
+                        }
+
                         baseActuator._LockedByUser = @"";
                         SaveUnversionedChanges(dbContext, projectVersion.VersionNum, baseActuator);
                     }
@@ -133,6 +138,11 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         foreach (var ceMatrixParam in ceMatrix.CeMatrixParams)
                         {
                             SaveUnversionedChanges(dbContext, projectVersion.VersionNum, ceMatrixParam);
+                        }
+
+                        foreach (var ceMatrixDbFileReference in ceMatrix.CeMatrixDbFileReferences)
+                        {
+                            SaveUnversionedChanges(dbContext, projectVersion.VersionNum, ceMatrixDbFileReference);
                         }
 
                         foreach (var cause in ceMatrix.Causes)
@@ -191,6 +201,11 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                             ClearUnversionedChanges(dbContext, baseActuatorParam);
                         }
 
+                        foreach (var baseActuatorDbFileReferences in baseActuator.BaseActuatorDbFileReferences)
+                        {
+                            ClearUnversionedChanges(dbContext, baseActuatorDbFileReferences);
+                        }
+
                         baseActuator._LockedByUser = @"";
                         ClearUnversionedChanges(dbContext, baseActuator);
                     }
@@ -228,6 +243,11 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         foreach (var ceMatrixParam in ceMatrix.CeMatrixParams)
                         {
                             ClearUnversionedChanges(dbContext, ceMatrixParam);
+                        }
+
+                        foreach (var ceMatrixDbFileReference in ceMatrix.CeMatrixDbFileReferences)
+                        {
+                            ClearUnversionedChanges(dbContext, ceMatrixDbFileReference);
                         }
 
                         foreach (var cause in ceMatrix.Causes)

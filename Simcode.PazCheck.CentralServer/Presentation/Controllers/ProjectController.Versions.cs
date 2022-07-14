@@ -7,6 +7,7 @@ using Simcode.PazCheck.CentralServer.Common.EntityFramework;
 using Ssz.Utils.Addons;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -56,6 +57,19 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             var minBaseActuators = await dbContext.BaseActuators.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
                     (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > minProjectVersionNum)).ToArrayAsync();
 
+            var maxBaseActuators = await dbContext.BaseActuators.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= maxProjectVersionNum) &&
+                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > maxProjectVersionNum)).ToArrayAsync();
+
+            var existedBaseActuators = maxBaseActuators.Intersect(minBaseActuators, IdEqualityComparer<BaseActuator>.Instance).ToArray();
+            var deletedBaseActuators = minBaseActuators.Except(existedBaseActuators, IdEqualityComparer<BaseActuator>.Instance);
+            var addedBaseActuators = maxBaseActuators.Except(existedBaseActuators, IdEqualityComparer<BaseActuator>.Instance);
+
+            foreach (var existedBaseActuator in existedBaseActuators)
+            {
+                dbContext.Entry(existedBaseActuator).Collection(ba => ba.BaseActuatorParams).Load();
+                CompareVersionsParams(dbContext, existedBaseActuator.BaseActuatorParams, minProjectVersionNum, maxProjectVersionNum);
+            }
+
             return new object();
         }
 
@@ -71,6 +85,64 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             return new object();
         }
 
+        private object CompareVersionsParams<TParam>(PazCheckDbContext dbContext, List<TParam> paramsList, uint minProjectVersionNum, uint maxProjectVersionNum)
+            where TParam: Param 
+        {
+            var minParams = paramsList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
+                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > minProjectVersionNum)).ToArray();
+
+            var maxParams = paramsList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= maxProjectVersionNum) &&
+                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > maxProjectVersionNum)).ToArray();
+
+            var existedMaxParams = maxParams.Intersect(minParams, ParamNameEqualityComparer<TParam>.Instance).ToArray();
+            var deletedMinParams = minParams.Except(existedMaxParams, ParamNameEqualityComparer<TParam>.Instance);
+            var addedMaxParams = maxParams.Except(existedMaxParams, ParamNameEqualityComparer<TParam>.Instance);
+
+            foreach (var existedMaxParam in existedMaxParams)
+            {
+                var existedMinParam = minParams.First(p => p.ParamName == existedMaxParam.ParamName);
+                if (existedMaxParam.Value != existedMinParam.Value)
+                {
+
+                }
+            }
+
+            return new object();
+        }
+
         #endregion
+
+        private class IdEqualityComparer<TVersionEntityBase> : IEqualityComparer<TVersionEntityBase>
+            where TVersionEntityBase : VersionEntityBase
+        {
+            public static readonly IdEqualityComparer<TVersionEntityBase> Instance = new();
+
+            public bool Equals(TVersionEntityBase? leftObj, TVersionEntityBase? rightObj)
+            {                               
+                return leftObj?.Id == rightObj?.Id;
+            }
+
+            public int GetHashCode(TVersionEntityBase obj)
+            {
+                return 0;
+            }
+        }
+
+        private class ParamNameEqualityComparer<TParam> : IEqualityComparer<TParam>
+            where TParam : Param
+        {
+            public static readonly IdEqualityComparer<TParam> Instance = new();
+
+            public bool Equals(TParam? leftObj, TParam? rightObj)
+            {
+                return leftObj?.ParamName == rightObj?.ParamName;
+            }
+
+            public int GetHashCode(TParam obj)
+            {
+                return 0;
+            }
+        }
+
     }
 }
