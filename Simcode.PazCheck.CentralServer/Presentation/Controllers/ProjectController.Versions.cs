@@ -31,11 +31,11 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                     //ProjectVersion minProjectVersion = dbContext.ProjectVersions.Single(pv => pv.Project == project && pv.VersionNum == minVersionNum);
                     //ProjectVersion maxProjectVersion = dbContext.ProjectVersions.Single(pv => pv.Project == project && pv.VersionNum == maxVersionNum);
 
-                    List<object> result = new();
+                    List<ItemVersionComparisonInfo> result = new();
 
-                    result.Add(await CompareVersionsBaseActuatorsAsync(dbContext, project, minProjectVersionNum, maxProjectVersionNum));
-                    result.Add(await CompareVersionsTagsAsync(dbContext, project, minProjectVersionNum, maxProjectVersionNum));
-                    result.Add(await CompareVersionsCeMatricesAsync(dbContext, project, minProjectVersionNum, maxProjectVersionNum));
+                    await CompareVersionsBaseActuatorsAsync(dbContext, project, minProjectVersionNum, maxProjectVersionNum, result);
+                    await CompareVersionsTagsAsync(dbContext, project, minProjectVersionNum, maxProjectVersionNum, result);
+                    await CompareVersionsCeMatricesAsync(dbContext, project, minProjectVersionNum, maxProjectVersionNum, result);
 
                     return Ok(result);
                 }
@@ -48,66 +48,483 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             }            
         }
 
+        [HttpGet(@"CompareVersionWithCurrent/{projectId}")]
+        public async Task<IActionResult> CompareVersionWithCurrentAsync(int projectId, uint projectVersionNum)
+        {            
+            try
+            {
+                using (var dbContext = new PazCheckDbContext())
+                {
+                    Project project = dbContext.Projects.Single(p => p.Id == projectId);
+                    //ProjectVersion minProjectVersion = dbContext.ProjectVersions.Single(pv => pv.Project == project && pv.VersionNum == minVersionNum);
+                    //ProjectVersion maxProjectVersion = dbContext.ProjectVersions.Single(pv => pv.Project == project && pv.VersionNum == maxVersionNum);
+
+                    List<ItemVersionComparisonInfo> result = new();
+
+                    await CompareVersionsBaseActuatorsAsync(dbContext, project, projectVersionNum, null, result);
+                    await CompareVersionsTagsAsync(dbContext, project, projectVersionNum, null, result);
+                    await CompareVersionsCeMatricesAsync(dbContext, project, projectVersionNum, null, result);
+
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, @"Invalid projectId: {0}", projectId);
+
+                return NotFound();
+            }
+        }
+
+        [HttpGet(@"GetBaseActuatorVersions/{baseActuatorId}")]
+        public async Task<IActionResult> GetBaseActuatorVersions(int baseActuatorId)
+        {
+            try
+            {
+                HashSet<uint> projectVersionNums = new();
+
+                using (var dbContext = new PazCheckDbContext())
+                {
+                    BaseActuator baseActuator = await dbContext.BaseActuators.Where(ba => ba.Id == baseActuatorId)
+                        .Include(ba => ba.BaseActuatorParams)
+                        .Include(ba => ba.BaseActuatorDbFileReferences)
+                        .FirstAsync();
+                    if (baseActuator._CreateProjectVersionNum is not null)
+                    {
+                        GetVersions(baseActuator, projectVersionNums);
+                        
+                        GetVersions(baseActuator.BaseActuatorParams, projectVersionNums);
+                        
+                        GetVersions(baseActuator.BaseActuatorDbFileReferences, projectVersionNums);
+                    }                    
+
+                    return Ok(projectVersionNums.ToArray());
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, @"Invalid baseActuatorId: {0}", baseActuatorId);
+
+                return NotFound();
+            }
+        }
+
+        [HttpGet(@"GetTagVersions/{tagId}")]
+        public async Task<IActionResult> GetTagVersions(int tagId)
+        {
+            try
+            {
+                HashSet<uint> projectVersionNums = new();
+
+                using (var dbContext = new PazCheckDbContext())
+                {
+                    Tag tag = await dbContext.Tags.Where(t => t.Id == tagId)
+                        .Include(ba => ba.TagParams)
+                        .Include(ba => ba.ActuatorParams)
+                        .Include(ba => ba.TagConditions)
+                        .FirstAsync();
+                    if (tag._CreateProjectVersionNum is not null)
+                    {
+                        GetVersions(tag, projectVersionNums);
+                        
+                        GetVersions(tag.TagParams, projectVersionNums);
+                        
+                        GetVersions(tag.ActuatorParams, projectVersionNums);
+                        
+                        GetVersions(tag.TagConditions, projectVersionNums);
+                    }
+
+                    return Ok(projectVersionNums.ToArray());
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, @"Invalid baseActuatorId: {0}", tagId);
+
+                return NotFound();
+            }
+        }
+
+        [HttpGet(@"GetCeMatrixVersions/{ceMatrixId}")]
+        public async Task<IActionResult> GetCeMatrixVersions(int ceMatrixId)
+        {
+            try
+            {
+                HashSet<uint> projectVersionNums = new();
+
+                using (var dbContext = new PazCheckDbContext())
+                {
+                    CeMatrix ceMatrix = await dbContext.CeMatrices.Where(ba => ba.Id == ceMatrixId)
+                        .Include(m => m.CeMatrixParams)
+                        .Include(m => m.CeMatrixDbFileReferences)                        
+                        .Include(m => m.Causes)
+                        .ThenInclude(c => c.SubCauses)
+                        .Include(m => m.Effects)
+                        .Include(m => m.Intersections)
+                        .FirstAsync();
+                    if (ceMatrix._CreateProjectVersionNum is not null)
+                    {
+                        GetVersions(ceMatrix, projectVersionNums);
+                        
+                        GetVersions(ceMatrix.CeMatrixParams, projectVersionNums);
+                        
+                        GetVersions(ceMatrix.CeMatrixDbFileReferences, projectVersionNums);
+                        
+                        foreach (var cause in ceMatrix.Causes)
+                        {
+                            GetVersions(cause, projectVersionNums);
+                            GetVersions(cause.SubCauses, projectVersionNums);
+                        }
+                        
+                        GetVersions(ceMatrix.Effects, projectVersionNums);
+                        
+                        GetVersions(ceMatrix.Intersections, projectVersionNums);
+                    }
+
+                    return Ok(projectVersionNums.ToArray());
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, @"Invalid ceMatrixId: {0}", ceMatrixId);
+
+                return NotFound();
+            }
+        }
+
         #endregion
 
         #region private functions
 
-        private async Task<object> CompareVersionsBaseActuatorsAsync(PazCheckDbContext dbContext, Project project, uint minProjectVersionNum, uint maxProjectVersionNum)
+        private async Task CompareVersionsBaseActuatorsAsync(PazCheckDbContext dbContext, Project project, uint minProjectVersionNum, uint? maxProjectVersionNum,
+                        List<ItemVersionComparisonInfo> result)
         {
             var minBaseActuators = await dbContext.BaseActuators.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
                     (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > minProjectVersionNum)).ToArrayAsync();
 
-            var maxBaseActuators = await dbContext.BaseActuators.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= maxProjectVersionNum) &&
-                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > maxProjectVersionNum)).ToArrayAsync();
+            BaseActuator[]? maxBaseActuators;
+            if (maxProjectVersionNum is not null)
+                maxBaseActuators = await dbContext.BaseActuators.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
+                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArrayAsync();
+            else
+                maxBaseActuators = await dbContext.BaseActuators.Where(ba => !ba._IsDeleted).ToArrayAsync();
 
-            var existedBaseActuators = maxBaseActuators.Intersect(minBaseActuators, IdEqualityComparer<BaseActuator>.Instance).ToArray();
-            var deletedBaseActuators = minBaseActuators.Except(existedBaseActuators, IdEqualityComparer<BaseActuator>.Instance);
-            var addedBaseActuators = maxBaseActuators.Except(existedBaseActuators, IdEqualityComparer<BaseActuator>.Instance);
+            var intersectBaseActuators = maxBaseActuators.Intersect(minBaseActuators, IdEqualityComparer<BaseActuator>.Instance).ToArray();
 
-            foreach (var existedBaseActuator in existedBaseActuators)
+            CompareVersionsCollections(intersectBaseActuators, minBaseActuators, maxBaseActuators, IdEqualityComparer<BaseActuator>.Instance, result);            
+
+            foreach (var intersectBaseActuator in intersectBaseActuators)
             {
-                dbContext.Entry(existedBaseActuator).Collection(ba => ba.BaseActuatorParams).Load();
-                CompareVersionsParams(dbContext, existedBaseActuator.BaseActuatorParams, minProjectVersionNum, maxProjectVersionNum);
+                bool hasChanges = false;
+
+                dbContext.Entry(intersectBaseActuator).Collection(ba => ba.BaseActuatorParams).Load();                
+                if (CompareVersionsParams(intersectBaseActuator.BaseActuatorParams, minProjectVersionNum, maxProjectVersionNum, result))
+                    hasChanges = true;
+
+                dbContext.Entry(intersectBaseActuator).Collection(ba => ba.BaseActuatorDbFileReferences).Load();
+                if (CompareVersionsEntities(intersectBaseActuator.BaseActuatorDbFileReferences, minProjectVersionNum, maxProjectVersionNum,
+                        DbFileReferenceEqualityComparer<DbFileReference>.Instance,
+                        result))
+                    hasChanges = true;
+
+                if (hasChanges)
+                {
+                    result.Add(new ItemVersionComparisonInfo
+                    {
+                        ObjectType = nameof(BaseActuator),
+                        OldObjectId = intersectBaseActuator.Id,
+                        NewObjectId = intersectBaseActuator.Id,
+                        ChangeType = ItemVersionComparisonInfo.ChangeType_Modified
+                    });
+                }                   
+            }            
+        }        
+
+        private async Task CompareVersionsTagsAsync(PazCheckDbContext dbContext, Project project, uint minProjectVersionNum, uint? maxProjectVersionNum, List<ItemVersionComparisonInfo> result)
+        {
+            var minTags = await dbContext.Tags.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
+                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > minProjectVersionNum)).ToArrayAsync();
+
+            Tag[] maxTags;
+            if (maxProjectVersionNum is not null)
+                maxTags = await dbContext.Tags.Where(t => (t._CreateProjectVersionNum != null && t._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
+                    (t._DeleteProjectVersionNum == null || t._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArrayAsync();
+            else
+                maxTags = await dbContext.Tags.Where(t => !t._IsDeleted).ToArrayAsync();
+
+            var intersectTags = maxTags.Intersect(minTags, TagNameEqualityComparer.Instance).ToArray();
+
+            CompareVersionsCollections(intersectTags, minTags, maxTags, TagNameEqualityComparer.Instance, result);
+
+            foreach (var intersectTag in intersectTags)
+            {
+                bool hasChanges = false;
+
+                dbContext.Entry(intersectTag).Collection(ba => ba.TagParams).Load();
+                if (CompareVersionsParams(intersectTag.TagParams, minProjectVersionNum, maxProjectVersionNum,                        
+                        result))
+                    hasChanges = true;
+
+                dbContext.Entry(intersectTag).Collection(ba => ba.ActuatorParams).Load();
+                if (CompareVersionsParams(intersectTag.ActuatorParams, minProjectVersionNum, maxProjectVersionNum,                        
+                        result))
+                    hasChanges = true;
+
+                dbContext.Entry(intersectTag).Collection(ba => ba.TagConditions).Load();
+                if (CompareVersionsEntities(intersectTag.TagConditions, minProjectVersionNum, maxProjectVersionNum,
+                        IdEqualityComparer<TagCondition>.Instance,
+                        result))
+                    hasChanges = true;
+
+                if (hasChanges)
+                {
+                    result.Add(new ItemVersionComparisonInfo
+                    {
+                        ObjectType = nameof(Tag),
+                        OldObjectId = intersectTag.Id,
+                        NewObjectId = intersectTag.Id,
+                        ChangeType = ItemVersionComparisonInfo.ChangeType_Modified
+                    });
+                }
+            }
+        }
+
+        private async Task CompareVersionsCeMatricesAsync(PazCheckDbContext dbContext, Project project, uint minProjectVersionNum, uint? maxProjectVersionNum, List<ItemVersionComparisonInfo> result)
+        {
+            var minCeMatrices = await dbContext.CeMatrices.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
+                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > minProjectVersionNum)).ToArrayAsync();
+
+            CeMatrix[] maxCeMatrices;
+            if (maxProjectVersionNum is not null)
+                maxCeMatrices = await dbContext.CeMatrices.Where(m => (m._CreateProjectVersionNum != null && m._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
+                    (m._DeleteProjectVersionNum == null || m._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArrayAsync();
+            else
+                maxCeMatrices = await dbContext.CeMatrices.Where(m => !m._IsDeleted).ToArrayAsync();
+
+            var intersectCeMatrices = maxCeMatrices.Intersect(minCeMatrices, IdEqualityComparer<CeMatrix>.Instance).ToArray();
+
+            CompareVersionsCollections(intersectCeMatrices, minCeMatrices, maxCeMatrices, IdEqualityComparer<CeMatrix>.Instance, result);
+
+            foreach (var intersectCeMatrix in intersectCeMatrices)
+            {
+                bool hasChanges = false;
+
+                dbContext.Entry(intersectCeMatrix).Collection(ba => ba.CeMatrixParams).Load();
+                if (CompareVersionsParams(intersectCeMatrix.CeMatrixParams, minProjectVersionNum, maxProjectVersionNum,                        
+                        result))
+                    hasChanges = true;
+
+                dbContext.Entry(intersectCeMatrix).Collection(ba => ba.CeMatrixDbFileReferences).Load();
+                if (CompareVersionsEntities(intersectCeMatrix.CeMatrixDbFileReferences, minProjectVersionNum, maxProjectVersionNum,
+                        DbFileReferenceEqualityComparer<DbFileReference>.Instance,
+                        result))
+                    hasChanges = true;
+
+                var intersectCeMatrix_Causes = dbContext.Causes.Where(c => c.CeMatrix == intersectCeMatrix).Include(c => c.SubCauses).ToList();                
+                if (CompareVersionsCauses(dbContext, intersectCeMatrix_Causes, minProjectVersionNum, maxProjectVersionNum,                        
+                        result))
+                    hasChanges = true;
+
+                dbContext.Entry(intersectCeMatrix).Collection(ba => ba.Effects).Load();
+                if (CompareVersionsEntities(intersectCeMatrix.Effects, minProjectVersionNum, maxProjectVersionNum,
+                        IdEqualityComparer<Effect>.Instance,
+                        result))
+                    hasChanges = true;
+
+                dbContext.Entry(intersectCeMatrix).Collection(ba => ba.Intersections).Load();
+                if (CompareVersionsEntities(intersectCeMatrix.Intersections, minProjectVersionNum, maxProjectVersionNum,
+                        IdEqualityComparer<Intersection>.Instance,
+                        result))
+                    hasChanges = true;
+
+                if (hasChanges)
+                {
+                    result.Add(new ItemVersionComparisonInfo
+                    {
+                        ObjectType = nameof(CeMatrix),
+                        OldObjectId = intersectCeMatrix.Id,
+                        NewObjectId = intersectCeMatrix.Id,
+                        ChangeType = ItemVersionComparisonInfo.ChangeType_Modified
+                    });
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Returns whether has changes.
+        /// </summary>
+        /// <typeparam name="TVersionEntity"></typeparam>
+        /// <param name="minMaxCollection"></param>
+        /// <param name="minCollection"></param>
+        /// <param name="maxCollection"></param>
+        /// <param name="equalityComparer"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        private bool CompareVersionsCollections<TVersionEntity>(TVersionEntity[] minMaxCollection, TVersionEntity[] minCollection, TVersionEntity[] maxCollection,
+            IEqualityComparer<TVersionEntity> equalityComparer,
+            List<ItemVersionComparisonInfo> result)
+            where TVersionEntity : VersionEntityBase
+        {
+            bool hasChanges = false;
+
+            var deletedCollection = minCollection.Except(minMaxCollection, equalityComparer);
+            foreach (var deleted in deletedCollection)
+            {
+                result.Add(new ItemVersionComparisonInfo
+                {
+                    ObjectType = deleted.GetType().Name,
+                    OldObjectId = deleted.Id,
+                    NewObjectId = null,
+                    ChangeType = ItemVersionComparisonInfo.ChangeType_Deleted
+                });
+                hasChanges = true;
+            }
+            var addedCollection = maxCollection.Except(minMaxCollection, equalityComparer);
+            foreach (var added in addedCollection)
+            {
+                result.Add(new ItemVersionComparisonInfo
+                {
+                    ObjectType = added.GetType().Name,
+                    OldObjectId = null,
+                    NewObjectId = added.Id,
+                    ChangeType = ItemVersionComparisonInfo.ChangeType_Added
+                });
+                hasChanges = true;
             }
 
-            return new object();
+            return hasChanges;
         }
 
-        private async Task<object> CompareVersionsTagsAsync(PazCheckDbContext dbContext, Project project, uint minProjectVersionNum, uint maxProjectVersionNum)
-        {
-            await Task.Delay(0);
-            return new object();
-        }
-
-        private async Task<object> CompareVersionsCeMatricesAsync(PazCheckDbContext dbContext, Project project, uint minProjectVersionNum, uint maxProjectVersionNum)
-        {
-            await Task.Delay(0);
-            return new object();
-        }
-
-        private object CompareVersionsParams<TParam>(PazCheckDbContext dbContext, List<TParam> paramsList, uint minProjectVersionNum, uint maxProjectVersionNum)
+        /// <summary>
+        ///     Returns whether has changes.
+        /// </summary>
+        /// <typeparam name="TParam"></typeparam>        
+        /// <param name="paramsList"></param>
+        /// <param name="minProjectVersionNum"></param>
+        /// <param name="maxProjectVersionNum"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        private bool CompareVersionsParams<TParam>(List<TParam> paramsList, uint minProjectVersionNum, uint? maxProjectVersionNum, List<ItemVersionComparisonInfo> result)
             where TParam: Param 
         {
+            bool hasChanges = false;
+
             var minParams = paramsList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
                     (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > minProjectVersionNum)).ToArray();
 
-            var maxParams = paramsList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= maxProjectVersionNum) &&
-                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > maxProjectVersionNum)).ToArray();
+            TParam[] maxParams;
+            if (maxProjectVersionNum is not null)
+                maxParams = paramsList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
+                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArray();
+            else
+                maxParams = paramsList.Where(ba => !ba._IsDeleted).ToArray();
 
-            var existedMaxParams = maxParams.Intersect(minParams, ParamNameEqualityComparer<TParam>.Instance).ToArray();
-            var deletedMinParams = minParams.Except(existedMaxParams, ParamNameEqualityComparer<TParam>.Instance);
-            var addedMaxParams = maxParams.Except(existedMaxParams, ParamNameEqualityComparer<TParam>.Instance);
+            var intersectMaxParams = maxParams.Intersect(minParams, ParamNameEqualityComparer<TParam>.Instance).ToArray();
+            if (CompareVersionsCollections(intersectMaxParams, minParams, maxParams, ParamNameEqualityComparer<TParam>.Instance, result))
+                hasChanges = true;
 
-            foreach (var existedMaxParam in existedMaxParams)
+            foreach (var intersectMaxParam in intersectMaxParams)
             {
-                var existedMinParam = minParams.First(p => p.ParamName == existedMaxParam.ParamName);
-                if (existedMaxParam.Value != existedMinParam.Value)
+                var intersectMinParam = minParams.First(p => p.ParamName == intersectMaxParam.ParamName);
+                if (intersectMaxParam.Value != intersectMinParam.Value || intersectMaxParam.Eu != intersectMinParam.Eu ||
+                    intersectMaxParam.Type != intersectMinParam.Type || intersectMaxParam.Desc != intersectMinParam.Desc)
                 {
-
+                    result.Add(new ItemVersionComparisonInfo
+                    {
+                        ObjectType = intersectMaxParam.GetType().Name,
+                        OldObjectId = intersectMinParam.Id,
+                        NewObjectId = intersectMaxParam.Id,
+                        ChangeType = ItemVersionComparisonInfo.ChangeType_Modified
+                    });
+                    hasChanges = true;
                 }
             }
 
-            return new object();
+            return hasChanges;
+        }
+
+        private bool CompareVersionsCauses(PazCheckDbContext dbContext, List<Cause> causesList, uint minProjectVersionNum, uint? maxProjectVersionNum,            
+            List<ItemVersionComparisonInfo> result)            
+        {
+            bool hasChanges = false;
+
+            var minCauses = causesList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
+                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > minProjectVersionNum)).ToArray();
+
+            Cause[] maxCauses;
+            if (maxProjectVersionNum is not null)
+                maxCauses = causesList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
+                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArray();
+            else
+                maxCauses = causesList.Where(ba => !ba._IsDeleted).ToArray();
+
+            var intersectMaxCauses = maxCauses.Intersect(minCauses, IdEqualityComparer<Cause>.Instance).ToArray();
+            if (CompareVersionsCollections(intersectMaxCauses, minCauses, maxCauses, IdEqualityComparer<Cause>.Instance, result))
+                hasChanges = true;
+
+            foreach (var intersectMaxCause in intersectMaxCauses)
+            {                
+                dbContext.Entry(intersectMaxCause).Collection(ba => ba.SubCauses).Load();
+                if (CompareVersionsEntities(intersectMaxCause.SubCauses, minProjectVersionNum, maxProjectVersionNum,
+                        IdEqualityComparer<SubCause>.Instance,
+                        result))                    
+                {
+                    result.Add(new ItemVersionComparisonInfo
+                    {
+                        ObjectType = nameof(Cause),
+                        OldObjectId = intersectMaxCause.Id,
+                        NewObjectId = intersectMaxCause.Id,
+                        ChangeType = ItemVersionComparisonInfo.ChangeType_Modified
+                    });
+                    hasChanges = true;
+                }
+            }
+
+            return hasChanges;
+        }
+
+        private bool CompareVersionsEntities<TEntity>(List<TEntity> entitiesList, uint minProjectVersionNum, uint? maxProjectVersionNum,
+            IEqualityComparer<TEntity> equalityComparer,
+            List<ItemVersionComparisonInfo> result)
+            where TEntity : VersionEntityBase
+        {
+            bool hasChanges = false;
+
+            var minEntities = entitiesList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
+                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > minProjectVersionNum)).ToArray();
+
+            TEntity[] maxEntities;
+            if (maxProjectVersionNum is not null)
+                maxEntities = entitiesList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
+                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArray();
+            else
+                maxEntities = entitiesList.Where(ba => !ba._IsDeleted).ToArray();
+
+            var intersectMaxEntities = maxEntities.Intersect(minEntities, equalityComparer).ToArray();
+            if (CompareVersionsCollections(intersectMaxEntities, minEntities, maxEntities, equalityComparer, result))
+                hasChanges = true;
+
+            return hasChanges;
+        }
+
+        private void GetVersions<TEntity>(List<TEntity> entitiesList, HashSet<uint> projectVersionNums)
+            where TEntity : VersionEntityBase
+        {
+            foreach (var entity in entitiesList)
+                GetVersions(entity, projectVersionNums);
+        }
+
+        private void GetVersions<TEntity>(TEntity entity, HashSet<uint> projectVersionNums)
+            where TEntity : VersionEntityBase
+        {
+            if (entity._CreateProjectVersionNum is not null)
+            {
+                uint minProjectVersionNum = entity._CreateProjectVersionNum.Value;
+                projectVersionNums.Add(minProjectVersionNum);
+                uint? maxProjectVersionNum = entity._DeleteProjectVersionNum;
+                if (maxProjectVersionNum is not null)
+                    projectVersionNums.Add(maxProjectVersionNum.Value);
+            }
         }
 
         #endregion
@@ -144,5 +561,63 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             }
         }
 
+        private class DbFileReferenceEqualityComparer<TDbFileReference> : IEqualityComparer<TDbFileReference>
+            where TDbFileReference : DbFileReference
+        {
+            public static readonly DbFileReferenceEqualityComparer<TDbFileReference> Instance = new();
+
+            public bool Equals(TDbFileReference? leftObj, TDbFileReference? rightObj)
+            {
+                return leftObj?.DbFileId == rightObj?.DbFileId;
+            }
+
+            public int GetHashCode(TDbFileReference obj)
+            {
+                return 0;
+            }
+        }
+
+        private class TagNameEqualityComparer : IEqualityComparer<Tag>
+        {
+            public static readonly TagNameEqualityComparer Instance = new();
+
+            public bool Equals(Tag? leftObj, Tag? rightObj)
+            {
+                return leftObj?.TagName == rightObj?.TagName;
+            }
+
+            public int GetHashCode(Tag obj)
+            {
+                return 0;
+            }
+        }
+
+        public class ItemVersionComparisonInfo
+        {
+            /// <summary>
+            ///     The entity is being tracked by the context and exists in the database. It has
+            ///     been marked for deletion from the database.
+            /// </summary>
+            public const string ChangeType_Deleted = @"Deleted";
+
+            /// <summary>
+            ///    The entity is being tracked by the context and exists in the database. Some or
+            ///    all of its property values have been modified.
+            /// </summary>
+            public const string ChangeType_Modified = @"Modified";
+
+            /// <summary>
+            ///     The entity is being tracked by the context but does not yet exist in the database.
+            /// </summary>
+            public const string ChangeType_Added = @"Added";
+
+            public string ObjectType { get; set; } = @"";
+
+            public int? OldObjectId { get; set; }
+
+            public int? NewObjectId { get; set; }
+
+            public string ChangeType { get; set; } = @"";
+        }
     }
 }

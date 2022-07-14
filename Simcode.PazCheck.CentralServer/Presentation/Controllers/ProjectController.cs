@@ -89,7 +89,8 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                     project.ProjectVersions.Add(projectVersion);
 
                     foreach (var baseActuator in dbContext.BaseActuators.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
-                        .Include(ba => ba.BaseActuatorParams))
+                        .Include(ba => ba.BaseActuatorParams)
+                        .Include(ba => ba.BaseActuatorDbFileReferences))
                     {
                         foreach (var baseActuatorParam in baseActuator.BaseActuatorParams)
                         {
@@ -106,8 +107,8 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                     }
 
                     foreach (var tag in dbContext.Tags.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
-                        .Include(t => t.ActuatorParams)
                         .Include(t => t.TagParams)
+                        .Include(t => t.ActuatorParams)                        
                         .Include(t => t.TagConditions))
                     {
                         foreach (var tagParam in tag.TagParams)
@@ -130,6 +131,8 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                     }
 
                     foreach (var ceMatrix in dbContext.CeMatrices.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
+                        .Include(t => t.CeMatrixParams)
+                        .Include(t => t.CeMatrixDbFileReferences)
                         .Include(t => t.Causes)
                         .ThenInclude(c => c.SubCauses)
                         .Include(t => t.Effects)
@@ -194,7 +197,8 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                     var lastVersionTimeUtc = project.LastProjectVersion?.TimeUtc ?? DateTime.MinValue;                    
 
                     foreach (var baseActuator in dbContext.BaseActuators.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
-                        .Include(ba => ba.BaseActuatorParams))
+                        .Include(ba => ba.BaseActuatorParams)
+                        .Include(ba => ba.BaseActuatorDbFileReferences))
                     {
                         foreach (var baseActuatorParam in baseActuator.BaseActuatorParams)
                         {
@@ -211,8 +215,8 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                     }
 
                     foreach (var tag in dbContext.Tags.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
-                        .Include(t => t.ActuatorParams)
                         .Include(t => t.TagParams)
+                        .Include(t => t.ActuatorParams)
                         .Include(t => t.TagConditions))
                     {
                         foreach (var tagParam in tag.TagParams)
@@ -235,6 +239,8 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                     }
 
                     foreach (var ceMatrix in dbContext.CeMatrices.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
+                        .Include(t => t.CeMatrixParams)
+                        .Include(t => t.CeMatrixDbFileReferences)
                         .Include(t => t.Causes)
                         .ThenInclude(c => c.SubCauses)
                         .Include(t => t.Effects)
@@ -335,6 +341,6 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         private readonly ILogger _logger;
         private readonly CancellationToken _applicationStopping_CancellationToken;
 
-        #endregion
+        #endregion        
     }
 }

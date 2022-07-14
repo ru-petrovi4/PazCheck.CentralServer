@@ -10,7 +10,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public abstract class DbFileReference : VersionEntityBase
     {
         [HasOne]
-        public DbFile DbFile { get; set; } = null!;        
+        public DbFile DbFile { get; set; } = null!;
+        
+        public int DbFileId { get; set; }
     }
 
     public class CeMatrixDbFileReference : DbFileReference
