@@ -154,6 +154,21 @@ namespace Simcode.PazCheck.CentralServer
                 });
                 dbContext.SaveChanges();
 
+                // ParamInfos
+                var maxSafeSpeedParamInfo = new ParamInfo
+                {
+                    ParamName = "MaxSafeSpeed",
+                    Desc = "Максимально допустимое время срабатывания"
+                };
+                dbContext.ParamInfos.Add(maxSafeSpeedParamInfo);
+                var safeSpeedParamInfo = new ParamInfo
+                {
+                    ParamName = "Среднее время срабатывания",
+                    Desc = "Среднее время срабатывания"
+                };
+                dbContext.ParamInfos.Add(safeSpeedParamInfo);
+                dbContext.SaveChanges();
+
                 // Base Actuator types
                 var empty_BaseActuatorType = new BaseActuatorType
                 {
@@ -164,21 +179,13 @@ namespace Simcode.PazCheck.CentralServer
                 {
                     Type = "Отсечной клапан",
                 };
-                valve_BaseActuatorType.StandardParams.Add(new StandardParam
-                {
-                    ParamName = "MaxSafeSpeed",
-                    Desc = "Максимально допустимое время срабатывания"
-                });
+                valve_BaseActuatorType.StandardParamInfos.Add(maxSafeSpeedParamInfo);
                 dbContext.BaseActuatorTypes.Add(valve_BaseActuatorType);
                 var pump_BaseActuatorType = new BaseActuatorType
                 {
                     Type = "Насос",
                 };
-                pump_BaseActuatorType.StandardParams.Add(new StandardParam
-                {
-                    ParamName = "MaxSafeSpeed",
-                    Desc = "Максимально допустимое время срабатывания"
-                });
+                pump_BaseActuatorType.StandardParamInfos.Add(maxSafeSpeedParamInfo);
                 dbContext.BaseActuatorTypes.Add(pump_BaseActuatorType);
                 dbContext.SaveChanges();
 
@@ -199,15 +206,13 @@ namespace Simcode.PazCheck.CentralServer
                 };              
                 valveBaseActuator.BaseActuatorParams.Add(new BaseActuatorParam
                 {
-                    ParamName = "MaxSafeSpeed",
-                    Desc = "Максимально допустимое время срабатывания",
+                    ParamName = "MaxSafeSpeed",                    
                     Value = "30",
                     Eu = "с"
                 });
                 valveBaseActuator.BaseActuatorParams.Add(new BaseActuatorParam
                 {
-                    ParamName = "SafeSpeed",
-                    Desc = "Среднее время срабатывания",
+                    ParamName = "SafeSpeed",                    
                     Value = "15",
                     Eu = "с"
                 });                                
@@ -222,8 +227,7 @@ namespace Simcode.PazCheck.CentralServer
                 };
                 pumpBaseActuator.BaseActuatorParams.Add(new BaseActuatorParam
                 {
-                    ParamName = "MaxSafeSpeed",
-                    Desc = "Максимально допустимое время срабатывания",
+                    ParamName = "MaxSafeSpeed",                    
                     Value = "3",
                     Eu = "с"
                 });                
@@ -231,34 +235,29 @@ namespace Simcode.PazCheck.CentralServer
                 dbContext.SaveChanges();
 
                 // TagConditionElementName
-                dbContext.TagConditionElementNames.Add(new TagConditionIdentifier
+                dbContext.TagConditionInfos.Add(new TagConditionInfo
                 {
-                    Identifier = @"PVHighHigh",
-                    Type = "Alarm",
+                    Identifier = @"PVHighHigh",                    
                     Desc = "Параметр: PV, сигнализация: High High",
                 });
-                dbContext.TagConditionElementNames.Add(new TagConditionIdentifier
+                dbContext.TagConditionInfos.Add(new TagConditionInfo
                 {
-                    Identifier = @"PVHigh",
-                    Type = "Alarm",
+                    Identifier = @"PVHigh",                    
                     Desc = "Параметр: PV, сигнализация: High",
                 });
-                dbContext.TagConditionElementNames.Add(new TagConditionIdentifier
+                dbContext.TagConditionInfos.Add(new TagConditionInfo
                 {
-                    Identifier = @"PVLow",
-                    Type = "Alarm",
+                    Identifier = @"PVLow",                    
                     Desc = "Параметр: PV, сигнализация: Low",
                 });
-                dbContext.TagConditionElementNames.Add(new TagConditionIdentifier
+                dbContext.TagConditionInfos.Add(new TagConditionInfo
                 {
-                    Identifier = @"PVLowLow",
-                    Type = "Alarm",
+                    Identifier = @"PVLowLow",                    
                     Desc = "Параметр: PV, сигнализация: Low Low",
                 });
-                dbContext.TagConditionElementNames.Add(new TagConditionIdentifier
+                dbContext.TagConditionInfos.Add(new TagConditionInfo
                 {
-                    Identifier = @"ALARM",
-                    Type = "Alarm",
+                    Identifier = @"ALARM",                    
                     Desc = "Сигнализация дискретного параметра",
                 });
                 dbContext.SaveChanges();

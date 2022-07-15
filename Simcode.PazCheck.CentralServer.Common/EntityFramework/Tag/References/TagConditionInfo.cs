@@ -7,7 +7,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     ///     Идентификатор состояния.
     /// </summary>
     [Resource]
-    public class TagConditionIdentifier : Identifiable<int>
+    public class TagConditionInfo : Identifiable<int>
     {
         /// <summary>
         ///     <para>Текстовое поле RW: Идентификатор состояния</para>
@@ -17,11 +17,11 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Identifier { get; set; } = @"";
 
         /// <summary>
-        ///     <para>Текстовое поле RW: Тип идентификатора состояния</para>
+        ///     <para>Текстовое поле RW: Тип тэга</para>
         ///     <example>Alarm</example>
         /// </summary>
         [Attr]
-        public string Type { get; set; } = @"";
+        public string TagType { get; set; } = @"";
 
         /// <summary>
         ///     <para>Текстовое поле RW: Описание идентификатора состояния</para>

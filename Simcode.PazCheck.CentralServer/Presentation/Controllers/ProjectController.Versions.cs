@@ -532,8 +532,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             foreach (var intersectMaxParam in intersectMaxParams)
             {
                 var intersectMinParam = minParams.First(p => p.ParamName == intersectMaxParam.ParamName);
-                if (intersectMaxParam.Value != intersectMinParam.Value || intersectMaxParam.Eu != intersectMinParam.Eu ||
-                    intersectMaxParam.Type != intersectMinParam.Type || intersectMaxParam.Desc != intersectMinParam.Desc)
+                if (intersectMaxParam.Value != intersectMinParam.Value || intersectMaxParam.Eu != intersectMinParam.Eu)
                 {
                     result.Add(new ItemVersionComparisonInfo
                     {
@@ -724,6 +723,19 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             public int? NewObjectId { get; set; }
 
             public string ChangeType { get; set; } = @"";
+
+            /// <summary>
+            ///     0,1,2..
+            /// </summary>
+            public uint Level { get; set; }
+
+            public string ObjectName { get; set; } = @"";
+
+            public string ObjectDesc { get; set; } = @"";
+
+            public string OldValue { get; set; } = @"";
+
+            public string NewValue { get; set; } = @"";
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     /// <summary>
-    ///     Тип устройства.
+    ///     Категория устройства.
     /// </summary>
     [Resource]
     public class BaseActuatorType : Identifiable<int>
@@ -28,6 +28,6 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         ///     Набор начальных стандартных параметров для данной категории.
         /// </summary>
         [HasMany]
-        public List<StandardParam> StandardParams { get; set; } = new();
+        public List<ParamInfo> StandardParamInfos { get; set; } = new();
     }
 }

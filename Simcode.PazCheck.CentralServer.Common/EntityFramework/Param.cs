@@ -27,17 +27,8 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr]
         public string Eu { get; set; } = @"";
 
-        /// <summary>
-        ///     Reserved
-        /// </summary>
-        [Attr]
-        public string Type { get; set; } = @"";
-
-        /// <summary>
-        ///     <para>Текстовое поле RW: Описание свойства</para>
-        /// </summary>
-        [Attr]
-        public string Desc { get; set; } = @"";
+        [HasOne]
+        public ParamInfo ParamInfo { get; set; } = null!;
     }
 
     [Resource]

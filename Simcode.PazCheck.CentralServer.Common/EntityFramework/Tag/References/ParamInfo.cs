@@ -7,7 +7,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     ///     Стандартное свойство.
     /// </summary>
     [Resource]
-    public class StandardParam : Identifiable<int>
+    public class ParamInfo : Identifiable<int>
     {
         /// <summary>
         ///     Имя свойства
@@ -16,10 +16,10 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string ParamName { get; set; } = @"";        
 
         /// <summary>
-        ///     Reserved
+        ///     Тип объекта, содержащего данный параметр.
         /// </summary>
         [Attr]
-        public string Type { get; set; } = @"";
+        public string ObjectType { get; set; } = @"";
 
         /// <summary>
         ///     Описание свойства

@@ -12,17 +12,11 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public class TagCondition : VersionEntityBase
     {
         /// <summary>
-        ///     <para>Текстовое поле RW (выбор из списка (таблица TagConditionIdentifier) либо свое значение): Идентификатор состояния</para>
+        ///     <para>Текстовое поле RW (выбор из списка (таблица TagConditionInfo) либо свое значение): Идентификатор состояния</para>
         ///     <example>ALARM</example><example>PVHighHigh</example>
         /// </summary>
         [Attr]
         public string Identifier { get; set; } = @"";
-
-        /// <summary>
-        ///     Reserved
-        /// </summary>
-        [Attr]
-        public string MathOperator { get; set; } = @"";
 
         /// <summary>
         ///     <para>Текстовое поле RW: Значение состояния</para>
@@ -52,6 +46,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         /// </summary>
         [Attr]
         public bool CanBeEffect { get; set; } = true;
+
+        [HasOne]
+        public TagConditionInfo TagConditionInfo { get; set; } = null!;
 
         [HasOne]
         public Tag Tag { get; set; } = null!;
