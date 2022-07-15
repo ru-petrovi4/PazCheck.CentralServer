@@ -23,7 +23,7 @@ namespace Simcode.PazCheck.CentralServer
 
         public static async Task Fixtures(IServiceProvider serviceProvider, IConfiguration configuration, AddonsManager addonsManager)
         {
-            string defaultUnitTitle = "АВТ-10";
+            string defaultUnitTitle = "АВТ-11";
 
             bool loadFromDumpFile = true;
             try
@@ -129,24 +129,14 @@ namespace Simcode.PazCheck.CentralServer
                 var someUnit = new Unit { Title = "Гидроочистка", Desc = "Гидроочистка дизельных топлив" };
                 dbContext.Units.Add(someUnit);                
 
-                // Projects
-                var mainProject_Empty_ProjectVersion = new ProjectVersion { TimeUtc = DateTime.UtcNow };
+                // Projects                
                 var mainProject = new Project { Title = "Основной", Desc = "" };
-                mainProject.ProjectVersions.Add(mainProject_Empty_ProjectVersion);                
-                var p2Project_Empty_ProjectVersion = new ProjectVersion { TimeUtc = DateTime.UtcNow };
-                var p2Project = new Project { Title = "Второй", Desc = "" };
-                p2Project.ProjectVersions.Add(p2Project_Empty_ProjectVersion);                
+                var p2Project = new Project { Title = "Второй", Desc = "" };                          
                 avtUnit.Projects.Add(mainProject);
-                avtUnit.Projects.Add(p2Project);                
-                var main2Project_Empty_ProjectVersion = new ProjectVersion { TimeUtc = DateTime.UtcNow };
-                var main2Project = new Project { Title = "Второй", Desc = "" };
-                main2Project.ProjectVersions.Add(main2Project_Empty_ProjectVersion);                
+                avtUnit.Projects.Add(p2Project);
+                var main2Project = new Project { Title = "Основной", Desc = "" };                
                 someUnit.Projects.Add(main2Project);                                
-                dbContext.SaveChanges();
-
-                mainProject.ActiveProjectVersion = mainProject_Empty_ProjectVersion;
-                p2Project.ActiveProjectVersion = p2Project_Empty_ProjectVersion;
-                main2Project.ActiveProjectVersion = main2Project_Empty_ProjectVersion;
+                dbContext.SaveChanges();                
                 avtUnit.ActiveProject = mainProject;
                 someUnit.ActiveProject = main2Project;
                 dbContext.SaveChanges();

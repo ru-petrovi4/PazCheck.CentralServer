@@ -310,10 +310,10 @@ namespace Simcode.PazCheck.CentralServer.Presentation
 
             BaseActuator[]? maxBaseActuators;
             if (maxProjectVersionNum is not null)
-                maxBaseActuators = await dbContext.BaseActuators.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
+                maxBaseActuators = await dbContext.BaseActuators.Where(ba => ba.Project == project && (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
                     (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArrayAsync();
             else
-                maxBaseActuators = await dbContext.BaseActuators.Where(ba => !ba._IsDeleted).ToArrayAsync();
+                maxBaseActuators = await dbContext.BaseActuators.Where(ba => ba.Project == project && !ba._IsDeleted).ToArrayAsync();
 
             var intersectBaseActuators = maxBaseActuators.Intersect(minBaseActuators, IdEqualityComparer<BaseActuator>.Instance).ToArray();
 
@@ -353,10 +353,10 @@ namespace Simcode.PazCheck.CentralServer.Presentation
 
             Tag[] maxTags;
             if (maxProjectVersionNum is not null)
-                maxTags = await dbContext.Tags.Where(t => (t._CreateProjectVersionNum != null && t._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
+                maxTags = await dbContext.Tags.Where(t => t.Project == project && (t._CreateProjectVersionNum != null && t._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
                     (t._DeleteProjectVersionNum == null || t._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArrayAsync();
             else
-                maxTags = await dbContext.Tags.Where(t => !t._IsDeleted).ToArrayAsync();
+                maxTags = await dbContext.Tags.Where(t => t.Project == project && !t._IsDeleted).ToArrayAsync();
 
             var intersectTags = maxTags.Intersect(minTags, TagNameEqualityComparer.Instance).ToArray();
 
@@ -402,10 +402,10 @@ namespace Simcode.PazCheck.CentralServer.Presentation
 
             CeMatrix[] maxCeMatrices;
             if (maxProjectVersionNum is not null)
-                maxCeMatrices = await dbContext.CeMatrices.Where(m => (m._CreateProjectVersionNum != null && m._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
+                maxCeMatrices = await dbContext.CeMatrices.Where(m => m.Project == project && (m._CreateProjectVersionNum != null && m._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
                     (m._DeleteProjectVersionNum == null || m._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArrayAsync();
             else
-                maxCeMatrices = await dbContext.CeMatrices.Where(m => !m._IsDeleted).ToArrayAsync();
+                maxCeMatrices = await dbContext.CeMatrices.Where(m => m.Project == project && !m._IsDeleted).ToArrayAsync();
 
             var intersectCeMatrices = maxCeMatrices.Intersect(minCeMatrices, IdEqualityComparer<CeMatrix>.Instance).ToArray();
 

@@ -45,13 +45,13 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         .Reference(p => p.LastProjectVersion)
                         .Load();
                     var lastVersionTimeUtc = project.LastProjectVersion?.TimeUtc ?? DateTime.MinValue;
-                    bool hasUnsavedChanges = dbContext.BaseActuators.Any(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc);
+                    bool hasUnsavedChanges = dbContext.BaseActuators.Any(ba => ba.Project == project && ba._LastChangeTimeUtc > lastVersionTimeUtc);
                     if (hasUnsavedChanges)
                         return Ok(true);
-                    hasUnsavedChanges = dbContext.Tags.Any(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc);
+                    hasUnsavedChanges = dbContext.Tags.Any(t => t.Project == project && t._LastChangeTimeUtc > lastVersionTimeUtc);
                     if (hasUnsavedChanges)
                         return Ok(true);
-                    hasUnsavedChanges = dbContext.CeMatrices.Any(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc);
+                    hasUnsavedChanges = dbContext.CeMatrices.Any(m => m.Project == project && m._LastChangeTimeUtc > lastVersionTimeUtc);
                     if (hasUnsavedChanges)
                         return Ok(true);                    
                 }
@@ -88,7 +88,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                     project.LastProjectVersion = projectVersion;
                     project.ProjectVersions.Add(projectVersion);
 
-                    foreach (var baseActuator in dbContext.BaseActuators.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
+                    foreach (var baseActuator in dbContext.BaseActuators.Where(ba => ba.Project == project && ba._LastChangeTimeUtc > lastVersionTimeUtc)
                         .Include(ba => ba.BaseActuatorParams)
                         .Include(ba => ba.BaseActuatorDbFileReferences))
                     {
@@ -106,7 +106,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         SaveUnversionedChanges(dbContext, projectVersion.VersionNum, baseActuator);
                     }
 
-                    foreach (var tag in dbContext.Tags.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
+                    foreach (var tag in dbContext.Tags.Where(t => t.Project == project && t._LastChangeTimeUtc > lastVersionTimeUtc)
                         .Include(t => t.TagParams)
                         .Include(t => t.ActuatorParams)                        
                         .Include(t => t.TagConditions))
@@ -130,7 +130,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         SaveUnversionedChanges(dbContext, projectVersion.VersionNum, tag);
                     }
 
-                    foreach (var ceMatrix in dbContext.CeMatrices.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
+                    foreach (var ceMatrix in dbContext.CeMatrices.Where(m => m.Project == project && m._LastChangeTimeUtc > lastVersionTimeUtc)
                         .Include(t => t.CeMatrixParams)
                         .Include(t => t.CeMatrixDbFileReferences)
                         .Include(t => t.Causes)
@@ -196,7 +196,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         .Load();
                     var lastVersionTimeUtc = project.LastProjectVersion?.TimeUtc ?? DateTime.MinValue;                    
 
-                    foreach (var baseActuator in dbContext.BaseActuators.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
+                    foreach (var baseActuator in dbContext.BaseActuators.Where(ba => ba.Project == project && ba._LastChangeTimeUtc > lastVersionTimeUtc)
                         .Include(ba => ba.BaseActuatorParams)
                         .Include(ba => ba.BaseActuatorDbFileReferences))
                     {
@@ -214,7 +214,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         ClearUnversionedChanges(dbContext, baseActuator);
                     }
 
-                    foreach (var tag in dbContext.Tags.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
+                    foreach (var tag in dbContext.Tags.Where(t => t.Project == project && t._LastChangeTimeUtc > lastVersionTimeUtc)
                         .Include(t => t.TagParams)
                         .Include(t => t.ActuatorParams)
                         .Include(t => t.TagConditions))
@@ -238,7 +238,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         ClearUnversionedChanges(dbContext, tag);
                     }
 
-                    foreach (var ceMatrix in dbContext.CeMatrices.Where(ba => ba._LastChangeTimeUtc > lastVersionTimeUtc)
+                    foreach (var ceMatrix in dbContext.CeMatrices.Where(m => m.Project == project && m._LastChangeTimeUtc > lastVersionTimeUtc)
                         .Include(t => t.CeMatrixParams)
                         .Include(t => t.CeMatrixDbFileReferences)
                         .Include(t => t.Causes)
