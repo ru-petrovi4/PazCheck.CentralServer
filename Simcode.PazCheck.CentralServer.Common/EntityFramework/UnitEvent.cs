@@ -14,7 +14,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string TagName { get; set; } = @"";
 
         /// <summary>
-        ///     ElementName[=Value]
+        ///     TagConditionIdentifier[=TagConditionValue]
         /// </summary>
         [Attr]
         public string TagConditionString { get; set; } = @"";

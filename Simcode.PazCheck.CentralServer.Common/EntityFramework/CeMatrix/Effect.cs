@@ -18,6 +18,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string TagName { get; set; } = @"";
 
         /// <summary>
+        ///     TagCondition.Identifier[=TagCondition.Value]
         ///     <example>PVHighHigh</example>
         ///     <example>ALARM=ЗАКР</example>
         /// </summary>
