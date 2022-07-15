@@ -18,11 +18,17 @@ namespace Simcode.PazCheck.CentralServer.Presentation
     {
         #region public functions
 
+        /// <summary>
+        ///     Сравнивает 2 версии проекта. Если maxProjectVersionNum не задан, то сравнивается с текущими несхораненными изменениями.
+        ///     Если minProjectVersionNum задать 0, то сравнивается с пустой базой.
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="minProjectVersionNum"></param>
+        /// <param name="maxProjectVersionNum"></param>
+        /// <returns></returns>
         [HttpGet(@"CompareVersions/{projectId}")]
-        public async Task<IActionResult> CompareVersionsAsync(int projectId, uint projectVersionNum1, uint projectVersionNum2)
-        {
-            uint minProjectVersionNum = Math.Min(projectVersionNum1, projectVersionNum2);
-            uint maxProjectVersionNum = Math.Max(projectVersionNum1, projectVersionNum2);            
+        public async Task<IActionResult> CompareVersionsAsync(int projectId, uint minProjectVersionNum, uint? maxProjectVersionNum)
+        {           
             try
             {
                 using (var dbContext = new PazCheckDbContext())
@@ -48,36 +54,88 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             }            
         }
 
-        [HttpGet(@"CompareVersionWithCurrent/{projectId}")]
-        public async Task<IActionResult> CompareVersionWithCurrentAsync(int projectId, uint projectVersionNum)
+        /// <summary>
+        ///     Сравнивает 2 версии тэга. Если maxProjectVersionNum не задан, то сравнивается с текущими несхораненными изменениями.
+        ///     Если minProjectVersionNum задать 0, то сравнивается с пустой базой.
+        /// </summary>
+        /// <param name="tagId"></param>
+        /// <param name="minProjectVersionNum"></param>
+        /// <param name="maxProjectVersionNum"></param>
+        /// <returns></returns>
+        [HttpGet(@"CompareVersions_Tag/{tagId}")]
+        public async Task<IActionResult> CompareVersions_TagAsync(int tagId, uint minProjectVersionNum, uint? maxProjectVersionNum)
         {            
             try
             {
                 using (var dbContext = new PazCheckDbContext())
                 {
-                    Project project = dbContext.Projects.Single(p => p.Id == projectId);
+                    //Project project = dbContext.Projects.Single(p => p.Id == projectId);
                     //ProjectVersion minProjectVersion = dbContext.ProjectVersions.Single(pv => pv.Project == project && pv.VersionNum == minVersionNum);
                     //ProjectVersion maxProjectVersion = dbContext.ProjectVersions.Single(pv => pv.Project == project && pv.VersionNum == maxVersionNum);
 
                     List<ItemVersionComparisonInfo> result = new();
 
-                    await CompareVersionsBaseActuatorsAsync(dbContext, project, projectVersionNum, null, result);
-                    await CompareVersionsTagsAsync(dbContext, project, projectVersionNum, null, result);
-                    await CompareVersionsCeMatricesAsync(dbContext, project, projectVersionNum, null, result);
+                    await Task.Delay(0);
+
+                    //await CompareVersionsBaseActuatorsAsync(dbContext, project, projectVersionNum, null, result);
+                    //await CompareVersionsTagsAsync(dbContext, project, projectVersionNum, null, result);
+                    //await CompareVersionsCeMatricesAsync(dbContext, project, projectVersionNum, null, result);
 
                     return Ok(result);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, @"Invalid projectId: {0}", projectId);
+                _logger.LogError(ex, @"Invalid tagId: {0}", tagId);
 
                 return NotFound();
             }
         }
 
-        [HttpGet(@"GetBaseActuatorVersions/{baseActuatorId}")]
-        public async Task<IActionResult> GetBaseActuatorVersions(int baseActuatorId)
+        /// <summary>
+        ///     Сравнивает 2 версии тэга. Если maxProjectVersionNum не задан, то сравнивается с текущими несхораненными изменениями.
+        ///     Если minProjectVersionNum задать 0, то сравнивается с пустой базой.
+        /// </summary>
+        /// <param name="ceMatrixId"></param>
+        /// <param name="minProjectVersionNum"></param>
+        /// <param name="maxProjectVersionNum"></param>
+        /// <returns></returns>
+        [HttpGet(@"CompareVersions_CeMatrix/{ceMatrixId}")]
+        public async Task<IActionResult> CompareVersions_CeMatrixAsync(int ceMatrixId, uint minProjectVersionNum, uint? maxProjectVersionNum)
+        {
+            try
+            {
+                using (var dbContext = new PazCheckDbContext())
+                {
+                    //Project project = dbContext.Projects.Single(p => p.Id == projectId);
+                    //ProjectVersion minProjectVersion = dbContext.ProjectVersions.Single(pv => pv.Project == project && pv.VersionNum == minVersionNum);
+                    //ProjectVersion maxProjectVersion = dbContext.ProjectVersions.Single(pv => pv.Project == project && pv.VersionNum == maxVersionNum);
+
+                    List<ItemVersionComparisonInfo> result = new();
+
+                    await Task.Delay(0);
+                    //await CompareVersionsBaseActuatorsAsync(dbContext, project, projectVersionNum, null, result);
+                    //await CompareVersionsTagsAsync(dbContext, project, projectVersionNum, null, result);
+                    //await CompareVersionsCeMatricesAsync(dbContext, project, projectVersionNum, null, result);
+
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, @"Invalid ceMatrixId: {0}", ceMatrixId);
+
+                return NotFound();
+            }
+        }
+
+        /// <summary>
+        ///     Получает массив номеров версий проекта, в которых что то менялось в этом элементе.
+        /// </summary>
+        /// <param name="baseActuatorId"></param>
+        /// <returns></returns>
+        [HttpGet(@"GetVersions_BaseActuator/{baseActuatorId}")]
+        public async Task<IActionResult> GetVersions_BaseActuator(int baseActuatorId)
         {
             try
             {
@@ -109,8 +167,13 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             }
         }
 
-        [HttpGet(@"GetTagVersions/{tagId}")]
-        public async Task<IActionResult> GetTagVersions(int tagId)
+        /// <summary>
+        ///     Получает массив номеров версий проекта, в которых что то менялось в этом элементе.
+        /// </summary>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        [HttpGet(@"GetVersions_Tag/{tagId}")]
+        public async Task<IActionResult> GetVersions_Tag(int tagId)
         {
             try
             {
@@ -145,8 +208,13 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             }
         }
 
-        [HttpGet(@"GetCeMatrixVersions/{ceMatrixId}")]
-        public async Task<IActionResult> GetCeMatrixVersions(int ceMatrixId)
+        /// <summary>
+        ///     Получает массив номеров версий проекта, в которых что то менялось в этом элементе.
+        /// </summary>
+        /// <param name="ceMatrixId"></param>
+        /// <returns></returns>
+        [HttpGet(@"GetVersions_CeMatrix/{ceMatrixId}")]
+        public async Task<IActionResult> GetVersions_CeMatrix(int ceMatrixId)
         {
             try
             {
@@ -199,7 +267,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         private async Task CompareVersionsBaseActuatorsAsync(PazCheckDbContext dbContext, Project project, uint minProjectVersionNum, uint? maxProjectVersionNum,
                         List<ItemVersionComparisonInfo> result)
         {
-            var minBaseActuators = await dbContext.BaseActuators.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
+            var minBaseActuators = await dbContext.BaseActuators.Where(ba => ba.Project == project && (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
                     (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > minProjectVersionNum)).ToArrayAsync();
 
             BaseActuator[]? maxBaseActuators;
@@ -242,8 +310,8 @@ namespace Simcode.PazCheck.CentralServer.Presentation
 
         private async Task CompareVersionsTagsAsync(PazCheckDbContext dbContext, Project project, uint minProjectVersionNum, uint? maxProjectVersionNum, List<ItemVersionComparisonInfo> result)
         {
-            var minTags = await dbContext.Tags.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
-                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > minProjectVersionNum)).ToArrayAsync();
+            var minTags = await dbContext.Tags.Where(t => t.Project == project && (t._CreateProjectVersionNum != null && t._CreateProjectVersionNum <= minProjectVersionNum) &&
+                    (t._DeleteProjectVersionNum == null || t._DeleteProjectVersionNum > minProjectVersionNum)).ToArrayAsync();
 
             Tag[] maxTags;
             if (maxProjectVersionNum is not null)
@@ -291,8 +359,8 @@ namespace Simcode.PazCheck.CentralServer.Presentation
 
         private async Task CompareVersionsCeMatricesAsync(PazCheckDbContext dbContext, Project project, uint minProjectVersionNum, uint? maxProjectVersionNum, List<ItemVersionComparisonInfo> result)
         {
-            var minCeMatrices = await dbContext.CeMatrices.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
-                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > minProjectVersionNum)).ToArrayAsync();
+            var minCeMatrices = await dbContext.CeMatrices.Where(m => m.Project == project && (m._CreateProjectVersionNum != null && m._CreateProjectVersionNum <= minProjectVersionNum) &&
+                    (m._DeleteProjectVersionNum == null || m._DeleteProjectVersionNum > minProjectVersionNum)).ToArrayAsync();
 
             CeMatrix[] maxCeMatrices;
             if (maxProjectVersionNum is not null)
@@ -409,15 +477,15 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         {
             bool hasChanges = false;
 
-            var minParams = paramsList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
-                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > minProjectVersionNum)).ToArray();
+            var minParams = paramsList.Where(p => (p._CreateProjectVersionNum != null && p._CreateProjectVersionNum <= minProjectVersionNum) &&
+                    (p._DeleteProjectVersionNum == null || p._DeleteProjectVersionNum > minProjectVersionNum)).ToArray();
 
             TParam[] maxParams;
             if (maxProjectVersionNum is not null)
-                maxParams = paramsList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
-                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArray();
+                maxParams = paramsList.Where(p => (p._CreateProjectVersionNum != null && p._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
+                    (p._DeleteProjectVersionNum == null || p._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArray();
             else
-                maxParams = paramsList.Where(ba => !ba._IsDeleted).ToArray();
+                maxParams = paramsList.Where(p => !p._IsDeleted).ToArray();
 
             var intersectMaxParams = maxParams.Intersect(minParams, ParamNameEqualityComparer<TParam>.Instance).ToArray();
             if (CompareVersionsCollections(intersectMaxParams, minParams, maxParams, ParamNameEqualityComparer<TParam>.Instance, result))
@@ -448,15 +516,15 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         {
             bool hasChanges = false;
 
-            var minCauses = causesList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
-                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > minProjectVersionNum)).ToArray();
+            var minCauses = causesList.Where(c => (c._CreateProjectVersionNum != null && c._CreateProjectVersionNum <= minProjectVersionNum) &&
+                    (c._DeleteProjectVersionNum == null || c._DeleteProjectVersionNum > minProjectVersionNum)).ToArray();
 
             Cause[] maxCauses;
             if (maxProjectVersionNum is not null)
-                maxCauses = causesList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
-                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArray();
+                maxCauses = causesList.Where(c => (c._CreateProjectVersionNum != null && c._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
+                    (c._DeleteProjectVersionNum == null || c._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArray();
             else
-                maxCauses = causesList.Where(ba => !ba._IsDeleted).ToArray();
+                maxCauses = causesList.Where(c => !c._IsDeleted).ToArray();
 
             var intersectMaxCauses = maxCauses.Intersect(minCauses, IdEqualityComparer<Cause>.Instance).ToArray();
             if (CompareVersionsCollections(intersectMaxCauses, minCauses, maxCauses, IdEqualityComparer<Cause>.Instance, result))
@@ -464,7 +532,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
 
             foreach (var intersectMaxCause in intersectMaxCauses)
             {                
-                dbContext.Entry(intersectMaxCause).Collection(ba => ba.SubCauses).Load();
+                dbContext.Entry(intersectMaxCause).Collection(c => c.SubCauses).Load();
                 if (CompareVersionsEntities(intersectMaxCause.SubCauses, minProjectVersionNum, maxProjectVersionNum,
                         IdEqualityComparer<SubCause>.Instance,
                         result))                    
@@ -490,15 +558,15 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         {
             bool hasChanges = false;
 
-            var minEntities = entitiesList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= minProjectVersionNum) &&
-                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > minProjectVersionNum)).ToArray();
+            var minEntities = entitiesList.Where(e => (e._CreateProjectVersionNum != null && e._CreateProjectVersionNum <= minProjectVersionNum) &&
+                    (e._DeleteProjectVersionNum == null || e._DeleteProjectVersionNum > minProjectVersionNum)).ToArray();
 
             TEntity[] maxEntities;
             if (maxProjectVersionNum is not null)
-                maxEntities = entitiesList.Where(ba => (ba._CreateProjectVersionNum != null && ba._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
-                    (ba._DeleteProjectVersionNum == null || ba._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArray();
+                maxEntities = entitiesList.Where(e => (e._CreateProjectVersionNum != null && e._CreateProjectVersionNum <= maxProjectVersionNum.Value) &&
+                    (e._DeleteProjectVersionNum == null || e._DeleteProjectVersionNum > maxProjectVersionNum.Value)).ToArray();
             else
-                maxEntities = entitiesList.Where(ba => !ba._IsDeleted).ToArray();
+                maxEntities = entitiesList.Where(e => !e._IsDeleted).ToArray();
 
             var intersectMaxEntities = maxEntities.Intersect(minEntities, equalityComparer).ToArray();
             if (CompareVersionsCollections(intersectMaxEntities, minEntities, maxEntities, equalityComparer, result))
