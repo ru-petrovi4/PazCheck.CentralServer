@@ -55,6 +55,44 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         }
 
         /// <summary>
+        ///     Сравнивает 2 версии типа исполнительных механизмов. Если maxProjectVersionNum не задан, то сравнивается с текущими несхораненными изменениями.
+        ///     Если minProjectVersionNum задать 0, то сравнивается с пустой базой.
+        /// </summary>
+        /// <param name="baseActuatorId"></param>
+        /// <param name="minProjectVersionNum"></param>
+        /// <param name="maxProjectVersionNum"></param>
+        /// <returns></returns>
+        [HttpGet(@"CompareVersions_BaseActuator/{baseActuatorId}")]
+        public async Task<IActionResult> CompareVersions_BaseActuatorAsync(int baseActuatorId, uint minProjectVersionNum, uint? maxProjectVersionNum)
+        {
+            try
+            {
+                using (var dbContext = new PazCheckDbContext())
+                {
+                    //Project project = dbContext.Projects.Single(p => p.Id == projectId);
+                    //ProjectVersion minProjectVersion = dbContext.ProjectVersions.Single(pv => pv.Project == project && pv.VersionNum == minVersionNum);
+                    //ProjectVersion maxProjectVersion = dbContext.ProjectVersions.Single(pv => pv.Project == project && pv.VersionNum == maxVersionNum);
+
+                    List<ItemVersionComparisonInfo> result = new();
+
+                    await Task.Delay(0);
+
+                    //await CompareVersionsBaseActuatorsAsync(dbContext, project, projectVersionNum, null, result);
+                    //await CompareVersionsTagsAsync(dbContext, project, projectVersionNum, null, result);
+                    //await CompareVersionsCeMatricesAsync(dbContext, project, projectVersionNum, null, result);
+
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, @"Invalid baseActuatorId: {0}", baseActuatorId);
+
+                return NotFound();
+            }
+        }
+
+        /// <summary>
         ///     Сравнивает 2 версии тэга. Если maxProjectVersionNum не задан, то сравнивается с текущими несхораненными изменениями.
         ///     Если minProjectVersionNum задать 0, то сравнивается с пустой базой.
         /// </summary>
@@ -93,7 +131,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         }
 
         /// <summary>
-        ///     Сравнивает 2 версии тэга. Если maxProjectVersionNum не задан, то сравнивается с текущими несхораненными изменениями.
+        ///     Сравнивает 2 версии матрицы ПСС. Если maxProjectVersionNum не задан, то сравнивается с текущими несхораненными изменениями.
         ///     Если minProjectVersionNum задать 0, то сравнивается с пустой базой.
         /// </summary>
         /// <param name="ceMatrixId"></param>
