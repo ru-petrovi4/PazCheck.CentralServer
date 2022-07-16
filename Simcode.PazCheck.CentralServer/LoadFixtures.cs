@@ -23,7 +23,7 @@ namespace Simcode.PazCheck.CentralServer
 
         public static async Task Fixtures(IServiceProvider serviceProvider, IConfiguration configuration, AddonsManager addonsManager)
         {
-            string defaultUnitTitle = "АВТ-11";
+            string defaultUnitTitle = "АВТ-12";
 
             bool loadFromDumpFile = true;
             try
@@ -208,13 +208,15 @@ namespace Simcode.PazCheck.CentralServer
                 {
                     ParamName = "MaxSafeSpeed",                    
                     Value = "30",
-                    Eu = "с"
+                    Eu = "с",
+                    ParamInfo = maxSafeSpeedParamInfo
                 });
                 valveBaseActuator.BaseActuatorParams.Add(new BaseActuatorParam
                 {
                     ParamName = "SafeSpeed",                    
                     Value = "15",
-                    Eu = "с"
+                    Eu = "с",
+                    ParamInfo = safeSpeedParamInfo
                 });                                
                 dbContext.BaseActuators.Add(valveBaseActuator);
                 var pumpBaseActuator = new BaseActuator
@@ -229,12 +231,13 @@ namespace Simcode.PazCheck.CentralServer
                 {
                     ParamName = "MaxSafeSpeed",                    
                     Value = "3",
-                    Eu = "с"
+                    Eu = "с",
+                    ParamInfo = maxSafeSpeedParamInfo
                 });                
                 dbContext.BaseActuators.Add(pumpBaseActuator);
                 dbContext.SaveChanges();
 
-                // TagConditionElementName
+                // TagConditionInfo
                 dbContext.TagConditionInfos.Add(new TagConditionInfo
                 {
                     Identifier = @"PVHighHigh",                    

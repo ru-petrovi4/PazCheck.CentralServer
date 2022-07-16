@@ -9,6 +9,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     public abstract class DbFileReference : VersionEntityBase
     {
+        [Attr]
+        public string FileName { get; set; } = @"";
+
         [HasOne]
         public DbFile DbFile { get; set; } = null!;
         

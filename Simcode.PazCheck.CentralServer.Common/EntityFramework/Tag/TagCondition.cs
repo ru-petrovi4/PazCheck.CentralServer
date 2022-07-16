@@ -48,7 +48,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public bool CanBeEffect { get; set; } = true;
 
         [HasOne]
-        public TagConditionInfo TagConditionInfo { get; set; } = null!;
+        public TagConditionInfo? TagConditionInfo { get; set; }
 
         [HasOne]
         public Tag Tag { get; set; } = null!;

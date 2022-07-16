@@ -18,7 +18,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string TagName { get; set; } = @"";
 
         /// <summary>
-        ///     TagCondition.Identifier[=TagCondition.Value]
+        ///     TagCondition_Identifier[=TagCondition_Value]
         ///     <example>PVHighHigh</example>
         ///     <example>ALARM=ЗАКР</example>
         /// </summary>
@@ -35,5 +35,10 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public CeMatrix CeMatrix { get; set; } = null!;
 
         public override ILastChangeEntity? GetParentForLastChange() => CeMatrix;
+
+        /// <summary>
+        ///     TAG.TagConditionString_SymbolToDisplay
+        /// </summary>
+        public string GetFullConditionStringToDiplay() => TagName + "." + TagConditionString_SymbolToDisplay;
     }
 }

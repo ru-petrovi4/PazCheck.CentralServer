@@ -14,9 +14,17 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public DbSet<CeMatrix> CeMatrices { get; set; } = null!;
         public DbSet<Cause> Causes { get; set; } = null!;
         public DbSet<Effect> Effects { get; set; } = null!;
+        public DbSet<Intersection> Intersections { get; set; } = null!;
         public DbSet<Tag> Tags { get; set; } = null!;
         public DbSet<BaseActuator> BaseActuators { get; set; } = null!;        
         public DbSet<BaseActuatorType> BaseActuatorTypes { get; set; } = null!;
+        public DbSet<BaseActuatorParam> BaseActuatorParams { get; set; } = null!;
+        public DbSet<BaseActuatorDbFileReference> BaseActuatorDbFileReferences { get; set; } = null!;
+        public DbSet<TagParam> TagParams { get; set; } = null!;
+        public DbSet<ActuatorParam> ActuatorParams { get; set; } = null!;
+        public DbSet<TagCondition> TagConditions { get; set; } = null!;
+        public DbSet<CeMatrixParam> CeMatrixParams { get; set; } = null!;
+        public DbSet<CeMatrixDbFileReference> CeMatrixDbFileReferences { get; set; } = null!;
         public DbSet<EngineeringUnit> EngineeringUnits { get; set; } = null!;
         public DbSet<ParamInfo> ParamInfos { get; set; } = null!;
         public DbSet<TagConditionInfo> TagConditionInfos { get; set; } = null!;
@@ -52,7 +60,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
             var projectEntry = modelBuilder.Entity<Project>();
             projectEntry.HasOne(s => s.ActiveProjectVersion);
-            projectEntry.HasOne(s => s.LastProjectVersion);
+            projectEntry.HasOne(s => s.LastProjectVersion);            
         }
 
         public override int SaveChanges()
@@ -78,6 +86,21 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         }        
     }
 }
+
+//var baseActuatorParamEntry = modelBuilder.Entity<BaseActuatorParam>();
+//baseActuatorParamEntry.HasOne(s => s.ParamInfo);
+
+//var tagParam = modelBuilder.Entity<TagParam>();
+//tagParam.HasOne(s => s.ParamInfo);
+
+//var actuatorParam = modelBuilder.Entity<ActuatorParam>();
+//actuatorParam.HasOne(s => s.ParamInfo);
+
+//var ceMatrixParam = modelBuilder.Entity<CeMatrixParam>();
+//ceMatrixParam.HasOne(s => s.ParamInfo);
+
+//var tagConditionEntry = modelBuilder.Entity<TagCondition>();
+//tagConditionEntry.HasOne(s => s.TagConditionInfo);
 
 //private void BeforeSaveChanges(EntityEntry entry, DateTime utcNow)
 //{

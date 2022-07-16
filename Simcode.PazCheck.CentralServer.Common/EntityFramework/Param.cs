@@ -28,7 +28,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Eu { get; set; } = @"";
 
         [HasOne]
-        public ParamInfo ParamInfo { get; set; } = null!;
+        public ParamInfo? ParamInfo { get; set; }
     }
 
     [Resource]
