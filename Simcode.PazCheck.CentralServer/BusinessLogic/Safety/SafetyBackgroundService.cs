@@ -23,21 +23,22 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
     {
         #region construction and destruction
 
-        public SafetyBackgroundService(IServiceProvider serviceProvider, AddonsManager addonsManager, ILogger<SafetyBackgroundService> logger, IConfiguration configuration)
+        public SafetyBackgroundService(IServiceProvider serviceProvider, AddonsManager addonsManager, ILogger<SafetyBackgroundService> logger, IConfiguration configuration, LocalDataAccessProvider localDataAccessProvider)
         {
             _serviceProvider = serviceProvider;
             _addonsManager = addonsManager;
             _serviceScope = serviceProvider.CreateScope();
             _dbContext = _serviceScope.ServiceProvider.GetRequiredService<PazCheckDbContext>();
             _logger = logger;
-            _configuration = configuration;
+            _configuration = configuration;                       
+            _localDataAccessProvider = localDataAccessProvider;            
         }
 
         #endregion
 
         #region public functions
 
-        public ThreadSafeDispatcher ThreadSafeDispatcher { get; } = new();
+        public ThreadSafeDispatcher ThreadSafeDispatcher { get; } = new();        
 
         public CsvDb CsvDb { get; private set; } = null!;
 
@@ -50,36 +51,30 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
             _logger.LogInformation(
                 $"Safety Hosted Service is running.{Environment.NewLine}");
 
+            _eventMessagesProcessingAddons = _addonsManager.Addons.OfType<EventMessagesProcessingAddonBase>().OrderBy(a => a.IsDummy).ToArray();
+
             CsvDb = ActivatorUtilities.CreateInstance<CsvDb>(
-                _serviceProvider, ServerConfigurationHelper.GetProgramDataDirectoryInfo(_configuration), ThreadSafeDispatcher);            
+                _serviceProvider, ServerConfigurationHelper.GetProgramDataDirectoryInfo(_configuration), ThreadSafeDispatcher);
 
-            var dataAccessProviderAddonsCollection = _addonsManager.Addons.OfType<DataAccessProviderAddonBase>().OrderBy(a => a.IsDummy).ToArray();
-            if (dataAccessProviderAddonsCollection.Length == 0)
-            {
-                // TODO Logging
-                return;
-            }
-
-            _eventMessagesProcessingAddons = _addonsManager.Addons.OfType<EventMessagesProcessingAddonBase>().OrderBy(a => a.IsDummy).ToArray();            
-            
+            _localDataAccessProvider.Initialize(null,
+                true,
+                true,
+                @"",
+                @"Simcode.PazCheck.CentralServer",
+                Environment.MachineName,
+                @"",
+                new CaseInsensitiveDictionary<string?>(),
+                ThreadSafeDispatcher);
+            _localDataAccessProvider.EventMessagesCallback += DataAccessProviderOnEventMessagesCallback;
+            _dataAccessProvidersCollection.Add(_localDataAccessProvider);
+            var dataAccessProviderAddonsCollection = _addonsManager.Addons.OfType<DataAccessProviderAddonBase>().OrderBy(a => a.IsDummy).ToArray();            
             foreach (var dataAccessProviderAddon in dataAccessProviderAddonsCollection)
-            {
-                //IDataAccessProvider dataAccessProvider = ActivatorUtilities.CreateInstance<GrpcDataAccessProvider>(_serviceProvider, ThreadSafeDispatcher);
-
-                //dataAccessProvider.Initialize(
-                //    null,
-                //    true,
-                //    true,
-                //    @"http://localhost:60060/",
-                //    @"Simcode.PazCheck.Addons.DataAccessClient",
-                //    Environment.MachineName,
-                //    @"DCS",
-                //    new CaseInsensitiveDictionary<string?>()
-                //    );
-
+            {                
                 var dataAccessProvider = dataAccessProviderAddon.GetDataAccessProvider(ThreadSafeDispatcher);
-                if (dataAccessProvider is null)
+                if (dataAccessProvider is null)                
                     continue;
+               dataAccessProvider.EventMessagesCallback += DataAccessProviderOnEventMessagesCallback;
+                _dataAccessProvidersCollection.Add(dataAccessProvider);
                 var eventSourceModel = new EventSourceModel();
                 eventSourceModel.Initialize(dataAccessProvider);
                 dataAccessProvider.Obj = eventSourceModel;
@@ -97,8 +92,6 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
             }
             foreach (var eventSourceModel in _eventSourceModelsCollection)
             {
-                eventSourceModel.DataAccessProvider.EventMessagesCallback += DataAccessProviderOnEventMessagesCallback;
-
                 FillInEventSourceModelAndDb(unit, eventSourceModel);                
             }
 
@@ -123,9 +116,13 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
                 await DoWorkAsync(nowUtc, cancellationToken);
             }
 
-            foreach (var eventSourceModel in _eventSourceModelsCollection)
+            foreach (var dataAccessProvider in _dataAccessProvidersCollection)
             {
-                eventSourceModel.DataAccessProvider.Close();
+                dataAccessProvider.Close();                
+            }
+
+            foreach (var eventSourceModel in _eventSourceModelsCollection)
+            {                
                 eventSourceModel.Clear();
             }
 
@@ -382,6 +379,8 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
                 return;
 
             using var dbContext = new PazCheckDbContext();
+            // TODO
+            var unint = dbContext.Units.Single(u => u.Title == LoadFixtures.DefaultUnitTitle);
 
             string? sourceSystemId = eventMessagesCollection.CommonFields?.TryGetValue(@"SourceSystemId");
             if (!String.IsNullOrEmpty(sourceSystemId))
@@ -389,22 +388,24 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
                 var eventMessagesProcessingAddon = _eventMessagesProcessingAddons?.FirstOrDefault(a => a.CanAddToEventSourceModelEventMessageFrom(sourceSystemId));
                 if (eventMessagesProcessingAddon is not null)
                 {
-                    var eventSourceModel = (EventSourceModel)dataAccessProvider.Obj!;
-                    var eventMessagesArray = eventMessagesCollection.EventMessages.Where(em => em != null).OrderBy(em => em.OccurrenceTimeUtc).ToArray();
-                    foreach (EventMessage eventMessage in eventMessagesArray)
+                    EventSourceModel? eventSourceModel = dataAccessProvider.Obj as EventSourceModel;
+                    if (eventSourceModel is not null)
                     {
-                        await eventMessagesProcessingAddon.AddToEventSourceModelAsync(eventSourceModel, eventMessage);
-                    }                    
+                        var eventMessagesArray = eventMessagesCollection.EventMessages.Where(em => em != null).OrderBy(em => em.OccurrenceTimeUtc).ToArray();
+                        foreach (EventMessage eventMessage in eventMessagesArray)
+                        {
+                            await eventMessagesProcessingAddon.AddToEventSourceModelAsync(eventSourceModel, eventMessage);
+                        }
+                    }                                       
                 }
 
                 eventMessagesProcessingAddon = _eventMessagesProcessingAddons?.FirstOrDefault(a => a.CanSaveToDbEventMessageFrom(sourceSystemId));
                 if (eventMessagesProcessingAddon is not null)
-                {
-                    var eventSourceModel = (EventSourceModel)dataAccessProvider.Obj!;
+                {                    
                     var eventMessagesArray = eventMessagesCollection.EventMessages.Where(em => em != null).OrderBy(em => em.OccurrenceTimeUtc).ToArray();
                     foreach (EventMessage eventMessage in eventMessagesArray)
                     {
-                        await eventMessagesProcessingAddon.SaveToDbAsync(dbContext, eventMessage, CancellationToken.None, null);
+                        await eventMessagesProcessingAddon.SaveToDbAsync(eventMessage, dbContext, unint, CancellationToken.None, null);
                     }
 
                     string? sourceAddonId = eventMessagesCollection.CommonFields?.TryGetValue(@"SourceAddonId");
@@ -439,10 +440,13 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
         private readonly PazCheckDbContext _dbContext;
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
-        
-        private readonly List<EventSourceModel> _eventSourceModelsCollection = new();
+        private readonly LocalDataAccessProvider _localDataAccessProvider;
 
         private EventMessagesProcessingAddonBase[]? _eventMessagesProcessingAddons;
+
+        private readonly List<IDataAccessProvider> _dataAccessProvidersCollection = new();
+
+        private readonly List<EventSourceModel> _eventSourceModelsCollection = new();
 
         #endregion
     }

@@ -91,7 +91,7 @@ namespace Simcode.PazCheck.Addons.DummyExperionTagsImporter
                                     ret.ImportedTags++;
                                     _context.Tags.Add(tag);
                                     count += 1;
-                                }
+                                }                                
                                 break;
                             }
                         case TagType.AnalogPoint:
@@ -134,7 +134,7 @@ namespace Simcode.PazCheck.Addons.DummyExperionTagsImporter
                                     ret.ImportedTags++;
                                     _context.Tags.Add(tag);
                                     count += 1;
-                                }
+                                }                                
                                 break;
                             }
                     }

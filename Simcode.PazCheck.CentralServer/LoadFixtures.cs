@@ -21,15 +21,15 @@ namespace Simcode.PazCheck.CentralServer
     {
         #region public functions
 
+        public const string DefaultUnitTitle = "АВТ-13";
+
         public static async Task Fixtures(IServiceProvider serviceProvider, IConfiguration configuration, AddonsManager addonsManager)
         {
-            string defaultUnitTitle = "АВТ-12";
-
             bool loadFromDumpFile = true;
             try
             {
                 using var dbContext = new PazCheckDbContext();
-                if (dbContext.Units.Any(u => u.Title == defaultUnitTitle))
+                if (dbContext.Units.Any(u => u.Title == DefaultUnitTitle))
                     return;
             }
             catch
@@ -124,7 +124,7 @@ namespace Simcode.PazCheck.CentralServer
                 Simuser = userMngr;
 
                 // Units
-                var avtUnit = new Unit { Title = defaultUnitTitle, Desc = "Установка" + defaultUnitTitle };
+                var avtUnit = new Unit { Title = DefaultUnitTitle, Desc = "Установка" + DefaultUnitTitle };
                 dbContext.Units.Add(avtUnit);
                 var someUnit = new Unit { Title = "Гидроочистка", Desc = "Гидроочистка дизельных топлив" };
                 dbContext.Units.Add(someUnit);                
@@ -267,47 +267,63 @@ namespace Simcode.PazCheck.CentralServer
 
                 var examplesDirectoryFullName = ServerConfigurationHelper.GetExamplesDirectoryFullName(configuration);
 
-                // TAGs                
-                var tagsImporterAddon = addonsManager.Addons.OfType<TagsImporterAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
-                if (tagsImporterAddon is not null)
+                // TAGs
+                foreach (string fileFullName in Directory.EnumerateFiles(examplesDirectoryFullName))
                 {
-                    foreach (string fileFullName in Directory.EnumerateFiles(examplesDirectoryFullName))
+                    string fileName = Path.GetFileName(fileFullName);
+                    if (fileName.EndsWith("_tags.csv", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        string fileName = Path.GetFileName(fileFullName);
-                        if (fileName.EndsWith("tags.csv", StringComparison.InvariantCultureIgnoreCase))
+                        int i1 = fileName.IndexOf('_');
+                        if (i1 >= 0)
                         {
-                            try
+                            int i2 = fileName.IndexOf('_', i1 + 1);
+                            if (i2 >= 0)
                             {
-                                using (var stream = File.OpenRead(fileFullName))
+                                string addonName = fileName.Substring(i1 + 1, i2 - i1 - 1);
+                                var tagsImporterAddon = addonsManager.Addons.OfType<TagsImporterAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault(a => String.Equals(a.Name, addonName, StringComparison.InvariantCultureIgnoreCase));
+                                if (tagsImporterAddon is not null)
                                 {
-                                    tagsImporterAddon.ImportTags(stream, dbContext, mainProject, Simuser!.User);
+                                    try
+                                    {
+                                        using var stream = System.IO.File.OpenRead(fileFullName);
+                                        tagsImporterAddon.ImportTags(stream, dbContext, mainProject, Simuser!.User);
+                                    }
+                                    catch
+                                    {
+                                    }
                                 }
                             }
-                            catch
-                            {
-                            }
                         }
-                    }
-                }
+                    }                    
+                }                
 
-                // Logs                
-                var logsImporterAddon = addonsManager.Addons.OfType<EventMessagesProcessingAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
-                if (logsImporterAddon is not null)
+                // Logs
+                foreach (string fileFullName in Directory.EnumerateFiles(examplesDirectoryFullName))
                 {
-                    foreach (string fileFullName in Directory.EnumerateFiles(examplesDirectoryFullName))
-                    {
-                        string fileName = Path.GetFileName(fileFullName);
-                        if (fileName.EndsWith("logs.csv", StringComparison.InvariantCultureIgnoreCase))
+                    string fileName = Path.GetFileName(fileFullName);
+                    if (fileName.EndsWith("_logs.csv", StringComparison.InvariantCultureIgnoreCase))
+                    {                        
+                        int i1 = fileName.IndexOf('_');
+                        if (i1 >= 0)
                         {
-                            try
+                            int i2 = fileName.IndexOf('_', i1 + 1);
+                            if (i2 >= 0)
                             {
-                                using var stream = System.IO.File.OpenRead(fileFullName);
-                                //await logsImporterAddon.SaveToDbAsync(stream, fileName, dbContext, avtUnit.Id, CancellationToken.None, DummyJobProgress.Dafault);
+                                string addonName = fileName.Substring(i1 + 1, i2 - i1 - 1);
+                                var eventMessagesProcessingAddon = addonsManager.Addons.OfType<EventMessagesProcessingAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault(a => String.Equals(a.Name, addonName, StringComparison.InvariantCultureIgnoreCase));
+                                if (eventMessagesProcessingAddon is not null)
+                                {
+                                    try
+                                    {
+                                        using var stream = System.IO.File.OpenRead(fileFullName);
+                                        await eventMessagesProcessingAddon.ImportEventsJournalFileAsync(stream, fileName, dbContext, avtUnit.Id, CancellationToken.None, DummyJobProgress.Dafault);
+                                    }
+                                    catch
+                                    {
+                                    }
+                                }
                             }
-                            catch
-                            {
-                            }
-                        }
+                        }                        
                     }
                 }
 

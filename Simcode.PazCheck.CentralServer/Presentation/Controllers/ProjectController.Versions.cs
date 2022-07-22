@@ -189,7 +189,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         GetVersions(baseActuator.BaseActuatorDbFileReferences, projectVersionNums);
                     }                    
 
-                    return Ok(projectVersionNums.ToArray());
+                    return Ok(projectVersionNums.OrderBy(n => n).ToArray());
                 }
             }
             catch (Exception ex)
@@ -230,7 +230,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         GetVersions(tag.TagConditions, projectVersionNums);
                     }
 
-                    return Ok(projectVersionNums.ToArray());
+                    return Ok(projectVersionNums.OrderBy(n => n).ToArray());
                 }
             }
             catch (Exception ex)
@@ -282,7 +282,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         GetVersions(ceMatrix.Intersections, projectVersionNums);
                     }
 
-                    return Ok(projectVersionNums.ToArray());
+                    return Ok(projectVersionNums.OrderBy(n => n).ToArray());
                 }
             }
             catch (Exception ex)
@@ -820,12 +820,19 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             public string ChangeType { get; set; } = @"";
 
             /// <summary>
+            ///     Уровень объекта в дереве (отступ)
             ///     0,1,2..
             /// </summary>
             public uint Level { get; set; }
 
+            /// <summary>
+            ///     Имя объекта
+            /// </summary>
             public string ObjectName { get; set; } = @"";
 
+            /// <summary>
+            ///     Описание (если не поменщается, можно как покзывать как всплывающую подсказку)
+            /// </summary>
             public string ObjectDesc { get; set; } = @"";
 
             public string OldValue { get; set; } = @"";

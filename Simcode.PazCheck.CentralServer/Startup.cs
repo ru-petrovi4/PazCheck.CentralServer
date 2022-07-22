@@ -131,6 +131,7 @@ namespace Simcode.PazCheck.CentralServer
             services.AddSingleton<AddonsManager>();
             services.AddSingleton<JobsManager>();
             services.AddSingleton<Licence>();
+            services.AddSingleton<LocalDataAccessProvider>();
             services.AddScoped<TagsImporter>();
         }
 

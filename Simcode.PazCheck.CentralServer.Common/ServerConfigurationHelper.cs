@@ -20,7 +20,7 @@ namespace Simcode.PazCheck.CentralServer.Common
         /// <exception cref="Exception"></exception>
         public static DirectoryInfo GetProgramDataDirectoryInfo(IConfiguration configuration)
         {
-            string programDataDirectory = ConfigurationHelper.GetValue<string>(configuration, @"ProgramDataDirectory", @"");
+            string programDataDirectory = ConfigurationHelper.GetValue(configuration, @"ProgramDataDirectory", @"");
             if (programDataDirectory == @"")
             {
                 throw new Exception(@"AppSettings ProgramDataDirectory is empty");
@@ -31,7 +31,7 @@ namespace Simcode.PazCheck.CentralServer.Common
                 programDataDirectory = Path.Combine(AppContext.BaseDirectory, programDataDirectory);
 
             return new DirectoryInfo(programDataDirectory);
-        }        
+        }
 
         /// <summary>
         ///     Throws, if ProgramDataDirectory is not configured.

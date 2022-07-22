@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
 using JsonApiDotNetCore.Resources;
 using JsonApiDotNetCore.Resources.Annotations;
 
@@ -31,5 +32,24 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         [HasMany]
         public List<IntersectionResult> IntersectionResults { get; set; } = new();
+
+        /// <summary>
+        ///     JSON string, name-values collection
+        /// </summary>
+        public string Statistics { get; set; } = @"";
+
+        [Attr]
+        [NotMapped]
+        public Dictionary<string, string> StatisticsDictionary
+        {
+            get
+            {
+                return JsonFieldsHelper.GetDictionary(Statistics);
+            }
+            set
+            {
+                Statistics = JsonFieldsHelper.SetDictionary(value);
+            }
+        }
     }
 }
