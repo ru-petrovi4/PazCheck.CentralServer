@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
 using JsonApiDotNetCore.Resources;
 using JsonApiDotNetCore.Resources.Annotations;
+using Ssz.Utils;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
@@ -17,34 +18,33 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string TagName { get; set; } = @"";
 
         /// <summary>
-        ///     TagConditionIdentifier[=TagConditionValue]
+        ///     TagCondition_Identifier[=TagCondition_Value]
         /// </summary>
         [Attr]
-        public string TagConditionString { get; set; } = @"";
+        public string ConditionString { get; set; } = @"";
 
         [Attr]
-        public bool ConditionIsActive { get; set; }
-
-        [Attr]
-        public string EventSource { get; set; } = @"";
+        public bool ConditionIsActive { get; set; }        
         
         /// <summary>
-        ///     JSON string, name-values collection
+        ///     Url encoded name-values collection
         /// </summary>
         public string OriginalEvent { get; set; } = @"";
 
         [Attr]
         [NotMapped]
-        public Dictionary<string, string> OriginalEventDictionary
+        public Dictionary<string, string?> OriginalEventDictionary
         {
             get
             {
-                return JsonFieldsHelper.GetDictionary(OriginalEvent);
+                return NameValueCollectionHelper.Parse(OriginalEvent);
             }
             set
             {
-                OriginalEvent = JsonFieldsHelper.SetDictionary(value);
+                OriginalEvent = NameValueCollectionHelper.GetNameValueCollectionString(value);
             }
         }
+
+        public string GetFullConditionString() => TagName + "." + ConditionString;
     }
 }

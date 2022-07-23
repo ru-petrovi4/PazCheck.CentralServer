@@ -16,8 +16,11 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [HasOne]
         public EffectResult EffectResult { get; set; } = null!;
 
+        /// <summary>
+        ///     TagConditionString_SymbolToDisplay или Custom Field Value
+        /// </summary>
         [Attr]
-        public string TagConditionString_SymbolToDisplay { get; set; } = @"";
+        public string Value { get; set; } = @"";
 
         [Attr]
         public TriggeredTypes TriggeredType { get; set; } = 0;

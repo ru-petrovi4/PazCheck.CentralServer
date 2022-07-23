@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
 using JsonApiDotNetCore.Resources;
 using JsonApiDotNetCore.Resources.Annotations;
+using Ssz.Utils;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
@@ -34,21 +35,21 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public List<IntersectionResult> IntersectionResults { get; set; } = new();
 
         /// <summary>
-        ///     JSON string, name-values collection
+        ///     Url encoded name-values collection
         /// </summary>
         public string Statistics { get; set; } = @"";
 
         [Attr]
-        [NotMapped]
-        public Dictionary<string, string> StatisticsDictionary
+        [NotMapped]        
+        public Dictionary<string, string?> StatisticsDictionary
         {
             get
             {
-                return JsonFieldsHelper.GetDictionary(Statistics);
+                return NameValueCollectionHelper.Parse(Statistics);
             }
             set
             {
-                Statistics = JsonFieldsHelper.SetDictionary(value);
+                Statistics = NameValueCollectionHelper.GetNameValueCollectionString(value);
             }
         }
     }

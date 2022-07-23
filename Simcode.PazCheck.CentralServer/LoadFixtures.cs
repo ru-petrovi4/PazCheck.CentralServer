@@ -25,16 +25,16 @@ namespace Simcode.PazCheck.CentralServer
 
         public static async Task Fixtures(IServiceProvider serviceProvider, IConfiguration configuration, AddonsManager addonsManager)
         {
-            bool loadFromDumpFile = true;
-            try
-            {
-                using var dbContext = new PazCheckDbContext();
-                if (dbContext.Units.Any(u => u.Title == DefaultUnitTitle))
-                    return;
-            }
-            catch
-            {
-            }
+            bool loadFromDumpFile = false;
+            //try
+            //{
+            //    using var dbContext = new PazCheckDbContext();
+            //    if (dbContext.Units.Any(u => u.Title == DefaultUnitTitle))
+            //        return;
+            //}
+            //catch
+            //{
+            //}
 
             if (loadFromDumpFile)
             {
@@ -124,9 +124,9 @@ namespace Simcode.PazCheck.CentralServer
                 Simuser = userMngr;
 
                 // Units
-                var avtUnit = new Unit { Title = DefaultUnitTitle, Desc = "Установка" + DefaultUnitTitle };
+                var avtUnit = new Unit { Id = "AVT_6", Title = DefaultUnitTitle, Desc = "Установка" + DefaultUnitTitle };
                 dbContext.Units.Add(avtUnit);
-                var someUnit = new Unit { Title = "Гидроочистка", Desc = "Гидроочистка дизельных топлив" };
+                var someUnit = new Unit { Id = "HYDRO", Title = "Гидроочистка", Desc = "Гидроочистка дизельных топлив" };
                 dbContext.Units.Add(someUnit);                
 
                 // Projects                
@@ -316,7 +316,7 @@ namespace Simcode.PazCheck.CentralServer
                                     try
                                     {
                                         using var stream = System.IO.File.OpenRead(fileFullName);
-                                        await eventMessagesProcessingAddon.ImportEventsJournalFileAsync(stream, fileName, dbContext, avtUnit.Id, CancellationToken.None, DummyJobProgress.Dafault);
+                                        await eventMessagesProcessingAddon.ImportEventsJournalFileAsync(stream, fileName, dbContext, avtUnit, CancellationToken.None, DummyJobProgress.Dafault);
                                     }
                                     catch
                                     {

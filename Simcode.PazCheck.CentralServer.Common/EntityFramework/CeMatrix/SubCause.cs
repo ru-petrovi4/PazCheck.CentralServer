@@ -25,13 +25,13 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         ///     <example>ALARM=«¿ –</example>        
         /// </summary>
         [Attr]
-        public string TagConditionString { get; set; } = @"";
+        public string ConditionString { get; set; } = @"";
         
         [Attr]
-        public string TagConditionString_SymbolToDisplay { get; set; } = @"";
+        public string ConditionString_SymbolToDisplay { get; set; } = @"";
 
         [Attr]
-        public string CustomFieldValues { get; set; } = @"";
+        public string CustomRowHeader { get; set; } = @"";
         
         [HasOne]
         public Cause Cause { get; set; } = null!;
@@ -39,9 +39,14 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public override ILastChangeEntity? GetParentForLastChange() => Cause;
 
         /// <summary>
+        ///     TAG.TagCondition_Identifier[=TagCondition_Value]
+        /// </summary>
+        public string GetTagNameAndConditionString() => TagName + "." + ConditionString;
+
+        /// <summary>
         ///     TAG.TagConditionString_SymbolToDisplay
         /// </summary>
-        public string GetFullConditionStringToDiplay() => TagName + "." + TagConditionString_SymbolToDisplay;
+        public string GetTagNameAndConditionString_SymbolToDisplay() => TagName + "." + ConditionString_SymbolToDisplay;
     }
 }
 

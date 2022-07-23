@@ -24,7 +24,7 @@ namespace Simcode.PazCheck.Addons.DummyExperionEventMessagesProcessing
             _logger = logger;
         }        
 
-        public async Task ImportFileLogAsync(CsvDb csvDb, Stream stream, string logName, PazCheckDbContext context, int unitId, CancellationToken cancellationToken, IJobProgress jobProgress)
+        public async Task ImportFileLogAsync(CsvDb csvDb, Stream stream, string logName, PazCheckDbContext context, string unitId, CancellationToken cancellationToken, IJobProgress jobProgress)
         {            
             var logevents = new List<UnitEvent>();
             var unit = await context.Units
@@ -76,9 +76,8 @@ namespace Simcode.PazCheck.Addons.DummyExperionEventMessagesProcessing
                 {
                     EventTimeUtc = dateTimeUtc,
                     TagName = logRecord.Tag,
-                    TagConditionString = tagAndCondition,
-                    ConditionIsActive = alarmConditionIsActive,
-                    EventSource = "Experion",
+                    //TagConditionString = tagAndCondition,
+                    ConditionIsActive = alarmConditionIsActive,                    
                     OriginalEvent = @"" // TODO
                 };
 

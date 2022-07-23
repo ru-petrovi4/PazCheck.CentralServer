@@ -490,7 +490,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             CompareVersionsEntities(effectsList, minProjectVersionNum, maxProjectVersionNum,
                     IdEqualityComparer<Effect>.Instance,
                     1,
-                    e => e.GetFullConditionStringToDiplay(),
+                    e => e.GetTagNameAndConditionString_SymbolToDisplay(),
                     e => @"",
                     e => @"",
                     resultEffects);
@@ -501,7 +501,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             CompareVersionsEntities(intersectionsList, minProjectVersionNum, maxProjectVersionNum,
                     IdEqualityComparer<Intersection>.Instance,
                     1,
-                    i => "Причина: " + i.Cause.Num + @"; Следствие: " + i.Effect.GetFullConditionStringToDiplay(),
+                    i => "Причина: " + i.Cause.Num + @"; Следствие: " + i.Effect.GetTagNameAndConditionString_SymbolToDisplay(),
                     i => @"",
                     i => @"",
                     resultIntersections);
@@ -658,7 +658,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                 CompareVersionsEntities(intersectMaxCause.SubCauses, minProjectVersionNum, maxProjectVersionNum,
                         IdEqualityComparer<SubCause>.Instance,
                         2,
-                        sc => sc.GetFullConditionStringToDiplay(),
+                        sc => sc.GetTagNameAndConditionString_SymbolToDisplay(),
                         sc => @"",
                         sc => @"",
                         resultSubCauses);
