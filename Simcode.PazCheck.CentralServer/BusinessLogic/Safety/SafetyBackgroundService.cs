@@ -84,7 +84,7 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
             await _dbContext.Database.EnsureCreatedAsync(cancellationToken);
 
             await Task.Delay(5000);
-            Unit? unit = _dbContext.Units.Find(2);
+            Unit? unit = _dbContext.Units.FirstOrDefault(u => u.Title == LoadFixtures.DefaultUnitTitle);
             if (unit == null)
             {
                 _logger.LogError("Invalid UnitId.");

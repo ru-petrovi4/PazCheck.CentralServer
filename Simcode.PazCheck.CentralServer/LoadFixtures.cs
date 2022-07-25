@@ -25,16 +25,16 @@ namespace Simcode.PazCheck.CentralServer
 
         public static async Task Fixtures(IServiceProvider serviceProvider, IConfiguration configuration, AddonsManager addonsManager)
         {
-            bool loadFromDumpFile = false;
-            //try
-            //{
-            //    using var dbContext = new PazCheckDbContext();
-            //    if (dbContext.Units.Any(u => u.Title == DefaultUnitTitle))
-            //        return;
-            //}
-            //catch
-            //{
-            //}
+            bool loadFromDumpFile = true;
+            try
+            {
+                using var dbContext = new PazCheckDbContext();
+                if (dbContext.Units.Any(u => u.Title == DefaultUnitTitle))
+                    return;
+            }
+            catch
+            {
+            }
 
             if (loadFromDumpFile)
             {

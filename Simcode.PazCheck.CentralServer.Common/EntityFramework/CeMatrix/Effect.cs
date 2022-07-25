@@ -30,7 +30,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string ConditionString_SymbolToDisplay { get; set; } = @"";
         
         [Attr]
-        public string CustomColumnHeader { get; set; } = @"";
+        public string CustomFieldHeader { get; set; } = @"";
 
         [HasOne]
         public CeMatrix CeMatrix { get; set; } = null!;

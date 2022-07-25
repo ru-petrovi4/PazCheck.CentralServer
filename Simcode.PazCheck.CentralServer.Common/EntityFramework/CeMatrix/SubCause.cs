@@ -31,7 +31,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string ConditionString_SymbolToDisplay { get; set; } = @"";
 
         [Attr]
-        public string CustomRowHeader { get; set; } = @"";
+        public string CustomFieldHeader { get; set; } = @"";
         
         [HasOne]
         public Cause Cause { get; set; } = null!;

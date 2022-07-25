@@ -25,8 +25,11 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr]
         public int Type { get; set; } = 0;
 
+        /// <summary>
+        ///     TagCondition_Identifier[=TagCondition_Value]
+        /// </summary>
         [Attr]
-        public string TagConditionString { get; set; } = @"";
+        public string ConditionString { get; set; } = @"";
 
         [Attr]
         public TriggeredTypes TriggeredType { get; set; } = 0;

@@ -20,6 +20,7 @@ namespace Simcode.PazCheck.CentralServer.Common
         public abstract string? GetCeMatrixRuntimeString(PazCheckDbContext context, CeMatrixResult diagResult);
 
         public abstract Task CalculateResultsAsync(PazCheckDbContext dbContext, int logId, DateTime startTimeUtc, DateTime endTimeUtc,
+            UInt32? projectVersionNum,
             CancellationToken cancellationToken, IJobProgress jobProgress);
 
         public abstract string? GetTimelineJson(Result result);

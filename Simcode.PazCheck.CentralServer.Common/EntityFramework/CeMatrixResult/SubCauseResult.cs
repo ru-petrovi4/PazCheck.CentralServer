@@ -20,16 +20,16 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string TagName { get; set; } = @"";
 
         /// <summary>
-        ///     Положение в котором он срабатыает
+        ///     TagCondition_Identifier[=TagCondition_Value]  
         /// </summary>
         [Attr]
-        public string TagConditionString { get; set; } = @"";
+        public string ConditionString { get; set; } = @"";
 
         [Attr]
-        public string TagConditionString_SymbolToDisplay { get; set; } = @"";
+        public string ConditionString_SymbolToDisplay { get; set; } = @"";
 
         [Attr]
-        public string CustomFieldValues { get; set; } = @"";
+        public string CustomFieldHeader { get; set; } = @"";
 
         [Attr]
         public DateTime? TriggeredTimeUtc { get; set; }

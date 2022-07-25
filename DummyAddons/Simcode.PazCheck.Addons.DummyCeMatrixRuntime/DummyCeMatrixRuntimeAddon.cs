@@ -51,6 +51,7 @@ namespace Simcode.PazCheck.Addons.DummyCeMatrixRuntime
         }
 
         public override Task CalculateResultsAsync(PazCheckDbContext dbContext, int logId, DateTime startTimeUtc, DateTime endTimeUtc,
+            UInt32? projectVersionNum,
             CancellationToken cancellationToken, IJobProgress jobProgress)
         {
             return Task.CompletedTask;

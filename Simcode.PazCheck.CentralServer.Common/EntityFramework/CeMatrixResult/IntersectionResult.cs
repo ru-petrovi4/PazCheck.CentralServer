@@ -13,6 +13,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [HasOne]
         public CauseResult CauseResult { get; set; } = null!;
 
+        [Attr]
+        public int? SubCauseNum { get; set; }
+
         [HasOne]
         public EffectResult EffectResult { get; set; } = null!;
 

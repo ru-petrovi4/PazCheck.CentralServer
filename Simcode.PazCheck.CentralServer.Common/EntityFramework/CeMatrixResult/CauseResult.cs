@@ -14,6 +14,12 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr]
         public int Num { get; set; } = 0;
 
+        /// <summary>
+        ///     Is row with debug info
+        /// </summary>
+        [Attr]
+        public bool IsDebug { get; set; }
+
         [HasMany]
         public List<SubCauseResult> SubCauseResults { get; set; } = new();
 
