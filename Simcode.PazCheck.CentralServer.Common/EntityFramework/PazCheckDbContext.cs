@@ -40,10 +40,14 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public DbSet<SetActiveProjectVersionRequest> SetActiveProjectVersionRequests { get; set; } = null!;
 
         public PazCheckDbContext(DbContextOptions<PazCheckDbContext> options) : base(options)
-        { }
+        {
+            SavingChanges += OnSavingChanges;
+        }
 
         public PazCheckDbContext() : base()
-        { }
+        {
+            SavingChanges += OnSavingChanges;
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {            
@@ -63,7 +67,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
             projectEntry.HasOne(s => s.LastProjectVersion);            
         }
 
-        public override int SaveChanges()
+        private void OnSavingChanges(object? sender, SavingChangesEventArgs e)
         {
             DateTime utcNow = DateTime.UtcNow;
 
@@ -81,8 +85,6 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
                     }
                 }
             }
-
-            return base.SaveChanges();
         }        
     }
 }
