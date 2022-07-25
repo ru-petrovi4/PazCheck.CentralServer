@@ -82,8 +82,8 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                     {
                         VersionNum = (project.LastProjectVersion?.VersionNum ?? 0) + 1,
                         TimeUtc = DateTime.UtcNow,
-                        User = user,
-                        Comment = comment
+                        User = user ?? @"",
+                        Comment = comment ?? @""
                     };
                     project.LastProjectVersion = projectVersion;
                     project.ProjectVersions.Add(projectVersion);
