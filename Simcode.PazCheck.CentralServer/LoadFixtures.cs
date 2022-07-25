@@ -21,7 +21,7 @@ namespace Simcode.PazCheck.CentralServer
     {
         #region public functions
 
-        public const string DefaultUnitTitle = "АВТ-13";
+        public const string DefaultUnitTitle = "АВТ-14";
 
         public static async Task Fixtures(IServiceProvider serviceProvider, IConfiguration configuration, AddonsManager addonsManager)
         {
