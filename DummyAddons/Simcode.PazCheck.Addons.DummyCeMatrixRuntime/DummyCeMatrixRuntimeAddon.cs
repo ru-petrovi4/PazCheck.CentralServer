@@ -31,14 +31,14 @@ namespace Simcode.PazCheck.Addons.DummyCeMatrixRuntime
 
         public override bool IsDummy => true;
 
-        public override string? GetCeMatrixString(PazCheckDbContext context, CeMatrix diagram)
+        public override Task<string?> GetCeMatrixStringAsync(PazCheckDbContext dbContext, CeMatrix ceMatrix)
         {
-            return "Example CeMatrix String";
+            return Task.FromResult<string?>("Example CeMatrix String");
         }
 
-        public override string? GetCeMatrixRuntimeString(PazCheckDbContext context, CeMatrixResult diagResult)
+        public override Task<string?> GetCeMatrixRuntimeStringAsync(PazCheckDbContext dbContext, CeMatrixResult ceMatrixResult)
         {
-            return "Example CeMatrixRuntime String";
+            return Task.FromResult<string?>("Example CeMatrixRuntime String");
         }
 
         public override Task LoadFixturesAsync(IConfiguration configuration, IServiceProvider serviceProvider, PazCheckDbContext dbContext, Project project)
