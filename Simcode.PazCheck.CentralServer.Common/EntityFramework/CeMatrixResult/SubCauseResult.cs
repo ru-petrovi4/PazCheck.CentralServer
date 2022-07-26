@@ -1,6 +1,3 @@
-// Copyright (c) 2021
-// All rights reserved by Simcode
-#nullable enable
 using System;
 using JsonApiDotNetCore.Resources;
 using JsonApiDotNetCore.Resources.Annotations;

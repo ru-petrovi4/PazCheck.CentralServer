@@ -9,7 +9,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public class UnitEventsInterval : Identifiable<int>
     {
         [Attr]
-        public DateTime StartTimeUtc { get; set; }
+        public DateTime BeginTimeUtc { get; set; }
 
         [Attr]
         public DateTime EndTimeUtc { get; set; }

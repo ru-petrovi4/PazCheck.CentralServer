@@ -1,6 +1,3 @@
-// Copyright (c) 2021
-// All rights reserved by Simcode
-#nullable enable
 using System;
 using System.Collections.Generic;
 using JsonApiDotNetCore.Resources;
@@ -24,7 +21,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public DateTime AlalyzeTimeUtc { get; set; } = DateTime.UtcNow;
 
         [Attr]
-        public DateTime StartTimeUtc { get; set; }
+        public DateTime BeginTimeUtc { get; set; }
 
         [Attr]
         public DateTime EndTimeUtc { get; set; }

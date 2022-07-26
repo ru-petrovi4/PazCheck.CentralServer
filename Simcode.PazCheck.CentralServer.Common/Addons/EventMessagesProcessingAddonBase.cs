@@ -4,6 +4,7 @@ using Ssz.Utils.Addons;
 using Ssz.Utils.DataAccess;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace Simcode.PazCheck.CentralServer.Common
 {
     public abstract class EventMessagesProcessingAddonBase : AddonBase
     {
-        public virtual Task ImportEventsJournalFileAsync(Stream stream, string fileName, PazCheckDbContext dbContext, Unit unit, CancellationToken cancellationToken, IJobProgress jobProgress)
+        public virtual Task ImportEventsJournalFileAsync(Stream stream, Encoding encoding, string fileName, PazCheckDbContext dbContext, Unit unit, CancellationToken cancellationToken, IJobProgress jobProgress)
         {
             return Task.CompletedTask;
         }

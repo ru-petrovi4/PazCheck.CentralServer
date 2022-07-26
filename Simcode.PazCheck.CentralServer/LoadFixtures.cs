@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -316,7 +317,7 @@ namespace Simcode.PazCheck.CentralServer
                                     try
                                     {
                                         using var stream = System.IO.File.OpenRead(fileFullName);
-                                        await eventMessagesProcessingAddon.ImportEventsJournalFileAsync(stream, fileName, dbContext, avtUnit, CancellationToken.None, DummyJobProgress.Dafault);
+                                        await eventMessagesProcessingAddon.ImportEventsJournalFileAsync(stream, Encoding.UTF8, fileName, dbContext, avtUnit, CancellationToken.None, DummyJobProgress.Dafault);
                                     }
                                     catch
                                     {

@@ -45,7 +45,7 @@ namespace Simcode.PazCheck.Addons.DummyExperionEventMessagesProcessing
                 if (i % 100 == 0) 
                     await jobProgress.ReportAsync(100 * streamReader.BaseStream.Position / streamReader.BaseStream.Length, null, null, false);
 
-                bool alarmConditionIsActive;
+                bool? alarmConditionIsActive = null;
                 switch (logRecord.EventType.ToUpperInvariant())
                 {
                     case "ALARM":
@@ -64,7 +64,7 @@ namespace Simcode.PazCheck.Addons.DummyExperionEventMessagesProcessing
                     case "NONE":
                         continue; // ignore when no alarm.
                     case "ALARM":
-                        if (!alarmConditionIsActive) continue; // ALARM can not return to normal.
+                        if (alarmConditionIsActive == false) continue; // ALARM can not return to normal.
                         alarmCondition += "=" + logRecord.Value;
                         break;
                 }
@@ -76,7 +76,7 @@ namespace Simcode.PazCheck.Addons.DummyExperionEventMessagesProcessing
                 {
                     EventTimeUtc = dateTimeUtc,
                     TagName = logRecord.Tag,
-                    //TagConditionString = tagAndCondition,
+                    ConditionString = alarmCondition,
                     ConditionIsActive = alarmConditionIsActive,                    
                     OriginalEvent = @"" // TODO
                 };
@@ -91,7 +91,7 @@ namespace Simcode.PazCheck.Addons.DummyExperionEventMessagesProcessing
                 {
                     Title = logName,
                     Unit = unit,
-                    StartTimeUtc = logevents.First().EventTimeUtc,
+                    BeginTimeUtc = logevents.First().EventTimeUtc,
                     EndTimeUtc = logevents.Last().EventTimeUtc,
                     UnitEvents = logevents
                 };

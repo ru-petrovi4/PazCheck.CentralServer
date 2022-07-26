@@ -23,8 +23,11 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr]
         public string ConditionString { get; set; } = @"";
 
+        /// <summary>
+        ///     Состояне стало активным, неактивным или не изменилось.
+        /// </summary>
         [Attr]
-        public bool ConditionIsActive { get; set; }        
+        public bool? ConditionIsActive { get; set; }        
         
         /// <summary>
         ///     Url encoded name-values collection
