@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Reflection;
 using System.IO;
 using Ssz.Utils.Addons;
+using Microsoft.AspNetCore.Mvc;
 #if LOCAL_IDENTITY_SERVER
 using Simcode.IdentityServer;
 using IdentityServer4;
@@ -96,12 +97,15 @@ namespace Simcode.PazCheck.CentralServer
 
             services.AddDbContext<PazCheckDbContext>();
 
-            IMvcCoreBuilder mvcBuilder = services.AddMvcCore()
-                .AddApiExplorer(); // For Swagger
+            const string routeNamespace = @"/api/v3";
+            IMvcCoreBuilder mvcBuilder = services.AddMvcCore(options =>
+                {
+                    options.UseCentralRoutePrefix(new RouteAttribute(routeNamespace));
+                }).AddApiExplorer(); // For Swagger
             services.AddJsonApi<PazCheckDbContext>(
                 options =>
                 {
-                    options.Namespace = "api/v3";
+                    options.Namespace = routeNamespace; // CentralRoutePrefix not added here, because already root prefix
                     options.DefaultPageSize = null;
                     options.IncludeTotalResourceCount = true;
                 },
