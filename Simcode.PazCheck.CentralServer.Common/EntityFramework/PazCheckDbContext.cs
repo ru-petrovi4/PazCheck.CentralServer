@@ -39,6 +39,8 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public DbSet<EffectResult> EffectResults { get; set; } = null!;
         public DbSet<SetActiveProjectVersionRequest> SetActiveProjectVersionRequests { get; set; } = null!;
 
+        public bool IsLastChangeTimeUtcUpdatingDisabled { get; set; }
+
         public PazCheckDbContext(DbContextOptions<PazCheckDbContext> options) : base(options)
         {
             SavingChanges += OnSavingChanges;
@@ -69,6 +71,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         private void OnSavingChanges(object? sender, SavingChangesEventArgs e)
         {
+            if (IsLastChangeTimeUtcUpdatingDisabled)
+                return;
+
             DateTime utcNow = DateTime.UtcNow;
 
             var entries = ChangeTracker.Entries().ToArray();

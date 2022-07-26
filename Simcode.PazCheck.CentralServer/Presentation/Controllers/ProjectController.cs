@@ -71,7 +71,10 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         {
             try
             {
-                using (var dbContext = new PazCheckDbContext())
+                using (var dbContext = new PazCheckDbContext
+                    {
+                        IsLastChangeTimeUtcUpdatingDisabled = true
+                    })
                 {
                     Project project = dbContext.Projects.Single(p => p.Id == projectId);                    
                     dbContext.Entry(project)
