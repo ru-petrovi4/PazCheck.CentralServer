@@ -89,7 +89,8 @@ namespace Simcode.PazCheck.Addons.DummyExperionEventMessagesProcessing
                 logevents = logevents.OrderBy(l => l.EventTimeUtc).ToList();
                 var log = new UnitEventsInterval
                 {
-                    Title = logName,
+                    LoadTimeUtc = DateTime.UtcNow,
+                    Comment = logName,
                     Unit = unit,
                     BeginTimeUtc = logevents.First().EventTimeUtc,
                     EndTimeUtc = logevents.Last().EventTimeUtc,

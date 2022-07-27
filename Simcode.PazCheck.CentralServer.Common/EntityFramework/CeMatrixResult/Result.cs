@@ -9,16 +9,13 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public class Result : Identifiable<int>
     {
         [Attr]
-        public string Title { get; set; } = @"";
+        public DateTime AlalyzeTimeUtc { get; set; }
 
         [Attr]
-        public string Desc { get; set; } = @"";
+        public string Source { get; set; } = @"";
 
         [Attr]
-        public string Comment { get; set; } = @"";        
-
-        [Attr]
-        public DateTime AlalyzeTimeUtc { get; set; } = DateTime.UtcNow;
+        public string Comment { get; set; } = @"";
 
         [Attr]
         public DateTime BeginTimeUtc { get; set; }

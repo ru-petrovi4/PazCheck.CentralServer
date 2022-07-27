@@ -9,16 +9,19 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public class UnitEventsInterval : Identifiable<int>
     {
         [Attr]
-        public DateTime BeginTimeUtc { get; set; }
-
-        [Attr]
-        public DateTime EndTimeUtc { get; set; }
+        public DateTime LoadTimeUtc { get; set; }
 
         [Attr]
         public string Source { get; set; } = @"";
 
         [Attr]
-        public string Title { get; set; } = @"";
+        public string Comment { get; set; } = @"";
+
+        [Attr]
+        public DateTime BeginTimeUtc { get; set; }
+
+        [Attr]
+        public DateTime EndTimeUtc { get; set; }        
 
         [HasMany]
         public List<UnitEvent> UnitEvents { get; set; } = new();
