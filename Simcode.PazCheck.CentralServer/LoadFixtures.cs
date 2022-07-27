@@ -26,7 +26,7 @@ namespace Simcode.PazCheck.CentralServer
 
         public static async Task Fixtures(IServiceProvider serviceProvider, IConfiguration configuration, AddonsManager addonsManager)
         {
-            bool loadFromDumpFile = false;
+            bool loadFromDumpFile = true;
             try
             {
                 using var dbContext = new PazCheckDbContext();
