@@ -33,15 +33,8 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         /// </summary>
         public string OriginalEvent { get; set; } = @"";
 
-        [Attr]
-        [NotMapped]
-        public string Message
-        {
-            get
-            {
-                return TagName + "." + ConditionString;
-            }            
-        }
+        [Attr]        
+        public string Message { get; set; } = @"";
 
         [Attr]
         [NotMapped]

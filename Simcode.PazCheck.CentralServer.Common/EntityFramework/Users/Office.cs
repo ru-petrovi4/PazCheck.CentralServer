@@ -11,6 +11,6 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Title { get; set; } = @"";
 
         [HasMany]
-        public List<Simuser> Users { get; set; }
+        public List<Simuser> Users { get; set; } = new();
     }
 }

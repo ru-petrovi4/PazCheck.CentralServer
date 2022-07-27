@@ -22,7 +22,7 @@ namespace Simcode.PazCheck.CentralServer.Common
             return false;
         }
         
-        public virtual Task<UnitEventsInterval?> ProcessEventMessagesAsync(List<EventMessage> eventMessages, string unitEventsIntervalTitle, CancellationToken cancellationToken, IJobProgress? jobProgress)
+        public virtual Task<UnitEventsInterval?> ProcessEventMessagesAsync(string sourceSystemName, List<EventMessage> eventMessages, string unitEventsIntervalTitle, CancellationToken cancellationToken, IJobProgress? jobProgress)
         {
             return Task.FromResult<UnitEventsInterval?>(null);
         }

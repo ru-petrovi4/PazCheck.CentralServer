@@ -5,7 +5,7 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic
 {
     public class Licence
     {
-        public async Task<Object> GetLicenceData()
+        public Task<Object> GetLicenceData()
         {
             var subProgs = new object[]
             {
@@ -22,7 +22,7 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic
                 customer = "Тестовая лицензия"
             };
 
-            return licence;
+            return Task.FromResult<Object>(licence);
         }
     }
 }

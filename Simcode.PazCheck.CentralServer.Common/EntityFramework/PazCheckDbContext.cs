@@ -38,6 +38,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public DbSet<CauseResult> CauseResults { get; set; } = null!;
         public DbSet<EffectResult> EffectResults { get; set; } = null!;
         public DbSet<SetActiveProjectVersionRequest> SetActiveProjectVersionRequests { get; set; } = null!;
+        public DbSet<LogUserEvent> LogUserEvents { get; set; } = null!;
 
         public bool IsLastChangeTimeUtcUpdatingDisabled { get; set; }
 

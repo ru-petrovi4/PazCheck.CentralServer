@@ -58,7 +58,7 @@ namespace Simcode.PazCheck.CentralServer
             CsvDb = ActivatorUtilities.CreateInstance<CsvDb>(
                 ServiceProvider, ServerConfigurationHelper.GetProgramDataDirectoryInfo(Configuration), ThreadSafeDispatcher);            
 
-            _addonsManager.Initialize(null, @"Simcode.PazCheck.Addons.*.dll", CsvDb);
+            _addonsManager.Initialize(new DbUserFriendlyLogger(), @"Simcode.PazCheck.Addons.*.dll", CsvDb);
 
             await LoadFixtures.Fixtures(ServiceProvider, Configuration, _addonsManager);
 

@@ -416,7 +416,7 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic.Safety
             var eventMessagesProcessingAddon = _eventMessagesProcessingAddons?.FirstOrDefault(a => a.CanProcessEventMessageFrom(sourceSystemName));
             if (eventMessagesProcessingAddon is not null)
             { 
-                UnitEventsInterval? unitEventsInterval = await eventMessagesProcessingAddon.ProcessEventMessagesAsync(eventMessagesCollection.EventMessages, @"Autoimported", CancellationToken.None, null);
+                UnitEventsInterval? unitEventsInterval = await eventMessagesProcessingAddon.ProcessEventMessagesAsync(sourceSystemName, eventMessagesCollection.EventMessages, @"Autoimported", CancellationToken.None, null);
                 if (unitEventsInterval is not null)
                 {
                     string? sourceAddonId = eventMessagesCollection.CommonFields?.TryGetValue(@"SourceAddonId");
