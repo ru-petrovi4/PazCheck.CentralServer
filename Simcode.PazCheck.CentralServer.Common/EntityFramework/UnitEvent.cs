@@ -19,7 +19,8 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         /// <summary>
         ///     TagCondition_Identifier[=TagCondition_Value]
-        /// </summary>        
+        /// </summary> 
+        [Attr]
         public string ConditionString { get; set; } = @"";
 
         /// <summary>
@@ -32,6 +33,12 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         ///     Url encoded name-values collection
         /// </summary>
         public string OriginalEvent { get; set; } = @"";
+
+        /// <summary>
+        ///     0 - Journal (J); 1 - Low (L); 2 - High (H); 3 - Urgent (U)
+        /// </summary>
+        [Attr]
+        public int Priority { get; set; }
 
         [Attr]        
         public string Message { get; set; } = @"";
