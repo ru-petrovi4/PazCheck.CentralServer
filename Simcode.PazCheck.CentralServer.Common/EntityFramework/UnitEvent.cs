@@ -19,8 +19,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         /// <summary>
         ///     TagCondition_Identifier[=TagCondition_Value]
-        /// </summary>
-        [Attr]
+        /// </summary>        
         public string ConditionString { get; set; } = @"";
 
         /// <summary>
@@ -33,6 +32,16 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         ///     Url encoded name-values collection
         /// </summary>
         public string OriginalEvent { get; set; } = @"";
+
+        [Attr]
+        [NotMapped]
+        public string Message
+        {
+            get
+            {
+                return TagName + "." + ConditionString;
+            }            
+        }
 
         [Attr]
         [NotMapped]
