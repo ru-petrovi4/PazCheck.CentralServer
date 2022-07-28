@@ -8,15 +8,27 @@ using Ssz.Utils;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    /// <summary>
+    ///     Результат анализа матрицы ПСС
+    /// </summary>
     [Resource]
     public class CeMatrixResult : Identifiable<int>
     {
+        /// <summary>
+        ///     ID оригинальной проанализированной матрицы
+        /// </summary>
         [Attr]
         public int? CeMatrixId { get; set; }
 
+        /// <summary>
+        ///     Версия проекта проанализированной матрицы
+        /// </summary>
         [Attr]
         public UInt32? ProjectVersionNum { get; set; }
 
+        /// <summary>
+        ///     Родительский результат анализа
+        /// </summary>
         [HasOne]
         public Result Result { get; set; } = null!;
 
@@ -30,9 +42,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
         [HasMany]
         public List<IntersectionResult> IntersectionResults { get; set; } = new();
-
+        
         /// <summary>
-        ///     Url encoded name-values collection
+        ///     Статистика по матрице. Url encoded name-values collection
         /// </summary>
         public string Statistics { get; set; } = @"";
 

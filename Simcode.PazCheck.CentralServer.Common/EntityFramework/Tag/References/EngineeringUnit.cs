@@ -10,6 +10,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public class EngineeringUnit : Identifiable<int>
     {
         /// <summary>
+        ///     Обозначение единиц измерения
         ///     <para>Текстовое поле RW: Обозначение</para>
         ///     <example>с</example><example>м/с</example>
         /// </summary>
@@ -17,6 +18,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Eu { get; set; } = @"";
 
         /// <summary>
+        ///     Описание единиц измерения
         ///     <para>Текстовое поле RW: Описание</para>
         ///     <example>Секунды</example><example>Метры в секунду</example>
         /// </summary>

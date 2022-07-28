@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     /// <summary>
-    ///     Модель исполнительного механизма.
+    ///     Модель исполнительного механизма
     /// </summary>
     [Resource]
     public class BaseActuator : VersionEntityBase
     {
         /// <summary>   
-        ///     Поле не версионируется.
+        ///     Наименование модели оборудования. Поле не версионируется.
         ///     <para>Текстовое поле RW: Наименование модели</para>
         ///     <para>Tooltip: Наименование модели оборудования</para>
         /// </summary>
@@ -23,7 +23,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Title { get; set; } = @"";
 
         /// <summary>     
-        ///     Поле не версионируется.
+        ///     Номер модели оборудования в каталоге производителя. Поле не версионируется.
         ///     <para>Текстовое поле RW: Код модели</para>
         ///     <para>Tooltip: Номер модели оборудования в каталоге производителя</para>
         /// </summary>
@@ -31,7 +31,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Code { get; set; } = @"";
 
         /// <summary>   
-        ///     Поле не версионируется.
+        ///     Производитель оборудования. Поле не версионируется.
         ///     <para>Текстовое поле RW: Производитель</para>
         ///     <para>Tooltip: Производитель оборудования</para>
         /// </summary>
@@ -39,7 +39,7 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string Manufacturer { get; set; } = @"";
 
         /// <summary>   
-        ///     Поле не версионируется.
+        ///     Комментарий, дополнительная информация о модели. Поле не версионируется.
         ///     <para>Текстовое поле RW: Примечание</para>
         ///     <para>Tooltip: Комментарий, дополнительная информация о модели</para>
         /// </summary>
@@ -50,8 +50,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public string _LockedByUser { get; set; } = @"";
 
         /// <summary>
+        ///     Категория оборудования (клапан, насос и т.д.)
         ///     <para>Текстовое поле RW (выбор из списка (таблица BaseActuatorType) либо свое значение): Категория</para>
-        ///     <para>Tooltip: Вид оборудования</para>
+        ///     <para>Tooltip: Категория оборудования</para>
         /// </summary>        
         [Attr]
         public BaseActuatorType BaseActuatorType { get; set; } = null!;
@@ -62,6 +63,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [HasMany]
         public List<BaseActuatorDbFileReference> BaseActuatorDbFileReferences { get; set; } = new();
 
+        /// <summary>
+        ///     Родительский проект
+        /// </summary>
         [HasOne]
         public Project Project { get; set; } = null!;
 

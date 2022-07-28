@@ -5,21 +5,39 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    /// <summary>
+    ///     Результат анализа
+    /// </summary>
     [Resource]
     public class Result : Identifiable<int>
     {
+        /// <summary>
+        ///     Время получения результата анализа
+        /// </summary>
         [Attr]
         public DateTime AlalyzeTimeUtc { get; set; }
 
+        /// <summary>
+        ///     Источник результата (пользовтаель или автоматический анализ)
+        /// </summary>
         [Attr]
         public string Source { get; set; } = @"";
 
+        /// <summary>
+        ///     Комментарий к результату
+        /// </summary>
         [Attr]
         public string Comment { get; set; } = @"";
 
+        /// <summary>
+        ///     Начало проанализированного временного интервала
+        /// </summary>
         [Attr]
         public DateTime BeginTimeUtc { get; set; }
 
+        /// <summary>
+        ///     Конец проанализированного временного интервала
+        /// </summary>
         [Attr]
         public DateTime EndTimeUtc { get; set; }
 
@@ -29,6 +47,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [HasMany]
         public List<DbFile> DbFiles { get; set; } = new();
 
+        /// <summary>
+        ///     Родетельская установка
+        /// </summary>
         [HasOne]
         public Unit Unit { get; set; } = null!;
 

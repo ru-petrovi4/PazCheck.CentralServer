@@ -12,13 +12,13 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public class ProjectVersion : Identifiable<int>
     {
         /// <summary>        
-        ///     Дата создания.
+        ///     Номер версии
         /// </summary>
         [Attr]
         public UInt32 VersionNum { get; set; }
 
         /// <summary>        
-        ///     Дата создания.
+        ///     Время создания версии
         /// </summary>
         [Attr]
         public DateTime TimeUtc { get; set; }
@@ -29,7 +29,8 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr]
         public string User { get; set; } = @"";
 
-        /// <summary>        
+        /// <summary>
+        ///     Комментарий к версии
         ///     <para>Текстовое поле RW: Комментарий</para>
         /// </summary>
         [Attr]
@@ -38,6 +39,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [HasMany]
         public List<DbFile> DbFiles { get; set; } = new();        
 
+        /// <summary>
+        ///     Родительский проект
+        /// </summary>
         [HasOne]
         public Project Project { get; set; } = null!;
     }

@@ -11,9 +11,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public class BaseActuatorType : Identifiable<int>
     {
         /// <summary>
-        ///     <para>Текстовое поле RW: Тип устройства</para>
-        ///     <para>Tooltip: Вид оборудования</para>
-        ///     <example>Клапан</example><example>Насос</example>
+        ///     Категория оборудования (клапан, насос и т.д.)
+        ///     <para>Текстовое поле RW: Категория устройства</para>
+        ///     <para>Tooltip: Категория оборудования</para>        /
         /// </summary>
         [Attr]
         public string Type { get; set; } = @"";

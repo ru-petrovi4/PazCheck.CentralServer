@@ -7,19 +7,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    /// <summary>
+    ///     Тэг
+    /// </summary>
     [Resource]
     [Index(nameof(TagName))]
     public class Tag : VersionEntityBase
     {
         /// <summary>  
-        ///     Поле (!)версионируется.
+        ///     Имя тэга. Поле (!)версионируется.
         ///     <para>Текстовое поле RW: Имя тэга</para>
         /// </summary>
         [Attr]
         public string TagName { get; set; } = @"";
 
         /// <summary>     
-        ///     Поле не версионируется.
+        ///     Описание тэга. Поле не версионируется.
         ///     <para>Текстовое поле RW: Описание</para>
         /// </summary>
         [Attr]
@@ -56,6 +59,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [HasMany]
         public List<TagEvent> TagEvents { get; set; } = new();
 
+        /// <summary>
+        ///     Родительский проект
+        /// </summary>
         [HasOne]
         public Project Project { get; set; } = null!;
 

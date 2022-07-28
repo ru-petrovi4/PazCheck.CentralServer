@@ -6,15 +6,21 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    /// <summary>
+    ///     Следствие в матрице ПСС
+    /// </summary>
     [Resource]
     public class Effect : VersionEntityBase
     {
         /// <summary>
-        ///     Порядковый номер внутри диаграммы
+        ///     Порядковый номер внутри матрицы
         /// </summary>
         [Attr]
         public int Num { get; set; }
 
+        /// <summary>
+        ///     Имя тэга
+        /// </summary>
         [Attr]
         public string TagName { get; set; } = @"";
 
@@ -26,12 +32,21 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr]
         public string ConditionString { get; set; } = @"";
 
+        /// <summary>
+        ///     Краткий символ для отображения пользователю
+        /// </summary>
         [Attr]
         public string ConditionString_SymbolToDisplay { get; set; } = @"";
-        
+
+        /// <summary>
+        ///     Заголовок кастомного (пользовательского) столбца
+        /// </summary>
         [Attr]
         public string CustomFieldHeader { get; set; } = @"";
 
+        /// <summary>
+        ///     Родительская матрица
+        /// </summary>
         [HasOne]
         public CeMatrix CeMatrix { get; set; } = null!;
 

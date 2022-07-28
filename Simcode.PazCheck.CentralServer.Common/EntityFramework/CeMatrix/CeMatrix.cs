@@ -5,17 +5,20 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    /// <summary>
+    ///     Матрица ПСС
+    /// </summary>
     [Resource]
     public class CeMatrix : VersionEntityBase
     {
         /// <summary>
-        ///     Поле не версионируется.
+        ///     Название матрицы. Поле не версионируется.        
         /// </summary>
         [Attr]
         public string Title { get; set; } = @"";
 
         /// <summary>
-        ///     Поле не версионируется.
+        ///     Описание матрицы. Поле не версионируется.
         /// </summary>
         [Attr]
         public string Desc { get; set; } = @"";        
@@ -23,6 +26,9 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr]
         public string _LockedByUser { get; set; } = @"";
 
+        /// <summary>
+        ///     Родительский проект
+        /// </summary>
         [HasOne]
         public Project Project { get; set; } = null!;
 

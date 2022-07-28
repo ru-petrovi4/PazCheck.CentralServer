@@ -7,15 +7,21 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    /// <summary>
+    ///     Подпричина в матрице ПСС
+    /// </summary>
     [Resource]
     public class SubCause : VersionEntityBase
     {
         /// <summary>
-        ///     Порядковый номер внутри причины
+        ///     Порядковый номер внутри родительской причины
         /// </summary>
         [Attr]
         public int Num { get; set; }
 
+        /// <summary>
+        ///     Имя тэга
+        /// </summary>
         [Attr]
         public string TagName { get; set; } = @"";
 
@@ -26,13 +32,22 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         /// </summary>
         [Attr]
         public string ConditionString { get; set; } = @"";
-        
+
+        /// <summary>
+        ///     Краткий символ для отображения пользователю
+        /// </summary>
         [Attr]
         public string ConditionString_SymbolToDisplay { get; set; } = @"";
 
+        /// <summary>
+        ///     Заголовок кастомной (пользовательской) строчки
+        /// </summary>
         [Attr]
         public string CustomFieldHeader { get; set; } = @"";
         
+        /// <summary>
+        ///     Родительская причина
+        /// </summary>
         [HasOne]
         public Cause Cause { get; set; } = null!;
 

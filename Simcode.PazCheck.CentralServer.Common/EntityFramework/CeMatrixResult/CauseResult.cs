@@ -5,14 +5,20 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    /// <summary>
+    ///     Причина в результате анализа матрицы ПСС
+    /// </summary>
     [Resource]
     public class CauseResult : Identifiable<int>
     {
+        /// <summary>
+        ///     Порядковый номер внутри матрицы
+        /// </summary>
         [Attr]
         public int Num { get; set; } = 0;
 
         /// <summary>
-        ///     Is row with debug info
+        ///     Строчка с отладочной информацией (не для пользователя)
         /// </summary>
         [Attr]
         public bool IsDebug { get; set; }
@@ -20,9 +26,15 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [HasMany]
         public List<SubCauseResult> SubCauseResults { get; set; } = new();
 
+        /// <summary>
+        ///     Время срабатывания причины
+        /// </summary>
         [Attr]
         public DateTime? TriggeredTimeUtc { get; set; }
 
+        /// <summary>
+        ///     Родительский результат анализа матрицы ПСС
+        /// </summary>
         [HasOne]
         public CeMatrixResult CeMatrixResult { get; set; } = null!;        
     }

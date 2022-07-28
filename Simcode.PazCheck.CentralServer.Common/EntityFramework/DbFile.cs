@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    /// <summary>
+    ///     Файл со своими данными
+    /// </summary>
     [Resource]
     public class DbFile : Identifiable<int>
     {

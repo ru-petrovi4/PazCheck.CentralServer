@@ -8,12 +8,21 @@ using Ssz.Utils;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    /// <summary>
+    ///     Событие технологической установки
+    /// </summary>
     [Resource]
     public class UnitEvent : Identifiable<int>
     {
+        /// <summary>
+        ///     Время события
+        /// </summary>
         [Attr]
         public DateTime EventTimeUtc { get; set; }
 
+        /// <summary>
+        ///     Имя тэга
+        /// </summary>
         [Attr]
         public string TagName { get; set; } = @"";
 
@@ -30,16 +39,19 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public bool? ConditionIsActive { get; set; }        
         
         /// <summary>
-        ///     Url encoded name-values collection
+        ///     Исходное событие со всеми исходными полями. Url encoded name-values collection
         /// </summary>
         public string OriginalEvent { get; set; } = @"";
 
         /// <summary>
-        ///     0 - Journal (J); 1 - Low (L); 2 - High (H); 3 - Urgent (U)
+        ///     Приоритет события. 0 - Journal (J); 1 - Low (L); 2 - High (H); 3 - Urgent (U)
         /// </summary>
         [Attr]
         public int Priority { get; set; }
-
+        
+        /// <summary>
+        ///     Описание события для пользователя
+        /// </summary>
         [Attr]        
         public string Message { get; set; } = @"";
 

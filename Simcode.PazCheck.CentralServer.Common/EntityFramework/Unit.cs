@@ -7,6 +7,9 @@ using JsonApiDotNetCore.Resources.Annotations;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
+    /// <summary>
+    ///     Технологическая установка
+    /// </summary>
     [Resource]
     public class Unit : Identifiable<string>
     {
