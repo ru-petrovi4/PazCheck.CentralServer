@@ -11,20 +11,23 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     [Resource]
     public class Project : Identifiable<int>, ILastChangeEntity
-    {        
-        /// <summary>        
+    {
+        /// <summary>    
+        ///     Название проекта
         ///     <para>Текстовое поле RW: Название</para>
         /// </summary>
         [Attr] 
         public string Title { get; set; } = @"";
 
-        /// <summary>        
+        /// <summary> 
+        ///     Описание проекта
         ///     <para>Текстовое поле RW: Описание</para>
         /// </summary>
         [Attr] 
         public string Desc { get; set; } = @"";
 
-        /// <summary>        
+        /// <summary>    
+        ///     Комментарий
         ///     <para>Текстовое поле RW: Комментарий</para>
         /// </summary>
         [Attr]
@@ -34,12 +37,21 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [InverseProperty(nameof(ProjectVersion.Project))] // Because ActiveProjectVersion property exists.
         public List<ProjectVersion> ProjectVersions { get; set; } = new();
 
+        /// <summary>
+        ///     Активная версия проекта
+        /// </summary>
         [HasOne]
         public ProjectVersion? ActiveProjectVersion { get; set; } = null!;
 
+        /// <summary>
+        ///     Последняя версия проекта
+        /// </summary>
         [HasOne]
         public ProjectVersion? LastProjectVersion { get; set; } = null!;
 
+        /// <summary>
+        ///     Родительская установка
+        /// </summary>
         [HasOne]        
         public Unit Unit { get; set; } = null!;
 

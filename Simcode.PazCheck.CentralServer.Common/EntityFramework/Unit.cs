@@ -9,14 +9,16 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
     [Resource]
     public class Unit : Identifiable<string>
-    {        
+    {
         /// <summary>
+        ///     Название установки
         ///     <para>Текстовое поле RW: Название установки</para>
         /// </summary>
         [Attr]
         public string Title { get; set; } = @"";
 
         /// <summary>
+        ///     Описание установки
         ///     <para>Текстовое поле RW: Описание установки</para>
         /// </summary>
         [Attr]
@@ -27,7 +29,8 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         public List<Project> Projects { get; set; } = new();
 
         /// <summary>
-        ///     <para>Текстовое поле R: Основной проект</para>
+        ///     Активный проект
+        ///     <para>Текстовое поле R: Активный проект</para>
         /// </summary>
         [HasOne]
         public Project? ActiveProject { get; set; } = null!;
