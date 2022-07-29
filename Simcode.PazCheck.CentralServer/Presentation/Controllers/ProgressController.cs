@@ -5,7 +5,7 @@ using Simcode.PazCheck.CentralServer.BusinessLogic;
 
 namespace Simcode.PazCheck.CentralServer.Presentation
 {
-    [Route("progress")]
+    [Route("Progress")]
     public class ProgressController : ControllerBase
     {
         #region construction and destruction

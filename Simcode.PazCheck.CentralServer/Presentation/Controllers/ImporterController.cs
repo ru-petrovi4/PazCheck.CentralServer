@@ -40,27 +40,79 @@ namespace Simcode.PazCheck.CentralServer.Presentation
 
         #region public functions
 
-        [HttpPost("Project")]
-        public async Task<IActionResult> ImportProjectAsync(IFormFile formFile)
+        [HttpPost("ImportEventsJournalFiles/{unitId}")]
+        public async Task<IActionResult> ImportEventsJournalFilesAsync(List<IFormFile> formFiles, string unitId)
         {
-            string guid = @"";
-
-            if (formFile.Length > 0)
+            var size = formFiles.Sum(f => f.Length);
+            var jobIds = new List<string>();
+            foreach (var formFile in formFiles)
             {
-                var filePath = Path.GetRandomFileName();
-                await using var tempFileStream = System.IO.File.Create(filePath);
-                await formFile.CopyToAsync(tempFileStream, _applicationStopping_CancellationToken);
-                guid = Guid.NewGuid().ToString();                
-                if (!_applicationStopping_CancellationToken.IsCancellationRequested)
+                if (formFile.Length > 0)
                 {
-                    //_jobsManager.QueueJob(async token =>
-                    //    new ProjectTaskData { Id = guid, FilePath = filePath, Name = formFile.FileName }
-                    //);
+                    var fileFullName = Path.GetRandomFileName();
+                    await using var tempFileStream = System.IO.File.Create(fileFullName);
+                    await formFile.CopyToAsync(tempFileStream, _applicationStopping_CancellationToken);
+                    var jobId = Guid.NewGuid().ToString();
+                    jobIds.Add(jobId);
+                    if (!_applicationStopping_CancellationToken.IsCancellationRequested)
+                    {
+                        _jobsManager.QueueJob(jobId, "Import Events Journal File",
+                            async (cancellationToken, jobProgress) =>
+                            {
+                                var eventMessagesProcessingAddon = _addonsManager.Addons.OfType<EventMessagesProcessingAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
+                                if (eventMessagesProcessingAddon is null)
+                                {
+                                    // TODO TEMP CODE
+                                    if (jobProgress is not null)
+                                        await jobProgress.ReportAsync(100, null, null, false);
+                                    return;
+                                }
+
+                                using (var dbContext = new PazCheckDbContext())
+                                {
+                                    Unit unit;
+                                    try
+                                    {
+                                        unit = dbContext.Units.Single(u => u.Id == unitId);
+                                    }
+                                    catch
+                                    {
+                                        _logger.LogError("Invali unitId: {0}", unitId);
+                                        return;
+                                    }
+
+                                    using var stream = System.IO.File.OpenRead(fileFullName);
+                                    await eventMessagesProcessingAddon.ImportEventsJournalFileAsync(stream, formFile.FileName, dbContext, unit, cancellationToken, jobProgress);
+                                }
+                            });
+                    }
                 }
             }
 
-            return Ok(new { size = formFile.Length, guid });
+            return Ok(new { count = formFiles.Count, size, guids = jobIds.ToArray() });
         }
+
+        //[HttpPost("Project")]
+        //public async Task<IActionResult> ImportProjectAsync(IFormFile formFile)
+        //{
+        //    string guid = @"";
+
+        //    if (formFile.Length > 0)
+        //    {
+        //        var filePath = Path.GetRandomFileName();
+        //        await using var tempFileStream = System.IO.File.Create(filePath);
+        //        await formFile.CopyToAsync(tempFileStream, _applicationStopping_CancellationToken);
+        //        guid = Guid.NewGuid().ToString();                
+        //        if (!_applicationStopping_CancellationToken.IsCancellationRequested)
+        //        {
+        //            //_jobsManager.QueueJob(async token =>
+        //            //    new ProjectTaskData { Id = guid, FilePath = filePath, Name = formFile.FileName }
+        //            //);
+        //        }
+        //    }
+
+        //    return Ok(new { size = formFile.Length, guid });
+        //}
 
         //[HttpPost("tags/{prjId}")]
         //public async Task<IActionResult> ImportTagsAsync(List<IFormFile> files, int prjId)
@@ -78,45 +130,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         //    }
 
         //    return Ok(new { count = files.Count, filesSize = size, guids = jobIds.ToArray() });
-        //}
-
-        //[HttpPost("log/{prjId}")]
-        //public async Task<IActionResult> ImportLogAsync(List<IFormFile> files, int prjId)
-        //{
-        //    var size = files.Sum(f => f.Length);
-        //    var jobIds = new List<string>();
-        //    foreach (var formFile in files)
-        //    {
-        //        if (formFile.Length > 0)
-        //        {
-        //            var fileFullName = Path.GetRandomFileName();
-        //            await using var tempFileStream = System.IO.File.Create(fileFullName);
-        //            await formFile.CopyToAsync(tempFileStream, _applicationStopping_CancellationToken);
-        //            var jobId = Guid.NewGuid().ToString();
-        //            jobIds.Add(jobId);
-        //            if (!_applicationStopping_CancellationToken.IsCancellationRequested)
-        //            {
-        //                _jobsManager.QueueJob(jobId, "Import Log",
-        //                    async (cancellationToken, jobProgress) =>
-        //                    {
-        //                        var logsImporterAddon = _addonsManager.Addons.OfType<EventMessagesProcessingAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
-        //                        if (logsImporterAddon is null)
-        //                        {
-        //                            return;
-        //                        }
-
-        //                        using (var dbContext = new PazCheckDbContext())
-        //                        {
-        //                            using var stream = System.IO.File.OpenRead(fileFullName);
-        //                            //await logsImporterAddon.SaveToDbAsync(stream, formFile.FileName, dbContext, prjId, cancellationToken, jobProgress);
-        //                        }
-        //                    });
-        //            }
-        //        }
-        //    }
-
-        //    return Ok(new { count = files.Count, size, guids = jobIds.ToArray() });
-        //}
+        //}        
 
         //[HttpGet("task")]
         //public async Task<IActionResult> ImportTaskAsync() //Не помню, зачем этот метод

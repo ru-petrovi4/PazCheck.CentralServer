@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 {
@@ -77,18 +78,29 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
 
             DateTime utcNow = DateTime.UtcNow;
 
-            var entries = ChangeTracker.Entries().ToArray();
+            var entries = ChangeTracker.Entries().ToArray(); // Updates all entity cross-references
 
             foreach (var entry in entries)
             {
-                if (entry.State == EntityState.Added || entry.State == EntityState.Modified || entry.State == EntityState.Deleted) // Deleted needed for updating parent entity timestamp.
+                ILastChangeEntity? lastChangeEntity = entry.Entity as ILastChangeEntity;
+                if (lastChangeEntity is not null)
                 {
-                    ILastChangeEntity? lastChangeEntity = entry.Entity as ILastChangeEntity;
-                    if (lastChangeEntity is not null)
+                    bool updateLastChangeTimeUtc = false;
+                    if (entry.State == EntityState.Added)
+                    {
+                        updateLastChangeTimeUtc = true;
+                    }
+                    else if (entry.State == EntityState.Modified)
+                    {
+                        PropertyEntry propertyEntry = entry.Property(nameof(ILastChangeEntity._IsDeleted));
+                        if ((bool)propertyEntry.CurrentValue! && !(bool)propertyEntry.OriginalValue!)
+                            updateLastChangeTimeUtc = true;
+                    }
+                    if (updateLastChangeTimeUtc)
                     {
                         lastChangeEntity._LastChangeTimeUtc = utcNow;
                         lastChangeEntity.UpdateParentLastChange();
-                    }
+                    }                    
                 }
             }
         }        

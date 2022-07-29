@@ -45,15 +45,16 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         .Reference(p => p.LastProjectVersion)
                         .Load();
                     var lastVersionTimeUtc = project.LastProjectVersion?.TimeUtc ?? DateTime.MinValue;
-                    bool hasUnsavedChanges = dbContext.BaseActuators.Any(ba => ba.Project == project && ba._LastChangeTimeUtc > lastVersionTimeUtc);
-                    if (hasUnsavedChanges)
-                        return Ok(true);
-                    hasUnsavedChanges = dbContext.Tags.Any(t => t.Project == project && t._LastChangeTimeUtc > lastVersionTimeUtc);
-                    if (hasUnsavedChanges)
-                        return Ok(true);
-                    hasUnsavedChanges = dbContext.CeMatrices.Any(m => m.Project == project && m._LastChangeTimeUtc > lastVersionTimeUtc);
-                    if (hasUnsavedChanges)
-                        return Ok(true);                    
+                    return Ok(project._LastChangeTimeUtc > lastVersionTimeUtc);
+                    //bool hasUnsavedChanges = dbContext.BaseActuators.Any(ba => ba.Project == project && ba._LastChangeTimeUtc > lastVersionTimeUtc);
+                    //if (hasUnsavedChanges)
+                    //    return Ok(true);
+                    //hasUnsavedChanges = dbContext.Tags.Any(t => t.Project == project && t._LastChangeTimeUtc > lastVersionTimeUtc);
+                    //if (hasUnsavedChanges)
+                    //    return Ok(true);
+                    //hasUnsavedChanges = dbContext.CeMatrices.Any(m => m.Project == project && m._LastChangeTimeUtc > lastVersionTimeUtc);
+                    //if (hasUnsavedChanges)
+                    //    return Ok(true);                    
                 }
             }
             catch (Exception ex)
@@ -61,9 +62,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                 _logger.LogError(ex, @"Invalid projectId: {0}", projectId);
 
                 return NotFound();
-            }            
-
-            return Ok(false);
+            }
         }
 
         [HttpPost(@"SaveUnversionedChanges/{projectId}")]

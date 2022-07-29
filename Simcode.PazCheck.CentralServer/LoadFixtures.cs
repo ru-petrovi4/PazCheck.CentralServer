@@ -317,7 +317,7 @@ namespace Simcode.PazCheck.CentralServer
                                     try
                                     {
                                         using var stream = System.IO.File.OpenRead(fileFullName);
-                                        await eventMessagesProcessingAddon.ImportEventsJournalFileAsync(stream, Encoding.UTF8, fileName, dbContext, avtUnit, CancellationToken.None, DummyJobProgress.Dafault);
+                                        await eventMessagesProcessingAddon.ImportEventsJournalFileAsync(stream, fileName, dbContext, avtUnit, CancellationToken.None, DummyJobProgress.Dafault);
                                     }
                                     catch
                                     {

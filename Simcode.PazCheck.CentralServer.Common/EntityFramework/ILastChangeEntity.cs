@@ -9,8 +9,13 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
     public interface ILastChangeEntity
     {
         string _LastChangeUser { get; set; }
-        
+
+        /// <summary>
+        ///     Updates only if entity or child entity was added or marked for deletion
+        /// </summary>
         DateTime _LastChangeTimeUtc { get; set; }
+
+        public bool _IsDeleted { get; set; }
 
         /// <summary>
         ///     Parent for _LastChangeTimeUtc updating.
