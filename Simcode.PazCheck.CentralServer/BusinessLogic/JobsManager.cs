@@ -9,15 +9,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Ssz.Utils;
 using Simcode.PazCheck.CentralServer.Common;
 using Microsoft.Extensions.Hosting;
+using Grpc.Core;
 
 namespace Simcode.PazCheck.CentralServer.BusinessLogic
 {
     public class JobsManager
     {
-        public JobsManager(IServiceProvider serviceProvider, IHostApplicationLifetime applicationLifetime)
+        public JobsManager(IHostApplicationLifetime applicationLifetime)
         {
-            ServiceProvider = serviceProvider;
-
             _applicationStopping_CancellationToken = applicationLifetime.ApplicationStopping;
 
             Task.Factory.StartNew(() =>
@@ -26,27 +25,43 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic
             }, TaskCreationOptions.LongRunning);
         }
 
-        public void QueueJob(string jobId, string jobName, Func<CancellationToken, IJobProgress, Task> asyncAction)
+        public async void QueueJob(string jobId, string jobName, Func<CancellationToken, IJobProgress, Task> asyncAction)
         {
-            var jobInfo = new JobInfo(this, jobName, _applicationStopping_CancellationToken);
-            JobInfos.Add(jobId, jobInfo);            
-            var cancellationToken = jobInfo.CancellationToken;
+            var jobInfo = new JobInfo(jobId, jobName, _applicationStopping_CancellationToken);
+
+            await _jobInfosSyncRoot.WaitAsync();
+            try
+            {
+                _jobInfos.Add(jobId, jobInfo);
+            }
+            finally
+            {
+                _jobInfosSyncRoot.Release();
+            }       
+
+            var cancellationToken = jobInfo.CancellationTokenSource.Token;
             var jobTask = Task.Run(() =>
             {
                 asyncAction(cancellationToken, jobInfo).Wait();
             });
             _ = jobTask.ContinueWith(async t =>
-            {
-                JobInfos.Remove(jobId);
-
-                var job = new Job
+            {                
+                await _jobInfosSyncRoot.WaitAsync();
+                try
                 {
-                    Guid = jobId,
-                    Name = jobName,
-                    IsSuccess = true,
-                    Message = $"{jobName} has been completed successfully.",
-                    Status = t.Status
-                };
+                    _jobInfos.Remove(jobId);
+                }
+                finally
+                {
+                    _jobInfosSyncRoot.Release();
+                }
+
+                Job job = await jobInfo.CreateJobAsync();
+                if (job.FinishedTimeUtc is null)
+                {
+                    job.StatusCode = (uint)StatusCode.Unknown;
+                    job.FinishedTimeUtc = DateTime.UtcNow;
+                }                
                 using (var dbContext = new PazCheckDbContext())
                 {
                     await dbContext.Jobs.AddAsync(job, cancellationToken);
@@ -55,44 +70,61 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic
             }, cancellationToken);
         }
 
-        public void QueueJobWithDispatcher(string jobId, string jobName, Func<IDispatcher, CancellationToken, IJobProgress, Task> asyncAction)
-        {
-            var jobInfo = new JobInfo(this, jobName, _applicationStopping_CancellationToken);
-            JobInfos.Add(jobId, jobInfo);              
-            ThreadSafeDispatcher.BeginAsyncInvoke(ct => asyncAction(ThreadSafeDispatcher, jobInfo.CancellationToken, jobInfo));                        
-        }        
+        //public void QueueJobWithDispatcher(string jobId, string jobName, Func<IDispatcher, CancellationToken, IJobProgress, Task> asyncAction)
+        //{
+        //    var jobInfo = new JobInfo(this, jobName, _applicationStopping_CancellationToken);
+        //    _jobInfos.Add(jobId, jobInfo);              
+        //    ThreadSafeDispatcher.BeginAsyncInvoke(ct => asyncAction(ThreadSafeDispatcher, jobInfo.CancellationToken, jobInfo));                        
+        //}        
 
-        public async Task<int> GetProgressAsync(string guid)
+        public async Task<Job?> GetProgressAsync(string jobId)
         {
-            //await _signal.WaitAsync();
-            JobInfos.TryGetValue(guid, out var jobInfo);
-            if (jobInfo is not null)
+            JobInfo? jobInfo;
+
+            await _jobInfosSyncRoot.WaitAsync();
+            try
             {
-                if (jobInfo.FinishedDateTimeUtc != null)
-                    return 100;
-                return (int)jobInfo.ProgressPercent;
+                _jobInfos.TryGetValue(jobId, out jobInfo);
             }
-            //_signal.Release();            
+            finally
+            {
+                _jobInfosSyncRoot.Release();
+            }
+
+            if (jobInfo is not null)
+                return await jobInfo.CreateJobAsync();
 
             using (var dbContext = new PazCheckDbContext())
             {
-                var currentJob = await dbContext.Jobs.Where(job => job.Guid == guid).FirstOrDefaultAsync();
-                if (currentJob != null)
-                {
-                    return 100;
-                }
+                var job = await dbContext.Jobs.Where(job => job.Id == jobId).FirstOrDefaultAsync();
+                if (job is not null)
+                    return job;
             }
 
-            return 0;
-        }        
+            return null;
+        }
 
-        public Task<List<JobInfo>> GetJobsListAsync()
+        public async Task<List<Job>> GetJobsListAsync()
         {
-            //await _signal.WaitAsync();
-            var jobsList = JobInfos.Values.ToList();
-            //_signal.Release();
-            return Task.FromResult(jobsList);
-        }        
+            List<JobInfo> jobsInfosList;
+
+            await _jobInfosSyncRoot.WaitAsync();
+            try
+            {
+                jobsInfosList = _jobInfos.Values.ToList();
+            }
+            finally
+            {
+                _jobInfosSyncRoot.Release();
+            }
+
+            List<Job> jobsList = new();
+            foreach (var jobInfo in jobsInfosList)
+            {
+                jobsList.Add(await jobInfo.CreateJobAsync());
+            }
+            return jobsList;
+        }
 
         #region private functions
 
@@ -104,17 +136,21 @@ namespace Simcode.PazCheck.CentralServer.BusinessLogic
                 await Task.Delay(3);
                 if (_applicationStopping_CancellationToken.IsCancellationRequested) break;
 
-                await ThreadSafeDispatcher.InvokeActionsInQueueAsync(_applicationStopping_CancellationToken);                
+                await _threadSafeDispatcher.InvokeActionsInQueueAsync(_applicationStopping_CancellationToken);                
             }
         }
 
+        #endregion
+
+        #region private fields
+
         private readonly CancellationToken _applicationStopping_CancellationToken;
 
-        private CaseInsensitiveDictionary<JobInfo> JobInfos { get; } = new();
+        private readonly CaseInsensitiveDictionary<JobInfo> _jobInfos = new();
 
-        private IServiceProvider ServiceProvider { get; }
+        private readonly SemaphoreSlim _jobInfosSyncRoot = new SemaphoreSlim(1);
 
-        private ThreadSafeDispatcher ThreadSafeDispatcher { get; } = new();
+        private ThreadSafeDispatcher _threadSafeDispatcher = new();
 
         #endregion
     }

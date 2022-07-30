@@ -35,8 +35,8 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         [Attr(PublicName="personnelnumber")]
         public string PersonnelNumber { get; set; } = @"";
         public int OfficeId { get; set; }
-        [HasOne(PublicName="office")]
-        public Office Office { get; set; }
+        [HasOne(PublicName = "office")]
+        public Office Office { get; set; } = null!;
         [Attr(PublicName="role")]
         public string Role { get; set; } = @"";        
     }

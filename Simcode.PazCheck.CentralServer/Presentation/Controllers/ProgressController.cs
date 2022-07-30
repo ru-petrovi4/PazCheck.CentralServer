@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Simcode.PazCheck.CentralServer.BusinessLogic;
+using Simcode.PazCheck.CentralServer.Common.EntityFramework;
 
 namespace Simcode.PazCheck.CentralServer.Presentation
 {
@@ -30,20 +31,11 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         [HttpGet("{jobId}")]
         public async Task<IActionResult> GetJobProgressAsync(string jobId)
         {
-            var progress = await _jobsManager.GetProgressAsync(jobId);
-            var isFinished = false;
-            var isStarted = true;
-            if (progress >= 100)
-            {
-                progress = 100;
-                isFinished = true;
-            }
-            else if (progress <= 0)
-            {
-                progress = 0;
-                isStarted = false;
-            }
-            return Ok(new { guid = jobId, progress, isFinished, isStarted });
+            Job? job = await _jobsManager.GetProgressAsync(jobId);
+            if (job is not null)
+                return Ok(new { data = job });
+            else
+                return BadRequest();
         }
 
         #endregion        

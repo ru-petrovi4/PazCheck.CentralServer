@@ -43,7 +43,7 @@ namespace Simcode.PazCheck.Addons.DummyExperionEventMessagesProcessing
             {
                 i++;
                 if (i % 100 == 0) 
-                    await jobProgress.ReportAsync(100 * streamReader.BaseStream.Position / streamReader.BaseStream.Length, null, null, false);
+                    await jobProgress.ReportAsync(100 * streamReader.BaseStream.Position / streamReader.BaseStream.Length, null, null, 0);
 
                 bool? alarmConditionIsActive = null;
                 switch (logRecord.EventType.ToUpperInvariant())
@@ -101,7 +101,7 @@ namespace Simcode.PazCheck.Addons.DummyExperionEventMessagesProcessing
                 await context.SaveChangesAsync(cancellationToken);
             }
 
-            await jobProgress.ReportAsync(100, null, null, false);
+            await jobProgress.ReportAsync(100, null, null, 0);
         }
 
         private class DummyExperionLogRecord

@@ -41,7 +41,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
         #region public functions
 
         [HttpPost("ImportEventsJournalFiles/{unitId}")]
-        public async Task<IActionResult> ImportEventsJournalFilesAsync(List<IFormFile> formFiles, string unitId)
+        public async Task<IActionResult> ImportEventsJournalFilesAsync(List<IFormFile> formFiles, string addonName, string unitId)
         {
             var size = formFiles.Sum(f => f.Length);
             var jobIds = new List<string>();
@@ -59,31 +59,30 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                         _jobsManager.QueueJob(jobId, "Import Events Journal File",
                             async (cancellationToken, jobProgress) =>
                             {
-                                var eventMessagesProcessingAddon = _addonsManager.Addons.OfType<EventMessagesProcessingAddonBase>().OrderBy(a => a.IsDummy).FirstOrDefault();
+                                var eventMessagesProcessingAddon = _addonsManager.Addons.OfType<EventMessagesProcessingAddonBase>().OrderBy(a => a.IsDummy)
+                                    .FirstOrDefault(a => String.Equals(a.Name, addonName, StringComparison.InvariantCultureIgnoreCase));
                                 if (eventMessagesProcessingAddon is null)
                                 {
                                     // TODO TEMP CODE
                                     if (jobProgress is not null)
-                                        await jobProgress.ReportAsync(100, null, null, false);
+                                        await jobProgress.ReportAsync(100, null, null, 0);
                                     return;
                                 }
 
-                                using (var dbContext = new PazCheckDbContext())
+                                using var dbContext = new PazCheckDbContext();
+                                Unit unit;
+                                try
                                 {
-                                    Unit unit;
-                                    try
-                                    {
-                                        unit = dbContext.Units.Single(u => u.Id == unitId);
-                                    }
-                                    catch
-                                    {
-                                        _logger.LogError("Invali unitId: {0}", unitId);
-                                        return;
-                                    }
-
-                                    using var stream = System.IO.File.OpenRead(fileFullName);
-                                    await eventMessagesProcessingAddon.ImportEventsJournalFileAsync(stream, formFile.FileName, dbContext, unit, cancellationToken, jobProgress);
+                                    unit = dbContext.Units.Single(u => u.Id == unitId);
                                 }
+                                catch
+                                {
+                                    _logger.LogError("Invali unitId: {0}", unitId);
+                                    return;
+                                }
+
+                                using var stream = System.IO.File.OpenRead(fileFullName);
+                                await eventMessagesProcessingAddon.ImportEventsJournalFileAsync(stream, formFile.FileName, dbContext, unit, cancellationToken, jobProgress);
                             });
                     }
                 }
