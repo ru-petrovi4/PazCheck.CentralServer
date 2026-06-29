@@ -1,0 +1,57 @@
+﻿﻿SubscriptionId: "Не произошла автоматическая загрузка логов АСУБ"
+
+SourceEvent:
+  Category: "!EVENT"
+  Type: "Diagnost_UnitEventsAutoLoaded"
+  AllowedTimeSpan: "90m"
+  
+Subject: "Не произошла автоматическая загрузка логов АСУБ"
+BodyTemplate: "mail_template1.htm"
+EMails:
+  - Valery.Pogorelov@mipt-cdt.ru  
+  - Valery.Pogorelov@mipt-cdt.ru  
+---
+
+SubscriptionId: "Автоматический анализ останова МЛСП"
+
+SourceEvent:
+  Category: "EVENT"
+  Type: "Diagnost_UnitEventsAutoAnalyzed"
+
+Reports:
+  - AddonIdentifier: "GpnImportExport"    
+    DestinationTypeIdentifier: "diagnostresult.xlsx"
+    Filter:
+      - ResultId: "%(ResultId)"
+  
+Subject: "%(ResultEventDesc)"
+BodyTemplate: "mail_template2.htm"
+EMails:
+  - Valery.Pogorelov@mipt-cdt.ru
+  - Valery.Pogorelov@mipt-cdt.ru    
+---
+
+SubscriptionId: "Периодический отчет со статистикой произошедших событий"
+
+SourceEvent:
+  Category: "TIME"
+  Time: "2025-07-01T15:00:00"
+
+Period: "1M"
+
+Reports:
+  - AddonIdentifier: "GpnImportExport"    
+    DestinationTypeIdentifier: "monitoringeventsstatistics.xlsx"
+    Filter:
+      - Unit: "mlsp"
+        Identifier: "mlsp"
+        Children: "true"       
+        From: "now-1M"
+        To: "now"
+  
+Subject: "Периодический отчет со статистикой произошедших событий за месяц"
+BodyTemplate: "mail_template2.htm"
+EMails:
+  - Valery.Pogorelov@mipt-cdt.ru
+  - Valery.Pogorelov@mipt-cdt.ru    
+

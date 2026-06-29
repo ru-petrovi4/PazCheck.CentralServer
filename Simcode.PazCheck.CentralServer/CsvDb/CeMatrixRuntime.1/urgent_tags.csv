@@ -1,0 +1,6 @@
+﻿!TAG,!Level,!Params
+ESD_2A,1,"Останов уровня 2A",EmergencyShutdownLevel=2A
+ESD_2B,2,"Останов уровня 2B",EmergencyShutdownLevel=2B
+ESD_2C,3,"Останов уровня 2C",EmergencyShutdownLevel=2C
+ESD_3,4,"Останов уровня 3",EmergencyShutdownLevel=3
+HS97104,5,"Останов уровня 4",EmergencyShutdownLevel=4

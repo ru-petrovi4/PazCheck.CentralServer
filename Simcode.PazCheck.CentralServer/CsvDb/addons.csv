@@ -1,0 +1,12 @@
+﻿!AddonInstanceId,!AddonIdentifier,!IsSwitchedOn
+CeMatrixRuntime.1,CeMatrixRuntime,true
+DataAccessClient.1,DataAccessClient,true
+Diagnost.1,Diagnost,true
+EMails.1,EMails,true
+ExperionEventMessagesProcessing.1,ExperionEventMessagesProcessing,true
+ExperionTagsImport.1,ExperionTagsImport,true
+GpnImportExport.1,GpnImportExport,true
+GpnSpa.1,GpnSpa,false
+Logging.1,Logging,true
+Monitoring.1,Monitoring,true
+PazCheckCentralServer.1,PazCheckCentralServer,true

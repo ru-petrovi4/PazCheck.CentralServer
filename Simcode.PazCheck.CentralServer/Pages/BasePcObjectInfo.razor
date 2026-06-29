@@ -1,0 +1,107 @@
+﻿@page "/api/v3/BasePcObjectInfo/{BasePcObjectId:int}"
+
+@inject IDbContextFactory<PazCheckDbContext> DbContextFactory
+
+@if (NotFound && !Loading)
+{
+    <div class="alert alert-warning">A basePcObject with that id doesn't exist.</div>
+}
+else
+{
+    @if (BasePcObject is null || Loading)
+    {
+        <div class="alert alert-info">Загрузка...</div>
+    }
+    else
+    {
+        @* <iframe src="./grafana/"></iframe> *@ @* nginx *@
+        <iframe width="100%" height="100%" class="fixed-top" src="./grafana/"></iframe> @* vs code *@
+
+        @* @if (BasePcObject.Identifier == PazCheckCentralServerConstants.BasePcObject_GrafanaSettings)
+        {
+            
+        }
+        else
+        {
+            <h3>Идентификатор: @BasePcObject.Identifier</h3>
+            <h3>@BasePcObject.Title</h3>
+            <br />
+        }    *@     
+    }
+}
+
+@code {
+    /// <summary>
+    /// Tracking of asynchronous calls.
+    /// </summary>
+    private bool Loading;
+
+    /// <summary>
+    /// Id from route of basePcObject.
+    /// </summary>
+    [Parameter]
+    public int BasePcObjectId { get; set; }
+
+    /// <summary>
+    /// Navigation check.
+    /// </summary>
+    private int _lastBasePcObjectId;
+
+    /// <summary>
+    /// BasePcObject entity.
+    /// </summary>
+    private BasePcObject? BasePcObject { get; set; }
+
+    /// <summary>
+    /// Set to true when not found.
+    /// </summary>
+    private bool NotFound = false;
+
+    /// <summary>
+    /// Navigated
+    /// </summary>
+    /// <returns>Task</returns>
+    protected override async Task OnParametersSetAsync()
+    {        
+        if (_lastBasePcObjectId != BasePcObjectId)
+        {
+            _lastBasePcObjectId = BasePcObjectId;
+            await LoadBasePcObjectAsync();
+        }
+        await base.OnParametersSetAsync();
+    }
+
+    /// <summary>
+    /// Loads the basePcObject
+    /// </summary>
+    /// <returns>Task</returns>
+    private async Task LoadBasePcObjectAsync()
+    {
+        if (Loading)
+        {
+            return; //avoid concurrent requests
+        }
+
+        NotFound = false;
+        BasePcObject = null;
+
+        Loading = true;
+
+        await using var dbContext = DbContextFactory.CreateDbContext();
+
+        if (dbContext.BasePcObjects is not null)
+        {
+            BasePcObject = await dbContext.BasePcObjects
+                .AsNoTracking()                
+                .SingleOrDefaultAsync(
+                    c => c.Id == BasePcObjectId);
+
+            if (BasePcObject is null)
+            {
+                NotFound = true;
+            }
+        }
+
+        Loading = false;
+    }    
+}

@@ -1,0 +1,108 @@
+﻿@page "/api/v3/PcObjectInfo/{PcObjectId:int}"
+@using Simcode.PazCheck.CentralServer.Common
+
+@inject IDbContextFactory<PazCheckDbContext> DbContextFactory
+
+@if (NotFound && !Loading)
+{
+    <div class="alert alert-warning">A pcObject with that id doesn't exist.</div>
+}
+else
+{
+    @if (PcObject is null || Loading)
+    {
+        <div class="alert alert-info">Загрузка...</div>
+    }
+    else
+    {
+        @*<h3>Идентификатор: @PcObject.Identifier</h3>
+        <h3>@PcObject.Title</h3>
+        <br />*@
+        @if (PcObject.BasePcObject.Identifier == PazCheckConstants.BasePcObject_SystemArea_Template)
+        {
+            @((MarkupString)PcObject.Widgets)
+        }
+        else
+        {
+            @* <iframe width="100%" height="100%" class="fixed-top" src="./grafana/d/jIjOQ4USk/unit?kiosk&var-PcObjectIdentifier=@(PcObject.Identifier)"></iframe> *@ @* nginx *@
+            <iframe width="100%" height="100%" class="fixed-top" src="./grafana/d/jIjOQ4USk/unit?kiosk&var-object=@(PcObject.Identifier)"></iframe> @* vs code *@
+        }
+    }
+}
+
+@code {
+    /// <summary>
+    /// Tracking of asynchronous calls.
+    /// </summary>
+    private bool Loading;
+
+    /// <summary>
+    /// Id from route of pcObject.
+    /// </summary>
+    [Parameter]
+    public int PcObjectId { get; set; }
+
+    /// <summary>
+    /// Navigation check.
+    /// </summary>
+    private int _lastPcObjectId;
+
+    /// <summary>
+    /// PcObject entity.
+    /// </summary>
+    private PcObject? PcObject { get; set; }
+
+    /// <summary>
+    /// Set to true when not found.
+    /// </summary>
+    private bool NotFound = false;
+
+    /// <summary>
+    /// Navigated
+    /// </summary>
+    /// <returns>Task</returns>
+    protected override async Task OnParametersSetAsync()
+    {
+        if (_lastPcObjectId != PcObjectId)
+        {
+            _lastPcObjectId = PcObjectId;
+            await LoadPcObjectAsync();
+        }
+        await base.OnParametersSetAsync();
+    }
+
+    /// <summary>
+    /// Loads the pcObject
+    /// </summary>
+    /// <returns>Task</returns>
+    private async Task LoadPcObjectAsync()
+    {
+        if (Loading)
+        {
+            return; //avoid concurrent requests
+        }
+
+        NotFound = false;
+        PcObject = null;
+
+        Loading = true;
+
+        using var readOnlyDbContext = DbContextFactory.CreateDbContext();
+        readOnlyDbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
+        if (readOnlyDbContext.PcObjects is not null)
+        {
+            PcObject = await readOnlyDbContext.PcObjects
+                .Include(o => o.BasePcObject)
+                .SingleOrDefaultAsync(
+                    o => o.Id == PcObjectId);
+
+            if (PcObject is null)
+            {
+                NotFound = true;
+            }
+        }
+
+        Loading = false;
+    }
+}

@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddonTestFinished" xml:space="preserve">
+    <value>Тест плагина завершен. Ошибок: {0}. Предупреждений: {1}. Детали в журнале ошибок.</value>
+  </data>
+  <data name="AddonTestUnhandledException" xml:space="preserve">
+    <value>В процессе тестирования плагина возникла ошибка</value>
+  </data>
+  <data name="AddResultToPcObject_Event" xml:space="preserve">
+    <value>Добавление данных об останове в реестр.</value>
+  </data>
+  <data name="AddResultToPcObject_EventDesc" xml:space="preserve">
+    <value>Добавление данных об останове в реестр.</value>
+  </data>
+  <data name="ApiCheckAccessFailed_Event" xml:space="preserve">
+    <value>Вызов неразрешенного API: {0} /{1}</value>
+  </data>
+  <data name="Autoloading" xml:space="preserve">
+    <value>Автозагрузка</value>
+  </data>
+  <data name="BaseActuator_IdentifierMode_Option" xml:space="preserve">
+    <value>Режим идентификатора устройства</value>
+  </data>
+  <data name="CalculateResults_Event" xml:space="preserve">
+    <value>Анализ матриц. Анализируемый временной диапазон, начало: {0}, конец: {1}</value>
+  </data>
+  <data name="CalculateResults_JobTitle" xml:space="preserve">
+    <value>Анализ логов событий</value>
+  </data>
+  <data name="CeMatrix_IdentifierMode_Option" xml:space="preserve">
+    <value>Режим идентификатра матрицы ПСС</value>
+  </data>
+  <data name="ClearUnversionedChanges_EventDesc" xml:space="preserve">
+    <value>Отмена (удаление) всех несохраненных изменений в проекте {0}</value>
+  </data>
+  <data name="ClearUnversionedChanges_EventName" xml:space="preserve">
+    <value>Отмена (удаление) всех несохраненных изменений в проекте</value>
+  </data>
+  <data name="ComponentStartedWithSuperUser_Event" xml:space="preserve">
+    <value>Компонент запущен в режиме, позволяющем роль суперпользователя.</value>
+  </data>
+  <data name="ComponentStartedWithSuperUser_EventDesc" xml:space="preserve">
+    <value>Компонент запущен в режиме, позволяющем роль суперпользователя: {0}</value>
+  </data>
+  <data name="ComponentStarted_Event" xml:space="preserve">
+    <value>Компонент запущен</value>
+  </data>
+  <data name="ComponentStarted_EventDesc" xml:space="preserve">
+    <value>Компонент запущен: {0}</value>
+  </data>
+  <data name="ComponentStopped_Event" xml:space="preserve">
+    <value>Компонент остановлен</value>
+  </data>
+  <data name="ComponentStopped_EventDesc" xml:space="preserve">
+    <value>Компонент остановлен: {0}</value>
+  </data>
+  <data name="DangerousAcceptAnyServerCertificate_Option" xml:space="preserve">
+    <value>Принимать любые сертификаты сервера (небезопасно)</value>
+  </data>
+  <data name="Default_AddonTestInfo" xml:space="preserve">
+    <value>Для продолжения нажмите "Выполнить"</value>
+  </data>
+  <data name="DiagnostAddon_Desc" xml:space="preserve">
+    <value>Модуль "Диагност"</value>
+  </data>
+  <data name="DiagnostCalculation_AutoBegin_Event" xml:space="preserve">
+    <value>Обнаружено технологическое событие, вызывающее запуск автоматического анализа. Анализ начат.</value>
+  </data>
+  <data name="DiagnostCalculation_AutoBegin_EventDesc" xml:space="preserve">
+    <value>Обнаружено технологическое событие, вызывающее запуск автоматического анализа. Анализ начат. Проект: {0}; начало временного интервала: {1}; конец {2}.</value>
+  </data>
+  <data name="DiagnostCalculation_Event" xml:space="preserve">
+    <value>Проведение анализа логов событий с помощью матриц ПСС</value>
+  </data>
+  <data name="DiagnostCalculation_EventDesc" xml:space="preserve">
+    <value>Аанализ логов событий. Проект: {0}; начало временного интервала: {1}; конец {2}.</value>
+  </data>
+  <data name="EntityDeleted_Event" xml:space="preserve">
+    <value>Удалена запись: {0}</value>
+  </data>
+  <data name="EntityPatched_Event" xml:space="preserve">
+    <value>Отредактирована запись: {0}; Детали: "{1}"</value>
+  </data>
+  <data name="EntityPosted_Event" xml:space="preserve">
+    <value>Добавлена запись: {0}; Детали: "{1}"</value>
+  </data>
+  <data name="Error_InvalidUnitIdentifier" xml:space="preserve">
+    <value>%(UnitIdentifier): неверный идентификатор установки</value>
+  </data>
+  <data name="ExportEventsToFile_Event" xml:space="preserve">
+    <value>Экспорт событий в файл</value>
+  </data>
+  <data name="ExportEventsToFile_EventDesc" xml:space="preserve">
+    <value>Экспорт событий в файл. Тип событий: {0}</value>
+  </data>
+  <data name="ExportVersionComparisonToFile_Event" xml:space="preserve">
+    <value>Экспорт результата сравнения версий в файл</value>
+  </data>
+  <data name="ExportVersionComparisonToFile_EventDesc" xml:space="preserve">
+    <value>Экспорт результата сравнения версий в файл. Объект: {0}; версия 1: {1}; версия 2: {2}.</value>
+  </data>
+  <data name="ImportBaseActuatorFile_JobTitle" xml:space="preserve">
+    <value>Импорт файлов устройств</value>
+  </data>
+  <data name="ImportCeMatrixFile_JobTitle" xml:space="preserve">
+    <value>Импорт файлов матриц ПСС</value>
+  </data>
+  <data name="ImportEventsJournalFile_JobTitle" xml:space="preserve">
+    <value>Импорт файлов журналов событий</value>
+  </data>
+  <data name="ImportLicenseFile_JobTitle" xml:space="preserve">
+    <value>Импорт файлов лицензий ПАЗ-Чек</value>
+  </data>
+  <data name="ImportProjectFile_JobTitle" xml:space="preserve">
+    <value>Импорт файлов проекта</value>
+  </data>
+  <data name="ImportSafetyControllerFile_JobTitle" xml:space="preserve">
+    <value>Импорт файлов объектов мониторинга</value>
+  </data>
+  <data name="ImportTagFile_JobTitle" xml:space="preserve">
+    <value>Импорт файлов тэгов</value>
+  </data>
+  <data name="Legend_IdentifierMode_Option" xml:space="preserve">
+    <value>Режим условных обозначений</value>
+  </data>
+  <data name="MonitoringAddon_Desc" xml:space="preserve">
+    <value>Модуль "Мониторинг"</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Пожалуйста, введите новый пароль:</value>
+  </data>
+  <data name="NotifyUsers_Event" xml:space="preserve">
+    <value>Отправка электронных сообщений</value>
+  </data>
+  <data name="NotifyUsers_EventDesc" xml:space="preserve">
+    <value>Отправка электронных сообщений</value>
+  </data>
+  <data name="PasswordsDoNotMatch" xml:space="preserve">
+    <value>Ошибка, пароли не совпадают.</value>
+  </data>
+  <data name="PazCheckCentralServerAddon_Desc" xml:space="preserve">
+    <value>Базовый модуль</value>
+  </data>
+  <data name="UpdatePeriod_Option" xml:space="preserve">
+    <value>Период обновления объектов модуля "Мониторинг"</value>
+  </data>
+  <data name="ProcessEventMessages_JobTitle" xml:space="preserve">
+    <value>Автоматическая обработка логов событий</value>
+  </data>
+  <data name="RepeatNewPassword" xml:space="preserve">
+    <value>Пожалуйста, повторите пароль:</value>
+  </data>
+  <data name="EMailsAddon_AddonTestInfo" xml:space="preserve">
+    <value>Введите существующий e-mail адрес, на который отправить тестовое письмо. Будет отправлен последний созданный в модуле Диагност отчет.</value>
+  </data>
+  <data name="EMailsAddon_Desc" xml:space="preserve">
+    <value>Модуль "Почтовая рассылка (E-Mails)"</value>
+  </data>
+  <data name="EMailsAddon_EMailFrom_Address_Option" xml:space="preserve">
+    <value>E-Mail, имя отправителя</value>
+  </data>
+  <data name="EMailsAddon_EMailFrom_Name_Option" xml:space="preserve">
+    <value>E-Mail, имя отправителя</value>
+  </data>
+  <data name="EMailsAddon_SmtpHost_Option" xml:space="preserve">
+    <value>Адрес SMTP-сервера</value>
+  </data>
+  <data name="EMailsAddon_SmtpParams_Option" xml:space="preserve">
+    <value>Дополнительные параметры для подключения к SMTP-серверу</value>
+  </data>
+  <data name="EMailsAddon_SmtpPassword_Option" xml:space="preserve">
+    <value>Пароль почтовой учетной записи</value>
+  </data>
+  <data name="EMailsAddon_SmtpPort_Option" xml:space="preserve">
+    <value>Порт SMTP-сервера</value>
+  </data>
+  <data name="EMailsAddon_SmtpUserName_Option" xml:space="preserve">
+    <value>Пользователь почтовой учетной записи</value>
+  </data>
+  <data name="EMailsAddon_Url_Option" xml:space="preserve">
+    <value>Указываемая ссылка на ИТ-решение ПАЗ-Чек в почтовых уведомлениях</value>
+  </data>
+  <data name="SafetyController_IdentifierMode_Option" xml:space="preserve">
+    <value>Режим идентификаторов объектов мониторинга</value>
+  </data>
+  <data name="SaveUnversionedChanges_Event" xml:space="preserve">
+    <value>Сохранение изменений в новую версию проекта</value>
+  </data>
+  <data name="SaveUnversionedChanges_EventDesc" xml:space="preserve">
+    <value>Сохранение версии проекта. Проект: {0}; Комментарий: {1}</value>
+  </data>
+  <data name="SaveUnversionedChanges_EventName" xml:space="preserve">
+    <value>Сохранение версии проекта</value>
+  </data>
+  <data name="SupervisorApproveActiveProjectVersion_EventDesc" xml:space="preserve">
+    <value>Утверждение актуальной версии проекта супервайзером. Проект: {0}; новая активная версия: {1} - {2}</value>
+  </data>
+  <data name="Tag_IdentifierMode_Option" xml:space="preserve">
+    <value>Режим имени тэга</value>
+  </data>
+  <data name="TestEMailSubject" xml:space="preserve">
+    <value>Тестовое письмо</value>
+  </data>
+  <data name="UnhandledException" xml:space="preserve">
+    <value>При выполнении программы возникла критическая ошибка.</value>
+  </data>
+  <data name="UnitEvents_MaxRecordsCount_Option" xml:space="preserve">
+    <value>Журнал событий, максимальное количество записей</value>
+  </data>
+  <data name="UnitEvents_MaxStorageTime_Option" xml:space="preserve">
+    <value>Журнал событий, максимальное время хранения записей</value>
+  </data>
+  <data name="UnitEvents_MaxUpdatePeriod_Option" xml:space="preserve">
+    <value>Максимально допустимое время получения событий</value>
+  </data>
+  <data name="UnitEvents_WarningRecordsCount_Option" xml:space="preserve">
+    <value>Журнал событий, количество записей для предупреждения</value>
+  </data>
+  <data name="UnitIdentifier_Option" xml:space="preserve">
+    <value>Идентификатор установки</value>
+  </data>
+  <data name="UserLogOut_Event" xml:space="preserve">
+    <value>Выход пользователя</value>
+  </data>
+  <data name="WriteConfigurationFile_Event" xml:space="preserve">
+    <value>Запись в конфигурационный файл</value>
+  </data>
+  <data name="WriteConfigurationFile_EventDesc" xml:space="preserve">
+    <value>Запись в конфигурационный файл: {0}; {1}</value>
+  </data>
+  <data name="UserLogOut_Event_Desc_Timeout" xml:space="preserve">
+    <value>Выход пользователя из-за неактивности</value>
+  </data>
+  <data name="UserLogOut_Event_Desc_RefreshTokenTimeout" xml:space="preserve">
+    <value>Выход пользователя в связи с превышением максимального времени работы</value>
+  </data>
+  <data name="UserLogOut_Event_Desc_UserAction" xml:space="preserve">
+    <value>Выход пользователя по кнопке</value>
+  </data>
+  <data name="SearchBy_IdentifierTitleDesc" xml:space="preserve">
+    <value>Идентификатор, название, описание</value>
+  </data>
+  <data name="FileReadingError" xml:space="preserve">
+    <value>Серверу не удалось прочитать файл</value>
+  </data>
+  <data name="Instructor_RoleName" xml:space="preserve">
+    <value>Начальник</value>
+  </data>
+  <data name="InvalidTestOptionsValue_Empty" xml:space="preserve">
+    <value>Не задан тестовый E-Mail.</value>
+  </data>
+  <data name="EMails_Sending_Event" xml:space="preserve">
+    <value>Отправка электронного сообщения (E-Mail).</value>
+  </data>
+  <data name="AddonTestFinished_Short" xml:space="preserve">
+    <value>Тест плагина завершен.</value>
+  </data>
+  <data name="DebugInfoHeader" xml:space="preserve">
+    <value>Отладочная информация (добавляется только при тесте)</value>
+  </data>
+  <data name="StandardFilterName_Templates" xml:space="preserve">
+    <value>Только шаблоны</value>
+  </data>
+</root>

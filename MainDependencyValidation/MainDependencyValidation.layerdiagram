@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="fe041d5f-e499-4e40-8c7d-d2bd97a3fe66" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <comments>
+    <comment Id="3c52fa60-800c-4f98-9806-f1524a4d8cdf" name="Comment2">
+      <body>Может быть любой. Веб-сервер только предоставляет файлы веб-приложения</body>
+      <layerElements>
+        <linkFromCommentToLayerElement>
+          <layerMoniker Id="ea3028da-ed81-41b8-8b36-8b1b16bb07ba" />
+        </linkFromCommentToLayerElement>
+      </layerElements>
+    </comment>
+    <comment Id="c1272b51-867a-4d75-80c4-86e396573515" name="Comment4">
+      <body>Используется шаблон: "Одностраничное приложение" (SPA) — это веб-приложение, которое загружает одну HTML-страницу и обновляет страницу динамически, вместо того, чтобы загружать новые страницы. После начальной загрузки страницы Протокол SPA обращается к серверу через запросы AJAX.
+Используется библиотка Ember JavaScript library.
+Подробнее тут https://docs.microsoft.com/ru-ru/aspnet/single-page-application/overview/templates/emberjs-template
+Среда разработки Visual Studio Code</body>
+      <layerElements>
+        <linkFromCommentToLayerElement>
+          <layerMoniker Id="d352d36a-6e2e-4325-8506-63b043b7dbf5" />
+        </linkFromCommentToLayerElement>
+      </layerElements>
+    </comment>
+    <comment Id="a83cec07-9928-4f0c-a591-534c80899945" name="Comment1">
+      <body>Среда разработки MS Visual Studio 2022 или Visual Studio Code - IDE с открытым исходным кодом</body>
+      <layerElements>
+        <linkFromCommentToLayerElement>
+          <layerMoniker Id="f93aaaca-ec8c-4903-89ab-43bcc19fb2b9" />
+        </linkFromCommentToLayerElement>
+      </layerElements>
+    </comment>
+  </comments>
+  <layers>
+    <layer Id="d352d36a-6e2e-4325-8506-63b043b7dbf5" name="Веб-браузер">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="ba58043f-5ea9-4743-901b-cf04558f9034" direction="Forward">
+          <layerMoniker Id="ea3028da-ed81-41b8-8b36-8b1b16bb07ba" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="1e7bbb6b-43e0-48de-8389-555c6c23ba5b" direction="Forward">
+          <layerMoniker Id="6c4974ed-a62a-4385-9362-31faf282fb1e" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="12abd268-6895-4ffb-8977-7a7e92963059" name="Сервисы доступа к данным">
+      <childLayers>
+        <layer Id="f9c9ba96-3502-4e14-823f-2adbab410b3c" name="Сервис доступа к историческим данным оффлайн">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="778f7926-1c43-4e34-b33c-8de399dcffbe" direction="Forward">
+              <layerMoniker Id="7a6aa55b-b6f4-4b7e-8bfe-c89364a8c0b8" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+        </layer>
+        <layer Id="5ad87dd1-861f-404b-95cd-e9a0988bc285" name="Сервис доступа к БДРВ">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="7f9f852b-37df-4da3-8a41-ef508631a0d0" direction="Forward">
+              <layerMoniker Id="7e2329dd-5e63-4c71-bfc9-e9d2d98fb04b" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+        </layer>
+        <layer Id="3328b221-0398-402c-8cfb-b4a6156a1054" name="Сервис импорта базы КИПиА">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="bdc2554c-e362-4a9d-a16b-62a13f93e599" direction="Forward">
+              <layerMoniker Id="2040312b-ca9f-4793-8362-5b800c39b595" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+        </layer>
+        <layer Id="1f370ddd-2fac-4410-af40-8790b3b671ff" name="Сервис импорта эталонных матриц ПСС">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="63cbd0d2-9478-413f-902e-3f676b0005b9" direction="Forward">
+              <layerMoniker Id="c144d6c0-b6a4-44d3-9fa3-476bdaaf87e8" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+        </layer>
+      </childLayers>
+    </layer>
+    <layer Id="f93aaaca-ec8c-4903-89ab-43bcc19fb2b9" name="ПАЗ-Чек ядро">
+      <comments>
+        <comment Id="e27e8b29-9f49-43d5-9e6c-a65c72429028" name="Comment1">
+          <body>Для предоставления данных веб-клиенту используется REST, JSON.API. Обеспечивает валидацию запросов и взаимодействие с нижестоящими слоями</body>
+          <layerElements>
+            <linkFromCommentToLayerElement>
+              <layerMoniker Id="e247cf13-cf27-4533-a372-6bcb7ce98a73" />
+            </linkFromCommentToLayerElement>
+          </layerElements>
+        </comment>
+      </comments>
+      <childLayers>
+        <layer Id="e247cf13-cf27-4533-a372-6bcb7ce98a73" name="Представление">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="36c150d9-405f-4c37-b199-493af76fe08a" direction="Forward">
+              <layerMoniker Id="69d27aa0-6246-422c-a70b-0c3c6f0e39cc" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="b9be4de2-1ce2-4771-b0e7-e7cde817594b" direction="Forward">
+              <layerMoniker Id="f4a62ff8-e4d4-4c4a-8d7f-dc0e184b3e11" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="48620aa8-ea61-4c86-8fb4-c827d088507c" direction="Forward">
+              <layerMoniker Id="24e154a3-5866-45fa-8265-43f8fc9bc318" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="aed64eb0-b42a-4263-adfc-06c4bab00623" direction="Forward">
+              <layerMoniker Id="5a828767-cdc3-49ef-844b-a35c7513dbff" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="74afb18b-574a-4ade-baeb-d22c2e329aff" direction="Forward">
+              <layerMoniker Id="50ba42b0-a57a-43ba-8a53-d7888114149c" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="29658ae6-6803-41d3-bfc6-4506b980914d" direction="Forward">
+              <layerMoniker Id="705b3965-8daf-44e9-ad6e-0a62e69ebaf2" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+		  <references>
+			<reference Id="E9240B76-9EDA-40CD-8E56-080CBE49D75A" name="Simcode.PazCheck.Server.Presentation">
+			  <ArtifactNode Label="Simcode.PazCheck.Server.Presentation" Category="CodeSchema_Namespace" Id="(Simcode.PazCheck.Server.Presentation)" />
+			  <ExpandedNode Id="(Simcode.PazCheck.Server.Presentation)" Label="Simcode.PazCheck.Server.Presentation" Category="CodeSchema_Namespace">
+				<LinkCategory Ref="Represents" />
+			  </ExpandedNode>
+			</reference>
+		  </references>
+        </layer>
+        <layer Id="f4a62ff8-e4d4-4c4a-8d7f-dc0e184b3e11" name="Бизнес-модели">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="e4863d0d-c6a1-4315-a330-09dfbd4ac690" direction="Forward">
+              <layerMoniker Id="24e154a3-5866-45fa-8265-43f8fc9bc318" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="d28011a5-3abb-4509-a555-cd2e97798039" direction="Forward">
+              <layerMoniker Id="e885397b-8dec-421c-9af1-b29aadcad35a" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="e933bd2b-d0eb-4c0d-b8a5-48058ce776ad" direction="Forward">
+              <layerMoniker Id="5a828767-cdc3-49ef-844b-a35c7513dbff" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="e84b4af3-055c-4f52-af63-668fb56b985f" direction="Forward">
+              <layerMoniker Id="55f617a3-d80e-4145-bdde-546e8d058c20" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <childLayers>
+            <layer Id="99ffc736-a561-47ae-bf26-751ce18be409" name="Бизнес-модели модуля ПАЗ-Чек - Диагност" />
+            <layer Id="6a33768a-0ad3-41c3-a60a-c2fdc722a769" name="Бизнес-модели модуля ПАЗ-Чек - Безопасность" />
+            <layer Id="51bf789f-80c6-46a8-9107-f37caeeee2ae" name="Бизнес-модели модуля ПАЗ-Чек - Мониторинг" />
+            <layer Id="b53386e9-4434-4da5-8b68-fa9c78e11397" name="Бизнес-модели модуля ПАЗ-Чек - Отчетность" />
+          </childLayers>
+		  <references>
+			<reference Id="98004403-58E8-459C-BE17-7AA0C2C3FA79" name="Simcode.PazCheck.Server.BusinessLogic">
+			  <ArtifactNode Label="Simcode.PazCheck.Server.BusinessLogic" Category="CodeSchema_Namespace" Id="(Simcode.PazCheck.Server.BusinessLogic)" />
+			  <ExpandedNode Id="(Simcode.PazCheck.Server.BusinessLogic)" Label="Simcode.PazCheck.Server.BusinessLogic" Category="CodeSchema_Namespace">
+				<LinkCategory Ref="Represents" />
+			  </ExpandedNode>
+			</reference>
+		  </references>
+        </layer>
+        <layer Id="24e154a3-5866-45fa-8265-43f8fc9bc318" name="Модуль логирования событий">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="4933644e-1896-4b98-94e9-ca61de2dc70d" direction="Forward">
+              <layerMoniker Id="e885397b-8dec-421c-9af1-b29aadcad35a" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+        </layer>
+        <layer Id="5a828767-cdc3-49ef-844b-a35c7513dbff" name="Контроллер сервисов доступа к данным">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="039a92c5-dde2-4c71-9e30-6da6bc5a6c24" direction="Forward">
+              <layerMoniker Id="12abd268-6895-4ffb-8977-7a7e92963059" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="9c8f79b0-9b02-4c19-8d6c-e8bbfc41754a" direction="Forward">
+              <layerMoniker Id="e885397b-8dec-421c-9af1-b29aadcad35a" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="4950b8b7-b97c-4a26-b2e1-107f2f79832a" direction="Forward">
+              <layerMoniker Id="55f617a3-d80e-4145-bdde-546e8d058c20" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+        </layer>
+        <layer Id="50ba42b0-a57a-43ba-8a53-d7888114149c" name="Модуль генерации отчетов">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="261628ca-77fa-4676-af11-a491b0864d3a" direction="Forward">
+              <layerMoniker Id="e885397b-8dec-421c-9af1-b29aadcad35a" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="0bd94e72-6c57-4861-9871-caf2b3bde249" direction="Forward">
+              <layerMoniker Id="55f617a3-d80e-4145-bdde-546e8d058c20" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+        </layer>
+        <layer Id="705b3965-8daf-44e9-ad6e-0a62e69ebaf2" name="Контроллер рассылки отчетов">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="50cfa70c-646f-4305-b3bb-e8de5ee061a6" direction="Forward">
+              <layerMoniker Id="e885397b-8dec-421c-9af1-b29aadcad35a" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="02615814-a30a-4bbd-bbac-fb431c813e9f" direction="Forward">
+              <layerMoniker Id="3364f380-1350-44c2-a77d-a60f0d9f5a27" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="3a77e0c0-5b27-4e2e-ad99-40cd4736f9df" direction="Forward">
+              <layerMoniker Id="55f617a3-d80e-4145-bdde-546e8d058c20" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+        </layer>
+        <layer Id="6c4974ed-a62a-4385-9362-31faf282fb1e" name="Кросс-платформенный веб-сервер Kestrel">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="1d1885f9-5635-4af7-9b56-136d7b31f352" direction="Forward">
+              <layerMoniker Id="e247cf13-cf27-4533-a372-6bcb7ce98a73" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+        </layer>
+      </childLayers>
+    </layer>
+    <layer Id="f5dbdf0c-5364-4b1f-9ce9-65741b45155a" name="СУБД PostgreSQL" />
+    <layer Id="ea3028da-ed81-41b8-8b36-8b1b16bb07ba" name="Веб-сервер" />
+    <layer Id="f562b64b-2941-4d38-99d7-911d8dd4d88d" name="Microsoft Active Directory" />
+    <layer Id="e885397b-8dec-421c-9af1-b29aadcad35a" name="Entity Framework Core 6">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="1b729a93-5b63-425e-874e-aef3906604cd" direction="Forward">
+          <layerMoniker Id="f5dbdf0c-5364-4b1f-9ce9-65741b45155a" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <references>
+        <reference Id="640E3A41-B82A-4FE8-B6DC-315CB42D907A" name="Simcode.PazCheck.Server.EntityFramework">
+          <ArtifactNode Label="Simcode.PazCheck.Server.EntityFramework" Category="CodeSchema_Namespace" Id="(Simcode.PazCheck.Server.EntityFramework)" />
+          <ExpandedNode Id="(Simcode.PazCheck.Server.EntityFramework)" Label="Simcode.PazCheck.Server.EntityFramework" Category="CodeSchema_Namespace">
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="3364f380-1350-44c2-a77d-a60f0d9f5a27" name="Сервис рассылки отчетов">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="ca2db52a-d0e1-4dd6-9346-44c1527a837b" direction="Forward">
+          <layerMoniker Id="55f617a3-d80e-4145-bdde-546e8d058c20" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="55f617a3-d80e-4145-bdde-546e8d058c20" name="Файловая система" />
+    <layer Id="7a6aa55b-b6f4-4b7e-8bfe-c89364a8c0b8" name="Историчсекие данные в виде файлов" />
+    <layer Id="7e2329dd-5e63-4c71-bfc9-e9d2d98fb04b" name="БДРВ" />
+    <layer Id="2040312b-ca9f-4793-8362-5b800c39b595" name="База КИПиА в виде файлов" />
+    <layer Id="c144d6c0-b6a4-44d3-9fa3-476bdaaf87e8" name="Эталонные матрицы ПСС в виде файлов" />
+    <layer Id="69d27aa0-6246-422c-a70b-0c3c6f0e39cc" name="Identity Server 4">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="d233b14c-6024-4f6e-8f66-489bc0c2d991" direction="Forward">
+          <layerMoniker Id="f562b64b-2941-4d38-99d7-911d8dd4d88d" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+  </layers>
+</layerModel>

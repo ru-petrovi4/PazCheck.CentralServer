@@ -1,0 +1,57 @@
+﻿Logging:   
+  # задается уровень логирования событий в файлы журналов
+  LogLevel: 
+    # можно увидеть ошибки сериализации JSON объектов
+    Microsoft.AspNetCore.Mvc: "Warning"
+    Simcode.PazCheck.CentralServer.MicroServices.Monitoring: "Debug" 
+  SszLogger:    
+    LogsDirectory: "%ProgramData%\\CDT\\Logs" 
+Kestrel:  
+  Endpoints: 
+    HttpsDefaultCert: 
+      Url: "https://localhost:5000"
+  Certificates:
+    Default:      
+      Path: ""      
+      Password: ""   
+      AllowInvalid: ""
+ConnectionStrings: 
+  # строка соединения с СУБД Postgres Pro
+  MainDbConnection: "Host=localhost;Username=postgres;Password=postgres;Database=pazcheck_dev;CommandTimeout=3600;Include Error Detail=true" 
+AuthorizationIsDisabled: "true"
+ActiveDirectory:  
+  TestUsers:
+    - User: super2
+      Password: '1'
+      Name: Тестовый Суперпользователь
+      Role: ''
+    - User: a2
+      Password: '1'
+      Name: Тестовый Администратор
+      Role: mpaz-admin-test
+    - User: isa2
+      Password: '1'
+      Name: Тестовый Администратор ИБ
+      Role: mpaz-adminIB-test
+    - User: e2
+      Password: '1'
+      Name: Тестовый Инженер
+      Role: mpaz-engineer-test
+    - User: se2
+      Password: '1'
+      Name: Тестовый Инженер и Супервайзер
+      Role: mpaz-engineer-test,mpaz-supervisor-test
+    - User: s2
+      Password: '1'
+      Name: Тестовый Супервайзер
+      Role: mpaz-supervisor-test
+    - User: o2
+      Password: '1'
+      Name: Тестовый Обозреватель
+      Role: mpaz-viewer-test  
+    - User: lo2
+      Password: '1'
+      Name: Тестовый Обозреватель приборных панелей ЦУД 
+      Role: mpaz-longrunningviewer-test  
+  SuperUser: "s2"
+---

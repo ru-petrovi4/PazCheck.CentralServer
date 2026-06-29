@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddonTestFinished" xml:space="preserve">
+    <value>Addon test finished. Errors: {0}. Warnings: {1}. Details in errors journal.</value>
+  </data>
+  <data name="AddonTestUnhandledException" xml:space="preserve">
+    <value>Addon test error</value>
+  </data>
+  <data name="AddResultToPcObject_Event" xml:space="preserve">
+    <value>Add journal analysis result to registry.</value>
+  </data>
+  <data name="AddResultToPcObject_EventDesc" xml:space="preserve">
+    <value>Add journal analysis result to registry.</value>
+  </data>
+  <data name="ApiCheckAccessFailed_Event" xml:space="preserve">
+    <value>API call access denied: {0} /{1}</value>
+  </data>
+  <data name="Autoloading" xml:space="preserve">
+    <value>Autoloading</value>
+  </data>
+  <data name="BaseActuator_IdentifierMode_Option" xml:space="preserve">
+    <value>Actuator identifier mode</value>
+  </data>
+  <data name="CalculateResults_Event" xml:space="preserve">
+    <value>Matrices analysis. Date range, begin: {0}, end: {1}</value>
+  </data>
+  <data name="CalculateResults_JobTitle" xml:space="preserve">
+    <value>Log events analysis</value>
+  </data>
+  <data name="CeMatrix_IdentifierMode_Option" xml:space="preserve">
+    <value>CE Matrix identifier mode</value>
+  </data>
+  <data name="ClearUnversionedChanges_EventDesc" xml:space="preserve">
+    <value>Clear unversioned changes in project {0}</value>
+  </data>
+  <data name="ClearUnversionedChanges_EventName" xml:space="preserve">
+    <value>Clear unversioned changes in project</value>
+  </data>
+  <data name="ComponentStartedWithSuperUser_Event" xml:space="preserve">
+    <value>Component started with SuperUser role enabled.</value>
+  </data>
+  <data name="ComponentStartedWithSuperUser_EventDesc" xml:space="preserve">
+    <value>Component started with SuperUser role enabled: {0}</value>
+  </data>
+  <data name="ComponentStarted_Event" xml:space="preserve">
+    <value>Component Started</value>
+  </data>
+  <data name="ComponentStarted_EventDesc" xml:space="preserve">
+    <value>Component Started: {0}</value>
+  </data>
+  <data name="ComponentStopped_Event" xml:space="preserve">
+    <value>Component Stopped</value>
+  </data>
+  <data name="ComponentStopped_EventDesc" xml:space="preserve">
+    <value>Component Stopped: {0}</value>
+  </data>
+  <data name="DangerousAcceptAnyServerCertificate_Option" xml:space="preserve">
+    <value>Accept any server certificate (dangerous)</value>
+  </data>
+  <data name="Default_AddonTestInfo" xml:space="preserve">
+    <value>To continue press OK button</value>
+  </data>
+  <data name="DiagnostAddon_Desc" xml:space="preserve">
+    <value>Diagnost Module</value>
+  </data>
+  <data name="DiagnostCalculation_AutoBegin_Event" xml:space="preserve">
+    <value>Automatic journal events analysis started</value>
+  </data>
+  <data name="DiagnostCalculation_AutoBegin_EventDesc" xml:space="preserve">
+    <value>Automatic journal events analysis started. Project: {0}; Begin Time: {1}; End Time {2}.</value>
+  </data>
+  <data name="DiagnostCalculation_Event" xml:space="preserve">
+    <value>Journal events analysis</value>
+  </data>
+  <data name="DiagnostCalculation_EventDesc" xml:space="preserve">
+    <value>Journal events analysis. Project: {0}; Begin Time: {1}; End Time {2}.</value>
+  </data>
+  <data name="EntityDeleted_Event" xml:space="preserve">
+    <value>Entity deleted: {0}</value>
+  </data>
+  <data name="EntityPatched_Event" xml:space="preserve">
+    <value>Entity updated: {0}; Details: "{1}"</value>
+  </data>
+  <data name="EntityPosted_Event" xml:space="preserve">
+    <value>Entity posted: {0}; Details: "{1}"</value>
+  </data>
+  <data name="Error_InvalidUnitIdentifier" xml:space="preserve">
+    <value>%(UnitIdentifier): invalid unit identifier</value>
+  </data>
+  <data name="ExportEventsToFile_Event" xml:space="preserve">
+    <value>Export events to file.</value>
+  </data>
+  <data name="ExportEventsToFile_EventDesc" xml:space="preserve">
+    <value>Export events to file. Event type: {0}</value>
+  </data>
+  <data name="ExportVersionComparisonToFile_Event" xml:space="preserve">
+    <value>Export version comparison result to file.</value>
+  </data>
+  <data name="ExportVersionComparisonToFile_EventDesc" xml:space="preserve">
+    <value>Export version comparison result to file. Object: {0}; Version 1: {1}; Version 2: {2}.</value>
+  </data>
+  <data name="ImportBaseActuatorFile_JobTitle" xml:space="preserve">
+    <value>Import Base Actuator File</value>
+  </data>
+  <data name="ImportCeMatrixFile_JobTitle" xml:space="preserve">
+    <value>Import CE Matrix File</value>
+  </data>
+  <data name="ImportEventsJournalFile_JobTitle" xml:space="preserve">
+    <value>Import Events Journal File</value>
+  </data>
+  <data name="ImportLicenseFile_JobTitle" xml:space="preserve">
+    <value>Import License File</value>
+  </data>
+  <data name="ImportProjectFile_JobTitle" xml:space="preserve">
+    <value>Import Project File</value>
+  </data>
+  <data name="ImportSafetyControllerFile_JobTitle" xml:space="preserve">
+    <value>Import Safety Controller File</value>
+  </data>
+  <data name="ImportTagFile_JobTitle" xml:space="preserve">
+    <value>Import Tag File</value>
+  </data>
+  <data name="Legend_IdentifierMode_Option" xml:space="preserve">
+    <value>Legend identifiers mode</value>
+  </data>
+  <data name="MonitoringAddon_Desc" xml:space="preserve">
+    <value>Monitoring Module</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Please, enter new password:</value>
+  </data>
+  <data name="NotifyUsers_Event" xml:space="preserve">
+    <value>Send e-mails </value>
+  </data>
+  <data name="NotifyUsers_EventDesc" xml:space="preserve">
+    <value>Send e-mails</value>
+  </data>
+  <data name="PasswordsDoNotMatch" xml:space="preserve">
+    <value>Error, passwords do not match.</value>
+  </data>
+  <data name="PazCheckCentralServerAddon_Desc" xml:space="preserve">
+    <value>Base module</value>
+  </data>
+  <data name="UpdatePeriod_Option" xml:space="preserve">
+    <value>Monitoring Module objects update period</value>
+  </data>
+  <data name="ProcessEventMessages_JobTitle" xml:space="preserve">
+    <value>Automatic process event logs processing</value>
+  </data>
+  <data name="RepeatNewPassword" xml:space="preserve">
+    <value>Please, cofirm password:</value>
+  </data>
+  <data name="EMailsAddon_AddonTestInfo" xml:space="preserve">
+    <value>Please, enter valid e-mail address for test message. Last report from Diagnost will be sent.</value>
+  </data>
+  <data name="EMailsAddon_Desc" xml:space="preserve">
+    <value>E-Mails Module</value>
+  </data>
+  <data name="EMailsAddon_EMailFrom_Address_Option" xml:space="preserve">
+    <value>E-Mail Sender Address</value>
+  </data>
+  <data name="EMailsAddon_EMailFrom_Name_Option" xml:space="preserve">
+    <value>E-Mail Sender Name</value>
+  </data>
+  <data name="EMailsAddon_SmtpHost_Option" xml:space="preserve">
+    <value>SMTP Server Host</value>
+  </data>
+  <data name="EMailsAddon_SmtpParams_Option" xml:space="preserve">
+    <value>SMTP Server Host connection additional params</value>
+  </data>
+  <data name="EMailsAddon_SmtpPassword_Option" xml:space="preserve">
+    <value>SMTP Server Host Password</value>
+  </data>
+  <data name="EMailsAddon_SmtpPort_Option" xml:space="preserve">
+    <value>SMTP Server Port</value>
+  </data>
+  <data name="EMailsAddon_SmtpUserName_Option" xml:space="preserve">
+    <value>SMTP Server Host User Name</value>
+  </data>
+  <data name="EMailsAddon_Url_Option" xml:space="preserve">
+    <value>PazCheck URL for reference in mail</value>
+  </data>
+  <data name="SafetyController_IdentifierMode_Option" xml:space="preserve">
+    <value>Monitoring objects identifiers mode</value>
+  </data>
+  <data name="SaveUnversionedChanges_Event" xml:space="preserve">
+    <value>Saved unversioned changes</value>
+  </data>
+  <data name="SaveUnversionedChanges_EventDesc" xml:space="preserve">
+    <value>Saving project version. Project: {0}; Comment: {1}</value>
+  </data>
+  <data name="SaveUnversionedChanges_EventName" xml:space="preserve">
+    <value>Saving project version</value>
+  </data>
+  <data name="SupervisorApproveActiveProjectVersion_EventDesc" xml:space="preserve">
+    <value>Supervisor approve new active project version. Project: {0}; new active project version: {1} - {2}</value>
+  </data>
+  <data name="Tag_IdentifierMode_Option" xml:space="preserve">
+    <value>Tag name mode</value>
+  </data>
+  <data name="TestEMailSubject" xml:space="preserve">
+    <value>Test E-Mail</value>
+  </data>
+  <data name="UnhandledException" xml:space="preserve">
+    <value>Program critical error.</value>
+  </data>
+  <data name="UnitEvents_MaxRecordsCount_Option" xml:space="preserve">
+    <value>UnitEvents Max Records Count</value>
+  </data>
+  <data name="UnitEvents_MaxStorageTime_Option" xml:space="preserve">
+    <value>UnitEvents Max Storage Time</value>
+  </data>
+  <data name="UnitEvents_MaxUpdatePeriod_Option" xml:space="preserve">
+    <value>Maximum period of time to recieve new unit events.</value>
+  </data>
+  <data name="UnitEvents_WarningRecordsCount_Option" xml:space="preserve">
+    <value>UnitEvents Warning Records Count</value>
+  </data>
+  <data name="UnitIdentifier_Option" xml:space="preserve">
+    <value>Unit Identifier</value>
+  </data>
+  <data name="UserLogOut_Event" xml:space="preserve">
+    <value>Log Out User</value>
+  </data>
+  <data name="WriteConfigurationFile_Event" xml:space="preserve">
+    <value>Write сonfiguration file</value>
+  </data>
+  <data name="WriteConfigurationFile_EventDesc" xml:space="preserve">
+    <value>Write сonfiguration file: {0} {1}</value>
+  </data>
+  <data name="UserLogOut_Event_Desc_Timeout" xml:space="preserve">
+    <value>User logout due to inactivity timeout</value>
+  </data>
+  <data name="UserLogOut_Event_Desc_RefreshTokenTimeout" xml:space="preserve">
+    <value>User logout due to exceeding maximum operating time</value>
+  </data>
+  <data name="UserLogOut_Event_Desc_UserAction" xml:space="preserve">
+    <value>User logout by button</value>
+  </data>
+  <data name="SearchBy_IdentifierTitleDesc" xml:space="preserve">
+    <value>Identifier, Title, Desc</value>
+  </data>
+  <data name="FileReadingError" xml:space="preserve">
+    <value>Server cannot read file </value>
+  </data>
+  <data name="Instructor_RoleName" xml:space="preserve">
+    <value>Instructor</value>
+  </data>
+  <data name="InvalidTestOptionsValue_Empty" xml:space="preserve">
+    <value>Test E-Mail is not set.</value>
+  </data>
+  <data name="EMails_Sending_Event" xml:space="preserve">
+    <value>E-Mail sending.</value>
+  </data>
+  <data name="AddonTestFinished_Short" xml:space="preserve">
+    <value>Addon test finished.</value>
+  </data>
+  <data name="DebugInfoHeader" xml:space="preserve">
+    <value>Debug Info (only added for test mode):</value>
+  </data>
+  <data name="StandardFilterName_Templates" xml:space="preserve">
+    <value>Templates Only</value>
+  </data>
+</root>

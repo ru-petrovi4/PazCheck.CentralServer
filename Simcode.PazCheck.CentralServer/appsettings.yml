@@ -1,0 +1,82 @@
+﻿Logging:
+  # задается уровень логирования событий в файлы журналов
+  LogLevel: 
+    Simcode.PazCheck.CentralServer.Program: "Information"
+    Default: "Warning"
+    Grpc: "Warning"
+    System: "Warning"
+    Microsoft: "Warning"    
+    # Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware: "None"
+    Ssz.IdentityServer.Helpers.GSSAPI.KerberosAuthMiddleware: "Information"
+  SszLogger: 
+    # путь до директории где будут храниться файлы журналов событий
+    LogsDirectory: "/var/log/CDT"
+    # базовое имя файлов журналов
+    LogFileName: "PazCheck.CentralServer.log"
+    # Флаг указывающий на необходимость дублирования события в стандартный поток вывода приложения
+    DuplicateInConsole: "true"
+    # количество дней которое должны храниться файлы журналов
+    DaysCountToStoreFiles: "60"
+    # максимальный размер одного файла журнала
+    LogFileMaxSizeInBytes: "10000000"    
+    # максимальный размер всех фалов журналов. Если размер превышает этот предел самые старые лог-файлы автоматически удаляются      
+    LogFilesMaxSizeInBytes: "200000000"
+Kestrel: 
+  EndpointDefaults: 
+    # Http1 нужен для TLS
+    Protocols: "Http1"   
+  Endpoints: 
+    HttpsDefaultCert: 
+      Url: "https://localhost:5000"
+  Certificates:
+    Default: 
+      # имя файла сертификата. Должен быть расположен в папке данных центрального сервера ПАЗ-Чек
+      Path: ""
+      # пароль от файла сертификата
+      Password: ""      
+  Limits: 
+    # максимальный размер загружаемых через веб-интерфейс в ИТ-решение файлов
+    MaxRequestBodySize: "1024000000"
+# НЕ должно заканчиваться на '/'. Может быть пустым.
+GrafanaUrl: "http://localhost:5001/grafana"
+MaxUploadFileSize: "1024000000"
+Process_SourceId: "PazCheck.CentralServer"
+Process_SourceIdToDisplay: "Центральный сервер ПАЗ ЧЕК"
+AllowedHosts: "*"
+# задается язык сообщений в журналах событий, которые доступны через веб интерфейс ИТ-решения возможные значения RU, EN
+UICulture: "RU"  
+# имя файла, где хранится пароль для шифрования полей в БД ИТ-решения
+PostgreCryptoPasswordFileName: "shadow_pass"
+ConnectionStrings: 
+  # строка соединения с СУБД Postgres Pro
+  MainDbConnection: ""   
+OIDC: 
+  # время жизни Access-токена
+  AccessTokenLifetime: "10m"
+  # время жизни Refresh-токена
+  RefreshTokenLifetime: "24h" 
+Kerberos:
+  KeytabPath: "krb5.keytab"
+# настройки интеграции с контроллером домена AD
+ActiveDirectory: 
+  # адрес LDAP сервера
+  Server: ""
+  # DN путь в AD где расположены пользователи системы
+  UsersDN: ""
+  # порт для доступа по протоколу LDAP 389 или LDAPS 636
+  LdapPort: ""
+  # версия протокола LDAP используемая сервером
+  LdapVersion: ""
+  # использовать ли защищенную версию LDAPS (значения true/false)
+  UseSsl: "true"
+  # указывает проверяется ли список отзыва сертификатов во время проверки подлинности (значения true/false)
+  CheckCertificateRevocation: "false"
+  ServiceAccount: 
+    # DN путь до сервисной учетной записи
+    DN: ""
+    # пароль от сервисной учетной записи
+    Password: ""    
+  # имя пользователя Active Directory которому нужно назначить права супер-пользователя
+  SuperUser: ""
+---
+  

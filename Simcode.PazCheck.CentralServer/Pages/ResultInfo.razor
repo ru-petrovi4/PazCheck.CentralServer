@@ -1,0 +1,175 @@
+﻿@page "/api/v3/ResultInfo/{ResultId:int}"
+@using Simcode.PazCheck.CentralServer.Common.MicroServices
+@using Ssz.Utils;
+@using Ssz.Utils.Addons;
+
+@inject IDbContextFactory<PazCheckDbContext> DbContextFactory
+@inject AddonsManager AddonsManager
+@inject Cache Cache
+
+@if (NotFound && !Loading)
+{
+    <div class="alert alert-warning">Error: a result with that id doesn't exist.</div>
+}
+else
+{
+    @if (Result is null || Loading)
+    {
+        <div class="alert alert-info">Загрузка...</div>
+    }
+    else
+    {
+        <h3>Результат анализа</h3>
+        <br />
+        <div>Дата анализа: @(new Any(Result.AlalysisTimeUtc.ToLocalTime()).ValueAsString(true, "g"))</div>
+        <br />
+        <div>Начало анализируемого временного диапазона: @(new Any(Result.BeginTimeUtc.ToLocalTime()).ValueAsString(true, "G"))</div>
+        <br />
+        <div>Конец анализируемого временного диапазона: @(new Any(Result.EndTimeUtc.ToLocalTime()).ValueAsString(true, "G"))</div>
+        <br />
+        <div>Событие: @Result.StatisticsDictionary.TryGetValue(CentralServer.Common.PazCheckConstants.ParamName_ResultEventDesc) (@Result.StatisticsDictionary.TryGetValue(CentralServer.Common.PazCheckConstants.ParamName_ResultEventTagName))</div>
+        <br />
+        <div>Первопричина(-ы):</div>
+        @foreach (var resultSource in (Result.StatisticsDictionary.TryGetValue(CentralServer.Common.PazCheckConstants.ParamName_Strict_PrimeCause_TagName) ?? "").Split('\n'))
+        {
+            <div>@resultSource</div>
+        }
+        <br />
+        @* <div>Событие в журнале: @Result.StatisticsDictionary.TryGetValue(CentralServer.Common.PazCheckConstants.ParamName_Strict_PrimeCause_Time)</div>
+        <div>@Result.StatisticsDictionary.TryGetValue(CentralServer.Common.PazCheckConstants.ParamName_Strict_PrimeCause_Condition)</div>
+        <br />
+        @if (_possibleResultSources.Length > 0 && !String.IsNullOrEmpty(_possibleResultSources[0]))
+        {
+            <div>Возможные первопричины, исходя из имеющихся данных:</div>
+            @foreach (var resultSource in _possibleResultSources)
+            {                
+                <div>@resultSource</div>                
+            }
+            <br />
+        } *@
+        @* <div>Сработало успешно: @(Result.StatisticsDictionary.TryGetValue(new Any(TriggeredType.SuccessTriggered).ValueAsString(false)) ?? "0")</div>
+        <br />
+        <div>Уже было в нужном состоянии: @(Result.StatisticsDictionary.TryGetValue(new Any(TriggeredType.SuccessFirstTriggered).ValueAsString(false)) ?? "0")</div>
+        <br />
+        <div>Сработало с отклонением по времени срабатывания: @(Result.StatisticsDictionary.TryGetValue(new Any(TriggeredType.LateTriggered).ValueAsString(false)) ?? "0")</div>
+        <br />
+        <div>Нет данных о срабатывании: @(Result.StatisticsDictionary.TryGetValue(new Any(TriggeredType.NotTriggered).ValueAsString(false)) ?? "0")</div>
+        <br /> *@
+        @if (_resultInfo.Count > 0)
+        {
+            <div>Информация о срабатывании оборудования:</div>
+            @foreach (var table in _resultInfo)
+            {
+                <br />
+                <div>@table[0][0]</div>
+                <div class="row">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                @foreach (var cell in table[1])
+                                {
+                                    <th>@cell</th>
+                                }
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var row in table.Skip(2))
+                            {
+                                <tr>
+                                    @foreach (var cell in row)
+                                    {
+                                        <td>@cell</td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }            
+        }        
+    }
+}
+
+@code {
+    /// <summary>
+    /// Tracking of asynchronous calls.
+    /// </summary>
+    private bool Loading;
+
+    /// <summary>
+    /// Id from route of result.
+    /// </summary>
+    [Parameter]
+    public int ResultId { get; set; }
+
+    /// <summary>
+    /// Navigation check.
+    /// </summary>
+    private int _lastResultId;    
+
+    /// <summary>
+    /// Result entity.
+    /// </summary>
+    private Result? Result { get; set; }
+
+    /// <summary>
+    /// Set to true when not found.
+    /// </summary>
+    private bool NotFound = false;
+
+    private CaseInsensitiveOrderedDictionary<string?> _statisticsDictionary = new();
+
+    private string?[] _possibleResultSources = new string[0];
+
+    private List<List<List<string?>>> _resultInfo = new();
+
+    /// <summary>
+    /// Navigated
+    /// </summary>
+    /// <returns>Task</returns>
+    protected override async Task OnParametersSetAsync()
+    {
+        if (_lastResultId != ResultId)
+        {            
+            _lastResultId = ResultId;
+            await LoadResultAsync();
+        }
+        await base.OnParametersSetAsync();
+    }
+
+    /// <summary>
+    /// Loads the result
+    /// </summary>
+    /// <returns>Task</returns>
+    private async Task LoadResultAsync()
+    {
+        if (Loading)
+            return; //avoid concurrent requests
+
+        NotFound = false;
+        Result = null;
+
+        Loading = true; 
+        
+        await using var readOnlyDbContext = DbContextFactory.CreateDbContext();
+        readOnlyDbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
+        Result = await readOnlyDbContext.Results
+                .AsNoTracking()
+                .Include(r => r.ResultEvents)
+                .ThenInclude(re => re.TriggeredUnitEvent)
+                .SingleOrDefaultAsync(
+                    c => c.Id == ResultId);
+
+        if (Result is null)
+            NotFound = true;
+
+        _statisticsDictionary = Result!.StatisticsDictionary;        
+        //_possibleResultSources = Ssz.Utils.CsvHelper.ParseCsvLine("\n", _statisticsDictionary.TryGetValue(CentralServer.Common.PazCheckConstants.ParamName_PossibleResultSources));
+        
+        _resultInfo = await Simcode.PazCheck.CentralServer.Common.Helpers.PazCheckDbHelper.GetResultInfoAsync(AddonsManager, DbContextFactory, Cache.DbCache, ResultId);
+
+        Loading = false;
+    }
+}

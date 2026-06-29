@@ -1,0 +1,4 @@
+﻿%(DataAccessClient_ContextParams),ClientUserName=server&ClientPassword=%(db:id2)
+%(DataAccessClient_DangerousAcceptAnyServerCertificate),true
+%(DataAccessClient_ServerAddress),https://localhost:60060
+%(DataAccessClient_SystemNameToConnect),DCS

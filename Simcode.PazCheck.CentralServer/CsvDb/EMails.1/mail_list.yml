@@ -1,0 +1,29 @@
+﻿SubscriptionId: "Не произошла автоматическая загрузка логов АСУБ"
+
+SourceEvent:
+  Category: "!EVENT"
+  Type: "Diagnost_UnitEventsAutoLoaded|MLSP|*"
+  AllowedTimeSpan: "90m"
+  
+Subject: "ПАЗ ЧЕК, не получена очередная выгрузка логов из Experion"
+BodyTemplate: "mail_template1.htm"
+EMails:
+  - Valery.Pogorelov@mipt-cdt.ru 
+---
+
+SubscriptionId: "Автоматический анализ останова МЛСП"
+
+SourceEvent:
+  Category: "EVENT"
+  Type: "Diagnost_UnitEventsAutoAnalyzed|MLSP|*"
+
+Reports:
+  - AddonIdentifier: "GpnImportExport"    
+    DestinationTypeIdentifier: "diagnostresult.xlsx"
+    Filter:
+      - ResultId: "%(ResultId)"
+  
+Subject: "ПАЗ ЧЕК, отчет о выявленном событии: %(ResultEventDesc)"
+BodyTemplate: "mail_template2.htm"
+EMails:
+  - Valery.Pogorelov@mipt-cdt.ru

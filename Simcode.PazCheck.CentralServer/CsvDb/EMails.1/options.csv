@@ -1,0 +1,9 @@
+﻿%(DangerousAcceptAnyServerCertificate),true
+%(EMailFrom_Address),div.zero@yandex.ru
+%(EMailFrom_Name),ПАЗ-Чек
+%(SmtpHost),smtp.yandex.ru
+%(SmtpParams),useSsl=true
+%(SmtpPassword),%(db:id2)
+%(SmtpPort),465
+%(SmtpUserName),div.zero@yandex.ru
+%(Url),https://localhost/

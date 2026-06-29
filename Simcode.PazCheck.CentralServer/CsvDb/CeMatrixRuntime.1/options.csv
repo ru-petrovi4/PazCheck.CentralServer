@@ -1,0 +1,4 @@
+﻿%(CalculationStepMs),2000
+%(CommandExecutionDurationMaxSeconds),180
+%(EventsToleranceSeconds),3
+%(LogicDelayMaxSeconds),180

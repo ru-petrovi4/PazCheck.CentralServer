@@ -1,0 +1,44 @@
+﻿!Identifier,!Desc,!IsMultiInstance,!IsAlwaysSwitchedOn
+CeMatrixRuntime,Обработка матриц ПСС,False,False
+CeMatrixRuntime.%(CalculationStepMs),Шаг вычислений (миллисекунды),1000
+CeMatrixRuntime.%(CommandExecutionDurationMaxSeconds),Верхняя граница возможного времени срабатывания устройства (секунды),180
+CeMatrixRuntime.%(EventsToleranceSeconds),Погрешность времени событий (секунды),3
+CeMatrixRuntime.%(LogicDelayMaxSeconds),Logic delay upper bound (seconds),180
+DataAccessClient,Подключение к серверу сбора данных,True,False
+DataAccessClient.%(DataAccessClient_ContextParams),Параметры контекста,""
+DataAccessClient.%(DataAccessClient_DangerousAcceptAnyServerCertificate),Принимать любые сертификаты сервера (небезопасно),true
+DataAccessClient.%(DataAccessClient_ServerAddress),Адрес сервера сбора данных,https://localhost:60060
+DataAccessClient.%(DataAccessClient_SystemNameToConnect),System Name при создании контектса,DCS
+Diagnost,"Модуль ""Диагност""",False,False
+Diagnost.%(UnitEvents_MaxRecordsCount),"Журнал событий, максимальное количество записей",3000000
+Diagnost.%(UnitEvents_MaxStorageTime),"Журнал событий, максимальное время хранения записей",5y
+EMails,"Модуль ""Почтовая рассылка (E-Mails)""",False,False
+EMails.%(DangerousAcceptAnyServerCertificate),Принимать любые сертификаты сервера (небезопасно),true
+EMails.%(EMailFrom_Address),"E-Mail, имя отправителя",""
+EMails.%(EMailFrom_Name),"E-Mail, имя отправителя",""
+EMails.%(SmtpHost),Адрес SMTP-сервера,smtp.friends.com
+EMails.%(SmtpParams),Дополнительные параметры для подключения к SMTP-серверу,useSsl=true
+EMails.%(SmtpPassword),Пароль почтовой учетной записи,""
+EMails.%(SmtpPort),Порт SMTP-сервера,587
+EMails.%(SmtpUserName),Пользователь почтовой учетной записи,""
+EMails.%(Url),Указываемая ссылка на ИТ-решение ПАЗ-Чек в почтовых уведомлениях,""
+ExperionEventMessagesProcessing,Обработка событий Experion PKS,False,False
+ExperionEventMessagesProcessing.%(JournalFiles_DateTimeFormat),Формат времени в файлах журналов,dd.MM.yyyy H:mm:ss.FFFFF
+ExperionEventMessagesProcessing.%(JournalFiles_SourceTimeZone),"Часовой пояс, в котором сохранены файлы журналов",3
+ExperionEventMessagesProcessing.%(RptFiles_Encoding),Кодировка RPT файлов журналов,windows-1251
+ExperionTagsImport,Импорт конфигурации тэгов РСУ - Experion,False,False
+GpnImportExport,Импорт/экспорт документов в форматах ООО «Газпром нефть шельф»,False,False
+GpnSpa,Экспорт событий в СПА систему ООО «Газпром нефть шельф»,False,False
+Logging,Журналы событий,False,False
+Logging.%(InformationSecurityEvents_MaxRecordsCount),"Журнал событий, максимальное количество записей",100000
+Logging.%(InformationSecurityEvents_MaxStorageTime),"Журнал событий, максимальное время хранения сообщений",5y
+Logging.%(UserEvents_MaxRecordsCount),"Журнал ошибок, максимальное количество записей",100000
+Logging.%(UserEvents_MaxStorageTime),"Журнал ошибок, максимальное время хранения сообщений",1M
+Monitoring,"Модуль ""Мониторинг""",False,False
+Monitoring.%(UpdatePeriod),"Период обновления объектов модуля ""Мониторинг""",5s
+PazCheckCentralServer,Базовый модуль,False,True
+PazCheckCentralServer.%(Actuator_IdentifierMode),Режим идентификатора устройства,"en,ru"
+PazCheckCentralServer.%(CeMatrix_IdentifierMode),Режим идентификатра матрицы ПСС,"en,ru"
+PazCheckCentralServer.%(Legend_IdentifierMode),Режим условных обозначений,"en,ru"
+PazCheckCentralServer.%(SafetyController_IdentifierMode),Режим идентификаторов объектов мониторинга,"en,ru"
+PazCheckCentralServer.%(Tag_IdentifierMode),Режим имени тэга,en

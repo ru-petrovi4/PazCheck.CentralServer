@@ -1,0 +1,71 @@
+﻿@page "/api/v3/UserPcObjectsInfo"
+
+
+@*<h3>Приборная панель</h3>*@
+
+@inject IDbContextFactory<PazCheckDbContext> DbContextFactory;
+
+@code {
+    /// <summary>
+    /// Tracking of asynchronous calls.
+    /// </summary>
+    private bool Loading;
+
+    /// <summary>
+    /// Id from route of pcObject.
+    /// </summary>
+    [Parameter]
+    public int User { get; set; }
+
+    /// <summary>
+    /// Navigation check.
+    /// </summary>
+    private int _lastUser;
+
+    /// <summary>
+    /// PcObject entity.
+    /// </summary>
+    private PcObject? PcObject { get; set; }
+
+    /// <summary>
+    /// Set to true when not found.
+    /// </summary>
+    private bool NotFound = false;
+
+    /// <summary>
+    /// Navigated
+    /// </summary>
+    /// <returns>Task</returns>
+    protected override async Task OnParametersSetAsync()
+    {
+        if (_lastUser != User)
+        {
+            _lastUser = User;
+            await LoadPcObjectAsync();
+        }
+        await base.OnParametersSetAsync();
+    }
+
+    /// <summary>
+    /// Loads the pcObject
+    /// </summary>
+    /// <returns>Task</returns>
+    private async Task LoadPcObjectAsync()
+    {
+        if (Loading)
+        {
+            return; //avoid concurrent requests
+        }
+
+        NotFound = false;
+        PcObject = null;
+
+        Loading = true;
+
+        using var dbContext = DbContextFactory.CreateDbContext();
+
+        
+
+        Loading = false;
+    }
+}

@@ -1,0 +1,24 @@
+При экспорте файлов, если не указан часовой пояс, то считается что это серверное время.
+
+$ErrorActionPreference = "Continue"
+Add-Migration Initialization
+
+
+Свойства плагинов могут содержать следующие константы:
+%(yml:<...>)
+%(db:<...>)
+
+
+Компонент: Grafana
+Версия: 7.5.17
+Лицензия: Apache 2.0
+Release Date: September 26, 2022
+https://grafana.com/grafana/download/7.5.17?pg=get&plcmt=selfmanaged-box1-cta1&edition=oss
+yarn build (start?)
+
+
+https://git.libreoffice.org/core/
+Mozilla Public License Version 2.0
+
+
+

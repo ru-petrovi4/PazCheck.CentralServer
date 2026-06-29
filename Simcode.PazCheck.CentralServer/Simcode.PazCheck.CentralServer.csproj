@@ -1,0 +1,102 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>    
+    <!--<ImplicitUsings>enable</ImplicitUsings>-->
+    <Nullable>enable</Nullable>
+  <LangVersion>Latest</LangVersion>
+  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  <NoWarn>$(NoWarn);1591</NoWarn>  
+  <Configurations>Debug;Release;Release_Prod</Configurations>
+  </PropertyGroup>  
+
+  <!--Remove from find and replace-->
+  <PropertyGroup>
+    <DefaultItemExcludes>grafana/**;$(DefaultItemExcludes)</DefaultItemExcludes>
+    <DefaultItemExcludes>wwwroot/**;$(DefaultItemExcludes)</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
+    <GarbageCollectionAdaptationMode>1</GarbageCollectionAdaptationMode>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" />
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Prod|AnyCPU'" />
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.80.0" />
+    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.80.0" />
+    <PackageReference Include="JsonApiDotNetCore" Version="5.11.0" />
+    <PackageReference Include="Kerberos.NET" Version="4.6.146" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.9" />
+    <PackageReference Include="Microsoft.DependencyValidation.Analyzers" Version="0.11.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>    
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>    
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.ResourceMonitoring" Version="10.7.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="10.0.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
+    <PackageReference Include="NuGet.Packaging" Version="7.6.0" />
+    <PackageReference Include="NuGet.Protocol" Version="7.6.0" />
+    <PackageReference Include="Spectre.Console" Version="0.57.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="10.2.3" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="10.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Ssz.Utils\Ssz.DataAccessGrpc.Client\Ssz.DataAccessGrpc.Client.csproj" />
+    <ProjectReference Include="..\..\Ssz.Utils\Ssz.DataAccessGrpc.ServerBase\Ssz.DataAccessGrpc.ServerBase.csproj" />
+    <ProjectReference Include="..\..\Ssz.Utils\Ssz.Dcs\Ssz.Dcs.CentralServer.Common\Ssz.Dcs.CentralServer.Common.csproj" />
+    <ProjectReference Include="..\..\Ssz.Utils\Ssz.IdentityServer\Ssz.IdentityServer\Ssz.IdentityServer.csproj" />
+    <ProjectReference Include="..\..\Ssz.Utils\Ssz.Utils\Ssz.Utils.csproj" />
+    <ProjectReference Include="..\..\Ssz.Utils\ThirdParties\IdentityServer4\IdentityServer4\IdentityServer4.csproj" />
+    <ProjectReference Include="..\..\Ssz.Utils\ThirdParties\MailKit\MailKit.csproj" />
+    <ProjectReference Include="..\..\Ssz.Utils\ThirdParties\MimeKit\MimeKit.csproj" />
+    <ProjectReference Include="..\..\Ssz.Utils\ThirdParties\Scriban\Scriban.csproj" />
+    <ProjectReference Include="..\Simcode.PazCheck.CentralServer.Common\Simcode.PazCheck.CentralServer.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>  
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.*.yml" CopyToPublishDirectory="Never" />
+  </ItemGroup>
+  
+  <ItemGroup>    
+    <None Update="appsettings.pfx">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>    
+    <None Update="appsettings.yml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>    
+    <None Update="shadow_pass">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>    
+  </ItemGroup>
+
+</Project>

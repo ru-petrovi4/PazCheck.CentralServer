@@ -1,0 +1,1338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="EmptyBaseActuator_Title" xml:space="preserve">
+    <value>No actuator</value>
+  </data>
+  <data name="Error_ActuatorOrBaseActuatorParamNotFoundInDb" xml:space="preserve">
+    <value>Actuator or base actuator param not found in DB: {0}. Default value is used.</value>
+  </data>
+  <data name="Error_MultipleActuatorParamsFoundInDb" xml:space="preserve">
+    <value>Multiple actuator params found in DB: {0}</value>
+  </data>
+  <data name="Error_MultipleBaseActuatorParamsFoundInDb" xml:space="preserve">
+    <value>Multiple base actuator params found in DB: {0}</value>
+  </data>
+  <data name="Error_MultipleMathOperators" xml:space="preserve">
+    <value>Multiple math operators: {0}. Part will be ignored.</value>
+  </data>
+  <data name="Error_MultipleTagsFoundInDb" xml:space="preserve">
+    <value>Multiple TAGs found in DB: {0}</value>
+  </data>
+  <data name="Error_TagConditionNotFoundInDb" xml:space="preserve">
+    <value>TAG condition not found in DB.</value>
+  </data>
+  <data name="Error_TagNotFoundInDb" xml:space="preserve">
+    <value>TAG not found in DB.</value>
+  </data>
+  <data name="UnknownFileFormatVersion" xml:space="preserve">
+    <value>Unknown file format version: {0}</value>
+  </data>
+  <data name="ImportBaseActuators_ProgressLabel" xml:space="preserve">
+    <value>Import BaseActuators..</value>
+  </data>
+  <data name="ImportCeMatrices_ProgressLabel" xml:space="preserve">
+    <value>Import CE Matrices..</value>
+  </data>
+  <data name="ImportFile_EventName" xml:space="preserve">
+    <value>Import file</value>
+  </data>
+  <data name="ImportSerializationRootObject_Error" xml:space="preserve">
+    <value>Import SerializationRootObject error.</value>
+  </data>
+  <data name="ImportSerializationRootObject_Error_DbFileReferenceNoFile" xml:space="preserve">
+    <value>DbFileReference no file content: {0}</value>
+  </data>
+  <data name="ImportSerializationRootObject_Error_NoBaseActuator" xml:space="preserve">
+    <value>BaseActuator is not found in file or DB, Identifier: {0}</value>
+  </data>
+  <data name="Error_ImportSerializationRootObject_BaseActuatorWithUnversionedChangesExists" xml:space="preserve">
+    <value>BaseActuator with unversioned changes exists. BaseActuator from file is skipped.</value>
+  </data>
+  <data name="Error_ImportSerializationRootObject_CeMatrixWithUnversionedChangesExists" xml:space="preserve">
+    <value>CE Matrix with unversioned changes exists. CE Matrix from file is skipped.</value>
+  </data>
+  <data name="Error_ImportSerializationRootObject_DbFileReferenceWithUnversionedChangesExists" xml:space="preserve">
+    <value>DbFile with unversioned changes exists. DbFile from file is skipped.</value>
+  </data>
+  <data name="Error_ImportSerializationRootObject_ParamWithUnversionedChangesExists" xml:space="preserve">
+    <value>Param with unversioned changes exists. Value is overwritten.</value>
+  </data>
+  <data name="Error_ImportSerializationRootObject_SafetyControllerWithUnversionedChangesExists" xml:space="preserve">
+    <value>SafetyController with unversioned changes exists. SafetyController from file is skipped.</value>
+  </data>
+  <data name="Error_ImportSerializationRootObject_TagConditionWithUnversionedChangesExists" xml:space="preserve">
+    <value>TagCondition with unversioned changes exists. TagCondition from file is skipped.</value>
+  </data>
+  <data name="Error_ImportSerializationRootObject_TagWithUnversionedChangesExists" xml:space="preserve">
+    <value>Tag with unversioned changes exists. Tag from file is skipped.</value>
+  </data>
+  <data name="ImportSafetyControllers_ProgressLabel" xml:space="preserve">
+    <value>Import SafetyControllers..</value>
+  </data>
+  <data name="ImportTags_ProgressLabel" xml:space="preserve">
+    <value>Import Tags..</value>
+  </data>
+  <data name="Information_AddedTagCondition" xml:space="preserve">
+    <value>Added Tag Condition: {0}</value>
+  </data>
+  <data name="InvalidFileInPcArchive" xml:space="preserve">
+    <value>Invalid file in archive. Must have .json or .csv or .xlsx extension and must have PazCheck standard format.</value>
+  </data>
+  <data name="Error_FileHasErrors" xml:space="preserve">
+    <value>File has errors.</value>
+  </data>
+  <data name="InformationSecurityEvents_MaxRecordsCount_Option" xml:space="preserve">
+    <value>InformationSecurityEvents Max Records Count</value>
+  </data>
+  <data name="InformationSecurityEvents_MaxStorageTime_Option" xml:space="preserve">
+    <value>InformationSecurityEvents Max Storage Time</value>
+  </data>
+  <data name="InformationSecurityEvents_WarningRecordsCount_Option" xml:space="preserve">
+    <value>InformationSecurityEvents Warning Records Count</value>
+  </data>
+  <data name="LoggingAddon_Desc" xml:space="preserve">
+    <value>Event journals</value>
+  </data>
+  <data name="UserEvents_MaxRecordsCount_Option" xml:space="preserve">
+    <value>UserEvents Max Records Count</value>
+  </data>
+  <data name="UserEvents_MaxStorageTime_Option" xml:space="preserve">
+    <value>UserEvents Max Storage Time</value>
+  </data>
+  <data name="UserEvents_WarningRecordsCount_Option" xml:space="preserve">
+    <value>UserEvents Warning Records Count</value>
+  </data>
+  <data name="InvalidAddonIdentifier" xml:space="preserve">
+    <value>Cannot find addon with identifier: {0}</value>
+  </data>
+  <data name="CsvObjectsFile_InvalidObjectProperty" xml:space="preserve">
+    <value>Invalid object property: {0}</value>
+  </data>
+  <data name="CsvObjectsFile_UnknownCollection" xml:space="preserve">
+    <value>Unknown objects collection: {0}</value>
+  </data>
+  <data name="FileReferenceError" xml:space="preserve">
+    <value>File reference error</value>
+  </data>
+  <data name="InvalidJournalParamData" xml:space="preserve">
+    <value>Invalid journal param data</value>
+  </data>
+  <data name="Error_IdentifierObjectDoesNotExist" xml:space="preserve">
+    <value>&lt;- Entity with this identifier does not exist.</value>
+  </data>
+  <data name="InvalidAddonType" xml:space="preserve">
+    <value>Cannot find addon with type: {0}</value>
+  </data>
+  <data name="Deserialization_Error" xml:space="preserve">
+    <value>Data format error</value>
+  </data>
+  <data name="UnitTitleScope" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="DbInitializationSuccess" xml:space="preserve">
+    <value>DB initialization success</value>
+  </data>
+  <data name="DbUpdateSuccess" xml:space="preserve">
+    <value>DB update success</value>
+  </data>
+  <data name="Error_FileInvalidFormat" xml:space="preserve">
+    <value>Invalid File Format.</value>
+  </data>
+  <data name="PasswordSuccesfullyChanged" xml:space="preserve">
+    <value>Password succesfully changed.</value>
+  </data>
+  <data name="Error_ImportSerializationRootObject_LegendWithUnversionedChangesExists" xml:space="preserve">
+    <value>Legend with unversioned changes exists. Legend from file is skipped.</value>
+  </data>
+  <data name="WorksheetScopeName" xml:space="preserve">
+    <value>Worksheet</value>
+  </data>
+  <data name="Error_MultipleTagConditionsFoundInDb" xml:space="preserve">
+    <value>Tag already has condition with this identifier.</value>
+  </data>
+  <data name="ColumnScope" xml:space="preserve">
+    <value>Column</value>
+  </data>
+  <data name="RowScope" xml:space="preserve">
+    <value>Row</value>
+  </data>
+  <data name="QuickTestSuccess" xml:space="preserve">
+    <value>Quick Test Finished.</value>
+  </data>
+  <data name="Error_AeNotMapped" xml:space="preserve">
+    <value>Not mapped in map.csv.</value>
+  </data>
+  <data name="Error_TagConditionSymbolToDisplayAlreadySet" xml:space="preserve">
+    <value>There is conflict of tag condition symbols in DB. {0}</value>
+  </data>
+  <data name="Error_DuplicateTagCondition" xml:space="preserve">
+    <value>Tag already have tag condition with this attributes set ({0}, {1}, {2})</value>
+  </data>
+  <data name="ObjectSystem" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="CryptoEntity" xml:space="preserve">
+    <value>Crypto Entity</value>
+  </data>
+  <data name="EntityAdded_EventName" xml:space="preserve">
+    <value>Entity Added</value>
+  </data>
+  <data name="EntityDeleted_EventName" xml:space="preserve">
+    <value>Entity Deleted</value>
+  </data>
+  <data name="LicenseFile" xml:space="preserve">
+    <value>License File</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="CeMatrices" xml:space="preserve">
+    <value>CE Matrices</value>
+  </data>
+  <data name="EventsJournal_ContentType" xml:space="preserve">
+    <value>Events Journal</value>
+  </data>
+  <data name="ExcelFile_ContentType" xml:space="preserve">
+    <value>Excel File</value>
+  </data>
+  <data name="ImportFile_EventDesc" xml:space="preserve">
+    <value>Import file: {0}; {1}</value>
+  </data>
+  <data name="LicenseFile_ContentType" xml:space="preserve">
+    <value>License File</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Unknown_ContentType" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="ZipArchive_ContentType" xml:space="preserve">
+    <value>ZIP Archive</value>
+  </data>
+  <data name="RoleBusinessFunction" xml:space="preserve">
+    <value>Business Function</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="IsAllowed" xml:space="preserve">
+    <value>Allowed</value>
+  </data>
+  <data name="IsDisallowed" xml:space="preserve">
+    <value>Forbidden</value>
+  </data>
+  <data name="RoleAttributesChanged_EventDesc" xml:space="preserve">
+    <value>Role permission changed: {0}. Permission to business function: {1}; new value: {2}.</value>
+  </data>
+  <data name="RoleAttributesChanged_EventName" xml:space="preserve">
+    <value>Role Permissions Changed</value>
+  </data>
+  <data name="RolePermission" xml:space="preserve">
+    <value>Role Permission</value>
+  </data>
+  <data name="ComponentStartStop_EventId" xml:space="preserve">
+    <value>Component Start/Stop</value>
+  </data>
+  <data name="Calculation_EventId" xml:space="preserve">
+    <value>Calculation</value>
+  </data>
+  <data name="Connection_EventId" xml:space="preserve">
+    <value>Connection breaked/restored</value>
+  </data>
+  <data name="DataExported_EventId" xml:space="preserve">
+    <value>Data Exported</value>
+  </data>
+  <data name="DataImported_EventId" xml:space="preserve">
+    <value>Data Imported</value>
+  </data>
+  <data name="EntityChanged_EventId" xml:space="preserve">
+    <value>Entity Changed</value>
+  </data>
+  <data name="RefreshTokenGenerated_EventId" xml:space="preserve">
+    <value>Refresh Token Generated</value>
+  </data>
+  <data name="RoleAttributesChanged_EventId" xml:space="preserve">
+    <value>Role Attributes Changed</value>
+  </data>
+  <data name="RolesChanged_EventId" xml:space="preserve">
+    <value>Roles Changed</value>
+  </data>
+  <data name="UserLogIn_EventId" xml:space="preserve">
+    <value>User Log In</value>
+  </data>
+  <data name="UserLogOut_EventId" xml:space="preserve">
+    <value>User Log Out</value>
+  </data>
+  <data name="Unknown_Severity" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="ParamDesc_CeMatrixSource" xml:space="preserve">
+    <value>CE Matrix Info Source</value>
+  </data>
+  <data name="ParamDesc_TagSource" xml:space="preserve">
+    <value>Tag Info Source</value>
+  </data>
+  <data name="ParamDesc_ProjectVersionSource" xml:space="preserve">
+    <value>Project Version source</value>
+  </data>
+  <data name="ParamDesc_MaxActuationTimeClose" xml:space="preserve">
+    <value>Valve max closing time</value>
+  </data>
+  <data name="SupervisorApproval_EventId" xml:space="preserve">
+    <value>Supervisor approval</value>
+  </data>
+  <data name="SupervisorApproveActiveProjectVersion_Event" xml:space="preserve">
+    <value>Supervisor approve new active project version</value>
+  </data>
+  <data name="BaseActuatorType_Pump" xml:space="preserve">
+    <value>Pump</value>
+  </data>
+  <data name="BaseActuatorType_Valve" xml:space="preserve">
+    <value>Valve</value>
+  </data>
+  <data name="PcEntityType_Main" xml:space="preserve">
+    <value>Main Type</value>
+  </data>
+  <data name="PcObjectEventTypeTitle_ActuatorAction" xml:space="preserve">
+    <value>Actuator Action</value>
+  </data>
+  <data name="Error_MultiplePcObjectsFoundInDb" xml:space="preserve">
+    <value>Multiple monitoring objects found in DB: {0}</value>
+  </data>
+  <data name="Error_PcObjectNotFoundInDb" xml:space="preserve">
+    <value>Monitoring Object not found in DB.</value>
+  </data>
+  <data name="ParamValue_FaultTriggered" xml:space="preserve">
+    <value>Actuator acted</value>
+  </data>
+  <data name="ParamValue_LateTriggered" xml:space="preserve">
+    <value>Actuator late acted</value>
+  </data>
+  <data name="ParamValue_NotTriggered" xml:space="preserve">
+    <value>Actuator failed to act</value>
+  </data>
+  <data name="ParamValue_SuccessFirstTriggered" xml:space="preserve">
+    <value>Actuator already in correct state</value>
+  </data>
+  <data name="ParamValue_SuccessTriggered" xml:space="preserve">
+    <value>Actuator successfully acted</value>
+  </data>
+  <data name="SearchBy_All" xml:space="preserve">
+    <value>Everywhere</value>
+  </data>
+  <data name="ParamDesc_MaxActuationTimeOpen" xml:space="preserve">
+    <value>Valve max opening time</value>
+  </data>
+  <data name="Error_AeNotMapped_IncorrectMappingExpression" xml:space="preserve">
+    <value>Incorrect expression. Must have 2 or 5 parts, separated by ':' &lt;ConditionCategory&gt;:&lt;AeCondition&gt; or &lt;ConditionCategory&gt;:&lt;AeCondition&gt;:&lt;DaCondition&gt;:&lt;CanBeCause&gt;:&lt;CanBeEffect&gt;</value>
+  </data>
+  <data name="ConfigurationChange_EventId" xml:space="preserve">
+    <value>Configuration Change</value>
+  </data>
+  <data name="Connected_Event" xml:space="preserve">
+    <value>Component connected</value>
+  </data>
+  <data name="Connected_EventDesc" xml:space="preserve">
+    <value>Component connected: {0}</value>
+  </data>
+  <data name="Disconnected_Event" xml:space="preserve">
+    <value>Component disconnected</value>
+  </data>
+  <data name="Disconnected_EventDesc" xml:space="preserve">
+    <value>Component disconnected: {0}</value>
+  </data>
+  <data name="CellScope" xml:space="preserve">
+    <value>Cell</value>
+  </data>
+  <data name="ParamDesc_CommandActuationTime" xml:space="preserve">
+    <value>Actuation time (Journal command, seconds)</value>
+  </data>
+  <data name="ParamDesc_LogicActuationTime" xml:space="preserve">
+    <value>Actuation time (CE Matrix logic command, seconds)</value>
+  </data>
+  <data name="BaseActuator" xml:space="preserve">
+    <value>Actuator</value>
+  </data>
+  <data name="CeMatrix" xml:space="preserve">
+    <value>CE Matrix</value>
+  </data>
+  <data name="SafetyController" xml:space="preserve">
+    <value>Safety Controller</value>
+  </data>
+  <data name="Tag" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="ActuatorParam" xml:space="preserve">
+    <value>Actuator Attribute</value>
+  </data>
+  <data name="BaseActuatorParam" xml:space="preserve">
+    <value>Actuator Attribute</value>
+  </data>
+  <data name="Cell" xml:space="preserve">
+    <value>Cell</value>
+  </data>
+  <data name="CeMatrixComment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="CeMatrixParam" xml:space="preserve">
+    <value>CE Matrix Attribute</value>
+  </data>
+  <data name="Column" xml:space="preserve">
+    <value>Column</value>
+  </data>
+  <data name="DbFileReference" xml:space="preserve">
+    <value>Attached File</value>
+  </data>
+  <data name="Row" xml:space="preserve">
+    <value>Row</value>
+  </data>
+  <data name="SafetyControllerParam" xml:space="preserve">
+    <value>Safety Controller Attribute</value>
+  </data>
+  <data name="TagCondition" xml:space="preserve">
+    <value>Tag Condition</value>
+  </data>
+  <data name="TagParam" xml:space="preserve">
+    <value>Tag Attribute</value>
+  </data>
+  <data name="Undefined" xml:space="preserve">
+    <value>Undefined</value>
+  </data>
+  <data name="Result" xml:space="preserve">
+    <value>Journal Analysis Result</value>
+  </data>
+  <data name="PcObjectEventTypeTitle_EmergencyShutdown" xml:space="preserve">
+    <value>Emergency Shutdown</value>
+  </data>
+  <data name="ParamDesc_EmergencyShutdownLevel" xml:space="preserve">
+    <value>Emergency Shutdown Level</value>
+  </data>
+  <data name="CriterionDesc_From" xml:space="preserve">
+    <value>Start of time range</value>
+  </data>
+  <data name="CriterionDesc_To" xml:space="preserve">
+    <value>End of time range</value>
+  </data>
+  <data name="PcObjectEventTypeTitle_ManualCheck" xml:space="preserve">
+    <value>Manual Check</value>
+  </data>
+  <data name="CriterionDesc_EventType" xml:space="preserve">
+    <value>Event Type</value>
+  </data>
+  <data name="CriterionDesc_BasePcObject_Identifier" xml:space="preserve">
+    <value>Object Template Identifier</value>
+  </data>
+  <data name="ParamDesc_Strict_PrimeCause_TagName" xml:space="preserve">
+    <value>Root Cause Tag Name</value>
+  </data>
+  <data name="SearchBy_EventDesc" xml:space="preserve">
+    <value>Event Comment</value>
+  </data>
+  <data name="ParamDesc_PossibleResultSources" xml:space="preserve">
+    <value>Possible emergemcy shutdown causes</value>
+  </data>
+  <data name="ExportResultToFile_Event" xml:space="preserve">
+    <value>Saving logs analysis results to file</value>
+  </data>
+  <data name="ExportResultToFile_EventDesc" xml:space="preserve">
+    <value>Saving logs analysis results to file</value>
+  </data>
+  <data name="ParamDesc_CommandActuationType" xml:space="preserve">
+    <value>Actuation type (Journal command)</value>
+  </data>
+  <data name="ParamDesc_LogicActuationType" xml:space="preserve">
+    <value>Actuation type (CE Matrix logic command)</value>
+  </data>
+  <data name="EntityModified_EventName" xml:space="preserve">
+    <value>Entity Modified</value>
+  </data>
+  <data name="Desc" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="ParamDesc_FaultTriggered" xml:space="preserve">
+    <value>Must not triggered, but actually triggered</value>
+  </data>
+  <data name="ParamDesc_LateTriggered" xml:space="preserve">
+    <value>Late triggered</value>
+  </data>
+  <data name="ParamDesc_NotActivated" xml:space="preserve">
+    <value>Not activated</value>
+  </data>
+  <data name="ParamDesc_NotTriggered" xml:space="preserve">
+    <value>Not triggered</value>
+  </data>
+  <data name="ParamDesc_SuccessFirstTriggered" xml:space="preserve">
+    <value>In desired condition already</value>
+  </data>
+  <data name="ParamDesc_SuccessTriggered" xml:space="preserve">
+    <value>Successfully triggered</value>
+  </data>
+  <data name="ParamDesc_ResultEventDesc" xml:space="preserve">
+    <value>Event Desc</value>
+  </data>
+  <data name="ParamDesc_ResultEventTagName" xml:space="preserve">
+    <value>Event Tag</value>
+  </data>
+  <data name="ParamDesc_ResultEventTime" xml:space="preserve">
+    <value>Event Date and Time</value>
+  </data>
+  <data name="High_Severity" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="Low_Severity" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Medium_Severity" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="VeryHigh_Severity" xml:space="preserve">
+    <value>VeryHigh</value>
+  </data>
+  <data name="BasePcObject" xml:space="preserve">
+    <value>Monitoring Object Template</value>
+  </data>
+  <data name="PcObject" xml:space="preserve">
+    <value>Monitoring Object</value>
+  </data>
+  <data name="PcObjectEvent" xml:space="preserve">
+    <value>Monitoring Event</value>
+  </data>
+  <data name="PcObject_Parent" xml:space="preserve">
+    <value>Object Parent</value>
+  </data>
+  <data name="Added" xml:space="preserve">
+    <value>Adding</value>
+  </data>
+  <data name="BaseActuators" xml:space="preserve">
+    <value>Actuators</value>
+  </data>
+  <data name="BasePcObjects" xml:space="preserve">
+    <value>Monitoring Object Templates</value>
+  </data>
+  <data name="PcObjects" xml:space="preserve">
+    <value>Monitoring Objects</value>
+  </data>
+  <data name="SafetyControllers" xml:space="preserve">
+    <value>Monitoring objects</value>
+  </data>
+  <data name="Updated" xml:space="preserve">
+    <value>Updating</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Deleting</value>
+  </data>
+  <data name="Error_IdentifierDuplicated" xml:space="preserve">
+    <value>&lt;- Duplicated identifier.</value>
+  </data>
+  <data name="Legend" xml:space="preserve">
+    <value>Legend</value>
+  </data>
+  <data name="PcObjectParentLoop" xml:space="preserve">
+    <value>Monitoring Object parent looped reference</value>
+  </data>
+  <data name="SearchBy_TagDesc" xml:space="preserve">
+    <value>Tag Description</value>
+  </data>
+  <data name="SearchBy_TagName" xml:space="preserve">
+    <value>Tag Name</value>
+  </data>
+  <data name="PcObjectEventType" xml:space="preserve">
+    <value>Monitoring Event type</value>
+  </data>
+  <data name="ResultReference" xml:space="preserve">
+    <value>Analysis Result Reference</value>
+  </data>
+  <data name="JournalParamValuesFile_InvalidLine" xml:space="preserve">
+    <value>Invalid Line</value>
+  </data>
+  <data name="LineScope" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="Error_IdentifierIsNull" xml:space="preserve">
+    <value>{0} &lt;- Identifier must be set.</value>
+  </data>
+  <data name="EntitiesDeleted_EventDesc" xml:space="preserve">
+    <value>Entity(-ies) Deleted. Objects Type: {0}</value>
+  </data>
+  <data name="EntitiesDeleted_EventName" xml:space="preserve">
+    <value>Entity(-ies) Deleted</value>
+  </data>
+  <data name="TemplateTagsLooped" xml:space="preserve">
+    <value>Tags templates looped or tags teplates chain too long</value>
+  </data>
+  <data name="Error_MultipleParamsFoundInDb" xml:space="preserve">
+    <value>Multiple params found in DB: {0}</value>
+  </data>
+  <data name="ParamDesc_TagTemplate" xml:space="preserve">
+    <value>Template Tag</value>
+  </data>
+  <data name="CsvObjectsFile_InvalidObjectValue" xml:space="preserve">
+    <value>Cannot convert string to entity: {0}</value>
+  </data>
+  <data name="InvalidAddonOptionValue_Empty" xml:space="preserve">
+    <value>Invalid addon option value: &lt;empty&gt;</value>
+  </data>
+  <data name="ImportRemoteFile_EventName" xml:space="preserve">
+    <value>Process log imported from service-collector</value>
+  </data>
+  <data name="ImportRemoteFile_EventDesc" xml:space="preserve">
+    <value>Process log imported from service-collector: {0}</value>
+  </data>
+  <data name="ParamDesc_EventStatus" xml:space="preserve">
+    <value>Event finishing status</value>
+  </data>
+  <data name="EventStatus_Finished" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="EventStatus_NotFinished" xml:space="preserve">
+    <value>Not Finished</value>
+  </data>
+  <data name="PcObjectEventTypeTitle_DBK" xml:space="preserve">
+    <value>Set MOS</value>
+  </data>
+  <data name="PcObjectEventTypeTitle_ForcedVariable" xml:space="preserve">
+    <value>Set forced value</value>
+  </data>
+  <data name="SafetyIndex_Red" xml:space="preserve">
+    <value>Critical (Red)</value>
+  </data>
+  <data name="SafetyIndex_Green" xml:space="preserve">
+    <value>Normal (Green)</value>
+  </data>
+  <data name="SafetyIndex_Unknown" xml:space="preserve">
+    <value>Unknown (Blue)</value>
+  </data>
+  <data name="SafetyIndex_Yellow" xml:space="preserve">
+    <value>Warning (Yellow)</value>
+  </data>
+  <data name="ParamDesc_SafetyIndex" xml:space="preserve">
+    <value>Current Safety Index</value>
+  </data>
+  <data name="ParamDesc_MalfunctionCategory" xml:space="preserve">
+    <value>Malfunction Category</value>
+  </data>
+  <data name="ParamDesc_AlarmIntensity" xml:space="preserve">
+    <value>Event Alarm Intensity [0..1]</value>
+  </data>
+  <data name="ParamDesc" xml:space="preserve">
+    <value>Property Description</value>
+  </data>
+  <data name="ProjectVersionType" xml:space="preserve">
+    <value>Project Version Type</value>
+  </data>
+  <data name="ParamDesc_PcObjectTemplate" xml:space="preserve">
+    <value>Monitoring object template identifier</value>
+  </data>
+  <data name="InvalidDateTimeString" xml:space="preserve">
+    <value>Invalid Date-Time String Format</value>
+  </data>
+  <data name="Activator_CreateInstance_Error" xml:space="preserve">
+    <value>Activator CreateInstance Error: {0}</value>
+  </data>
+  <data name="Error_TemplateFileDoesNotExist" xml:space="preserve">
+    <value>Template file does not exist: {0}</value>
+  </data>
+  <data name="ParamDesc_Strict_PrimeCause_Condition" xml:space="preserve">
+    <value>Root Cause Condition</value>
+  </data>
+  <data name="ParamDesc_Strict_PrimeCause_Time" xml:space="preserve">
+    <value>Root Cause Date</value>
+  </data>
+  <data name="SearchBy_PrimeCause" xml:space="preserve">
+    <value>Root Cause</value>
+  </data>
+  <data name="Scope_FileName" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="InvalidAddonOptionValue" xml:space="preserve">
+    <value>Invalid addon option value: {0}</value>
+  </data>
+  <data name="Scope_AddonOption" xml:space="preserve">
+    <value>Addon Option</value>
+  </data>
+  <data name="ParamDesc_Desc" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ParamDesc_NewState" xml:space="preserve">
+    <value>New State</value>
+  </data>
+  <data name="ParamDesc_OldState" xml:space="preserve">
+    <value>Old State</value>
+  </data>
+  <data name="SeeUserEventsLog" xml:space="preserve">
+    <value>For details, please see user events log.</value>
+  </data>
+  <data name="AddonTest_EventId" xml:space="preserve">
+    <value>Addon Test</value>
+  </data>
+  <data name="AddonTest_EventDesc" xml:space="preserve">
+    <value>Addon test: {0}</value>
+  </data>
+  <data name="SearchBy_ExcludeContent" xml:space="preserve">
+    <value>In Attribute Values Only</value>
+  </data>
+  <data name="InvalidSymbolToDisplay_NoLegend" xml:space="preserve">
+    <value>Cannot find legend for symbol.</value>
+  </data>
+  <data name="Scope_TagCondition" xml:space="preserve">
+    <value>Condition</value>
+  </data>
+  <data name="Scope_TagName" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="ParamDesc_SafetyIndex_Green_Desc" xml:space="preserve">
+    <value>Green Safety Index Desc</value>
+  </data>
+  <data name="ParamDesc_SafetyIndex_Red_Desc" xml:space="preserve">
+    <value>Red Safety Index Desc</value>
+  </data>
+  <data name="ParamDesc_SafetyIndex_Yellow_Desc" xml:space="preserve">
+    <value>Yellow Safety Index Desc</value>
+  </data>
+  <data name="SafetyIndexDesc_NoData" xml:space="preserve">
+    <value>No Data</value>
+  </data>
+  <data name="ParamDesc_BaseActuator" xml:space="preserve">
+    <value>Actuator</value>
+  </data>
+  <data name="ParamDesc_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="ParamDesc_Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="ParamDesc_Manufacturer" xml:space="preserve">
+    <value>Manufacturer</value>
+  </data>
+  <data name="BasePcObject_SystemArea_Title" xml:space="preserve">
+    <value>System Area</value>
+  </data>
+  <data name="BasePcObject_SystemAddon_Title" xml:space="preserve">
+    <value>Addon</value>
+  </data>
+  <data name="PcObject_SystemArea_Title" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="DataImportError_EventId" xml:space="preserve">
+    <value>Import data error</value>
+  </data>
+  <data name="RemoteFileIsNotImported_EventDesc" xml:space="preserve">
+    <value>Unit events are not recieved from server</value>
+  </data>
+  <data name="RemoteFileIsNotImported_EventName" xml:space="preserve">
+    <value>Unit events are not recieved from server</value>
+  </data>
+  <data name="InformationSecurityEvents_WarningRecordsCount_EventDesc" xml:space="preserve">
+    <value>DB records count warning - Information Security Events</value>
+  </data>
+  <data name="InformationSecurityEvents_WarningRecordsCount_EventName" xml:space="preserve">
+    <value>DB records count warning - Information Security Events</value>
+  </data>
+  <data name="UnitEvents_WarningRecordsCount_EventDesc" xml:space="preserve">
+    <value>DB records count warning - Unit Events (Diagnost module)</value>
+  </data>
+  <data name="UnitEvents_WarningRecordsCount_EventName" xml:space="preserve">
+    <value>DB records count warning - Unit Events (Diagnost module)</value>
+  </data>
+  <data name="UserEvents_WarningRecordsCount_EventDesc" xml:space="preserve">
+    <value>DB records count warning - User Events</value>
+  </data>
+  <data name="UserEvents_WarningRecordsCount_EventName" xml:space="preserve">
+    <value>DB records count warning - User Events</value>
+  </data>
+  <data name="WarningRecordsCount_EventId" xml:space="preserve">
+    <value>DB records count warning</value>
+  </data>
+  <data name="Legends" xml:space="preserve">
+    <value>Legends</value>
+  </data>
+  <data name="Succeeded_False" xml:space="preserve">
+    <value>False</value>
+  </data>
+  <data name="Succeeded_True" xml:space="preserve">
+    <value>True</value>
+  </data>
+  <data name="DestinationTypeDesc_HumanReadable_ExcelFile" xml:space="preserve">
+    <value>Human-readable file (.xlsx)</value>
+  </data>
+  <data name="SearchBy_ExcludeContent_UnitEventsInterval" xml:space="preserve">
+    <value>Source, comment</value>
+  </data>
+  <data name="ParamDesc_TrendDeadbandPercentage" xml:space="preserve">
+    <value>Trend Update Deadband (Percentage)</value>
+  </data>
+  <data name="ParamDesc_ValueDeadbandPercentage" xml:space="preserve">
+    <value>Value Update Deadband (Percentage)</value>
+  </data>
+  <data name="ParamDesc_TrendEnabled" xml:space="preserve">
+    <value>Trend is Enabled</value>
+  </data>
+  <data name="ParamDesc_TrendPeriod" xml:space="preserve">
+    <value>Trend Update Period</value>
+  </data>
+  <data name="ParamDesc_ValuePeriod" xml:space="preserve">
+    <value>Value Update Period</value>
+  </data>
+  <data name="ParamDesc_ValueEU" xml:space="preserve">
+    <value>Data Access Item ID or Const for Value Eng. Units</value>
+  </data>
+  <data name="ParamDesc_ValueMax" xml:space="preserve">
+    <value>Data Access Item ID or Const for Value Max</value>
+  </data>
+  <data name="ParamDesc_ValueMin" xml:space="preserve">
+    <value>Data Access Item ID or Const for Value Min</value>
+  </data>
+  <data name="ParamDesc_TrendStorePeriod" xml:space="preserve">
+    <value>Trend Store Period</value>
+  </data>
+  <data name="BasePcObject_Overview_Title" xml:space="preserve">
+    <value>Overview display widgets</value>
+  </data>
+  <data name="BasePcObject_OtherArea_Title" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="BasePcObject_OtherItem_Title" xml:space="preserve">
+    <value>Other Item</value>
+  </data>
+  <data name="PcObject_OtherArea_Title" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="InvalidDaCondition" xml:space="preserve">
+    <value>DA differs in this events category. TAG: {0}; DA: {1}</value>
+  </data>
+  <data name="ParamDesc_TrendBeginTimeUtc" xml:space="preserve">
+    <value>First saved value timestamp</value>
+  </data>
+  <data name="ParamDesc_TrendEndTimeUtc" xml:space="preserve">
+    <value>Last saved value timestamp</value>
+  </data>
+  <data name="BasePcObject_Default_Title" xml:space="preserve">
+    <value>Default widgets</value>
+  </data>
+  <data name="SearchBy_PcObjectEventAll" xml:space="preserve">
+    <value>Events All Properties</value>
+  </data>
+  <data name="ParamDesc_CommandResultType" xml:space="preserve">
+    <value>Actuation type</value>
+  </data>
+  <data name="ImportEventsJournalFileFinished" xml:space="preserve">
+    <value>Import events journal file finished; elapsed milliseconds: {0}</value>
+  </data>
+  <data name="DestinationTypeDesc_Std_ExcelFile" xml:space="preserve">
+    <value>Standard Excel files (.xlsx)</value>
+  </data>
+  <data name="DestinationTypeDesc_Std_ExcelFile_Extended" xml:space="preserve">
+    <value>Standard Excel files (.xlsx) - alternative format</value>
+  </data>
+  <data name="DestinationTypeDesc_Std_CsvFile" xml:space="preserve">
+    <value>CSV files (comma-separated text)</value>
+  </data>
+  <data name="ParamDesc_Converter" xml:space="preserve">
+    <value>Converter for Value Source(s)</value>
+  </data>
+  <data name="SearchBy_PcObjectAll" xml:space="preserve">
+    <value>Objects All Properties</value>
+  </data>
+  <data name="ParamDesc_Children" xml:space="preserve">
+    <value>Include child objects</value>
+  </data>
+  <data name="ParamDesc_Query" xml:space="preserve">
+    <value>Journal Param for query</value>
+  </data>
+  <data name="ParamDesc_QueryType" xml:space="preserve">
+    <value>Query type</value>
+  </data>
+  <data name="ParamDesc_TrendSources" xml:space="preserve">
+    <value>Value Sources: Data Access Item ID(s) and JSON Query(-ies) (separator: ---)</value>
+  </data>
+  <data name="ParamDesc_EventTypeTitle" xml:space="preserve">
+    <value>Event Type</value>
+  </data>
+  <data name="ParamDesc_EventTypeDesc" xml:space="preserve">
+    <value>Event Type Description</value>
+  </data>
+  <data name="ParamDesc_EventTitle" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="ParamDesc_EventDesc" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="CriterionDesc_TagName" xml:space="preserve">
+    <value>Tag Name</value>
+  </data>
+  <data name="CriterionDesc_Event" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="Operator_Equals" xml:space="preserve">
+    <value>Equals</value>
+  </data>
+  <data name="Operator_NotEquals" xml:space="preserve">
+    <value>Not Equals</value>
+  </data>
+  <data name="Operator_LessThanOrEquals" xml:space="preserve">
+    <value>Less Than or Equal</value>
+  </data>
+  <data name="Operator_GreaterThanOrEquals" xml:space="preserve">
+    <value>Greater Than Or Equal</value>
+  </data>
+  <data name="Operator_LessThan" xml:space="preserve">
+    <value>Less Than</value>
+  </data>
+  <data name="Operator_GreaterThan" xml:space="preserve">
+    <value>Greater Than</value>
+  </data>
+  <data name="Operator_Contains" xml:space="preserve">
+    <value>Contains</value>
+  </data>
+  <data name="Operator_NotContains" xml:space="preserve">
+    <value>Not Contain</value>
+  </data>
+  <data name="Operator_StartsWith" xml:space="preserve">
+    <value>Starts With</value>
+  </data>
+  <data name="Operator_NotStartsWith" xml:space="preserve">
+    <value>Not Starts With</value>
+  </data>
+  <data name="Operator_EndsWith" xml:space="preserve">
+    <value>Ends With</value>
+  </data>
+  <data name="Operator_NotEndsWith" xml:space="preserve">
+    <value>Not Ends With</value>
+  </data>
+  <data name="Operator_IsEmpty" xml:space="preserve">
+    <value>Is Empty</value>
+  </data>
+  <data name="Operator_NotIsEmpty" xml:space="preserve">
+    <value>Is Not Empty</value>
+  </data>
+  <data name="OperatorOption_CaseSensitive" xml:space="preserve">
+    <value>Case Sensitive</value>
+  </data>
+  <data name="CriterionDesc_Params" xml:space="preserve">
+    <value>Param</value>
+  </data>
+  <data name="ParamDesc_CeMatrixTemplate" xml:space="preserve">
+    <value>CE Matrix Type</value>
+  </data>
+  <data name="ParamDesc_BaseActuatorSource" xml:space="preserve">
+    <value>Base Actuator Info Source</value>
+  </data>
+  <data name="ParamDesc_SafetyControllerSource" xml:space="preserve">
+    <value>Safety Controller Info Source</value>
+  </data>
+  <data name="CriterionDesc_JournalParams" xml:space="preserve">
+    <value>Journal Param</value>
+  </data>
+  <data name="CriterionDesc_EventParams" xml:space="preserve">
+    <value>Event Param</value>
+  </data>
+  <data name="CriterionDesc_Severity" xml:space="preserve">
+    <value>Severity</value>
+  </data>
+  <data name="CriterionDesc_Succeeded" xml:space="preserve">
+    <value>Succeeded</value>
+  </data>
+  <data name="EncryptAppsettingsSuccess" xml:space="preserve">
+    <value>*.yml files sections successfully encrypted.</value>
+  </data>
+  <data name="DecryptAppsettingsSuccess" xml:space="preserve">
+    <value>*yml files sections successfully decrypted.</value>
+  </data>
+  <data name="SetPostgreCryptoPasswordSuccess" xml:space="preserve">
+    <value>Password is set successfully.</value>
+  </data>
+  <data name="LegendParam" xml:space="preserve">
+    <value>Legend Attribute</value>
+  </data>
+  <data name="ParamDesc_BaseActuatorTemplate" xml:space="preserve">
+    <value>Actuator Model</value>
+  </data>
+  <data name="ParamDesc_LegendSource" xml:space="preserve">
+    <value>Info Source</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="ParamDesc_CanBeCause" xml:space="preserve">
+    <value>Can be Cause</value>
+  </data>
+  <data name="ParamDesc_CanBeEffect" xml:space="preserve">
+    <value>Can be Effect</value>
+  </data>
+  <data name="ParamDesc_TagActuator" xml:space="preserve">
+    <value>Actuator</value>
+  </data>
+  <data name="Objects_ContentType" xml:space="preserve">
+    <value>Objects</value>
+  </data>
+  <data name="UnitEvents" xml:space="preserve">
+    <value>Unit Events </value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="SetCurrentProjectVersion_JobTitle" xml:space="preserve">
+    <value>Set current project version</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error!</value>
+  </data>
+  <data name="Units" xml:space="preserve">
+    <value>Units</value>
+  </data>
+  <data name="DbFiles" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="ParamDescs" xml:space="preserve">
+    <value>Param Descs</value>
+  </data>
+  <data name="ProjectVersionTypes" xml:space="preserve">
+    <value>Project Version Types</value>
+  </data>
+  <data name="PcObjectEventTypes" xml:space="preserve">
+    <value>Monitoring Event types</value>
+  </data>
+  <data name="SetCurrentProjectVersion_EventName" xml:space="preserve">
+    <value>Set Current Project Version</value>
+  </data>
+  <data name="SetCurrentProjectVersion_EventDesc" xml:space="preserve">
+    <value>Set current project version. Version {1} has taken from project '{0}' and is set as current in project '{2}'. Details: {3}</value>
+  </data>
+  <data name="ParamDesc_SafetyIndexK" xml:space="preserve">
+    <value>Safety Index Weighting Factor</value>
+  </data>
+  <data name="ParamDesc_TrendDeadband" xml:space="preserve">
+    <value>Trend Update Deadband (Absolute Value)</value>
+  </data>
+  <data name="ParamDesc_ValueDeadband" xml:space="preserve">
+    <value>Value Update Deadband (Absolute Value)</value>
+  </data>
+  <data name="DestinationTypeDesc_ExportMonitoringEventsReport_HumanReadable_ExcelFile" xml:space="preserve">
+    <value>Filtered events list (.xlsx).</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total entities count</value>
+  </data>
+  <data name="DestinationTypeDesc_ExportMonitoringWidgetsReport_HumanReadable_ExcelFile" xml:space="preserve">
+    <value>Safety index report (.xlsx)</value>
+  </data>
+  <data name="DestinationTypeDesc_ExportMonitoringEventsReport_HumanReadable_ExcelFile_Details" xml:space="preserve">
+    <value>Filtered events list, human-readable .xlsx file (spreadsheet file). Not intended for subsequent import.</value>
+  </data>
+  <data name="DestinationTypeDesc_ExportMonitoringWidgetsReport_HumanReadable_ExcelFile_Details" xml:space="preserve">
+    <value>Safety index report, human-readable .xlsx file (spreadsheet file). Not intended for subsequent import.</value>
+  </data>
+  <data name="DestinationTypeDesc_Std_File" xml:space="preserve">
+    <value>PazCheck standard files (.json, .csv)</value>
+  </data>
+  <data name="SourceTypeDesc_Std_File" xml:space="preserve">
+    <value>PazCheck standard files (.json, .csv, .xlsx, or .zip)</value>
+  </data>
+  <data name="DestinationTypeDesc_StdJsonExportFileType" xml:space="preserve">
+    <value>PazCheck standard files: *.json</value>
+  </data>
+  <data name="DestinationTypeDesc_Std_File_Details" xml:space="preserve">
+    <value>PazCheck standard files, .zip archive with .json, .csv files. Full export of objects, including attached files. Not intended for human viewing. Intended for subsequent import.</value>
+  </data>
+  <data name="DestinationTypeDesc_Std_ExcelFile_Details" xml:space="preserve">
+    <value>Standard Excel files, .xlsx files (spreadsheet files). Incomplete export of objects, does not include attached files. Possible to import back into PAZ-Check.</value>
+  </data>
+  <data name="DestinationTypeDesc_Std_ExcelFile_Extended_Details" xml:space="preserve">
+    <value>Standard Excel files, .xlsx file (spreadsheet file). Incomplete export of objects, does not include attached files. Can be imported into PAZ-Check. Characterized by a sparse data format.</value>
+  </data>
+  <data name="DestinationTypeDesc_HumanReadable_ExcelFile_Details" xml:space="preserve">
+    <value>Human-readable file, .xlsx file (spreadsheet file). Not intended for subsequent import.</value>
+  </data>
+  <data name="SourceTypeDesc_Std_File_Details" xml:space="preserve">
+    <value>PazCheck standard files, .json, .csv, .xlsx, or .zip</value>
+  </data>
+  <data name="SourceTypeDesc_PcLicFileType" xml:space="preserve">
+    <value>PazCheck standard license file (.pclic or .zip)</value>
+  </data>
+  <data name="SourceTypeDesc_PcLicFileType_Details" xml:space="preserve">
+    <value>PazCheck standard license file (.pclic or .zip)</value>
+  </data>
+  <data name="SearchBy_IdentifierTitleDesc" xml:space="preserve">
+    <value>Name, Desc</value>
+  </data>
+  <data name="PcObjectEvents" xml:space="preserve">
+    <value>Monitoring Events</value>
+  </data>
+  <data name="InformationSecurityEvents" xml:space="preserve">
+    <value>System Events</value>
+  </data>
+  <data name="Error_SeeApplicationLogFilesForDetails" xml:space="preserve">
+    <value>Error. See application log files for details.</value>
+  </data>
+  <data name="Error_FileNotFound" xml:space="preserve">
+    <value>File not found or not accessible.</value>
+  </data>
+  <data name="Scope_KeyName" xml:space="preserve">
+    <value>Key Name</value>
+  </data>
+  <data name="Error_KeyRequiredIsMissing" xml:space="preserve">
+    <value>Cannot find required key.</value>
+  </data>
+  <data name="Error_KeyUnknownValue" xml:space="preserve">
+    <value>Key unknown value.</value>
+  </data>
+  <data name="Error_KeyDuplicateValue" xml:space="preserve">
+    <value>Key duplicate value.</value>
+  </data>
+  <data name="Scope_FilePartName" xml:space="preserve">
+    <value>File part</value>
+  </data>
+  <data name="Error_ExportReport" xml:space="preserve">
+    <value>Report file creation error.</value>
+  </data>
+  <data name="Error_SendEMail" xml:space="preserve">
+    <value>Error sending E-Mail.</value>
+  </data>
+  <data name="ImportFilePreview_EventDesc" xml:space="preserve">
+    <value>Import file peview: {0}; {1}</value>
+  </data>
+  <data name="ImportFilePreview_EventName" xml:space="preserve">
+    <value>Import file peview</value>
+  </data>
+  <data name="EMails_EventId" xml:space="preserve">
+    <value>E-Mails sending.</value>
+  </data>
+  <data name="Error_KeyUnknown" xml:space="preserve">
+    <value>Unknown Key.</value>
+  </data>
+  <data name="Error_IdentifierInvalid" xml:space="preserve">
+    <value>&lt;- Invalid identifier.</value>
+  </data>
+  <data name="Scope_Constant" xml:space="preserve">
+    <value>Generic Constant</value>
+  </data>
+  <data name="BasePcObject_SystemProcess_Title" xml:space="preserve">
+    <value>System Process</value>
+  </data>
+  <data name="ParamDesc_CeMatrixTemplate_ForFilter" xml:space="preserve">
+    <value>CE Matrix Type</value>
+  </data>
+  <data name="BasePcObject_Unit_Title" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="Error_JsonInvalid" xml:space="preserve">
+    <value>Invalid JSON.</value>
+  </data>
+  <data name="Scope_ExcelNamedRange" xml:space="preserve">
+    <value>Named Range</value>
+  </data>
+  <data name="Error_FileReadingError" xml:space="preserve">
+    <value>Cannot read file.</value>
+  </data>
+  <data name="Error_JsonEmpty" xml:space="preserve">
+    <value>JSON is empty.</value>
+  </data>
+  <data name="Empty_TagCondition_SymbolToDisplay" xml:space="preserve">
+    <value>&lt;Empty Symbol&gt;</value>
+  </data>
+  <data name="Error_CauseInHeaderArea" xml:space="preserve">
+    <value>Cause cannot be in upper area.</value>
+  </data>
+  <data name="Error_EffectInHeaderArea" xml:space="preserve">
+    <value>Effect cannot be in left area.</value>
+  </data>
+  <data name="Error_IncorrectAreaForDash" xml:space="preserve">
+    <value>'-' can be only in left or central areas.</value>
+  </data>
+  <data name="Error_IncorrectAreaForDoubleDash" xml:space="preserve">
+    <value>'--' can be only in upper area.</value>
+  </data>
+  <data name="ParamDesc_PcObjectParent" xml:space="preserve">
+    <value>Monitoring object parent object identifier</value>
+  </data>
+  <data name="ParamDesc_TagIsVariable" xml:space="preserve">
+    <value>Tag is variable for CE Matrices relations</value>
+  </data>
+  <data name="CriterionDesc_IsTemplate" xml:space="preserve">
+    <value>Is Template</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>True</value>
+  </data>
+  <data name="False" xml:space="preserve">
+    <value>False</value>
+  </data>
+  <data name="ParamDesc_SafetyIndex_Green_Percentage" xml:space="preserve">
+    <value>Green Safety Index Percentage</value>
+  </data>
+  <data name="ParamDesc_SafetyIndex_Yellow_Percentage" xml:space="preserve">
+    <value>Yellow Safety Index Percentage</value>
+  </data>
+  <data name="ParamDesc_SafetyIndex_Red_Percentage" xml:space="preserve">
+    <value>Red Safety Index Percentage</value>
+  </data>
+  <data name="Error_IdentifierUnknown" xml:space="preserve">
+    <value>&lt;- Unknown identifier.</value>
+  </data>
+  <data name="ParamDesc_MaxActuationTime" xml:space="preserve">
+    <value>Max actuation time</value>
+  </data>
+  <data name="ParamDesc_Command_ToDisplay" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="Scope_ExcelCell" xml:space="preserve">
+    <value>Cell</value>
+  </data>
+  <data name="Scope_SymbolToDisplay" xml:space="preserve">
+    <value>Symbol</value>
+  </data>
+  <data name="Access_EventId" xml:space="preserve">
+    <value>Access Attempt</value>
+  </data>
+  <data name="Scope_CeMatrixIdentifier" xml:space="preserve">
+    <value>CE Matrix Identifier</value>
+  </data>
+  <data name="Scope_CeMatrixTemplate" xml:space="preserve">
+    <value>CE Matrix Template</value>
+  </data>
+  <data name="ParamDesc_TrendCalculated" xml:space="preserve">
+    <value>Trend values is calculated</value>
+  </data>
+  <data name="ProjectVersionFullExportFile" xml:space="preserve">
+    <value>Project Version</value>
+  </data>
+  <data name="ParamDesc_SafetyIndexK2" xml:space="preserve">
+    <value>Safety Index Weighting Factor 2</value>
+  </data>
+  <data name="ParamDesc_SafetyIndexDesc" xml:space="preserve">
+    <value>Current Safety Index Description</value>
+  </data>
+  <data name="Error_HtmlTemplate" xml:space="preserve">
+    <value>HTML template has errors.</value>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>No Data</value>
+  </data>
+</root>

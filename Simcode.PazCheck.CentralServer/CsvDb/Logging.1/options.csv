@@ -1,0 +1,4 @@
+﻿%(InformationSecurityEvents_MaxRecordsCount),100000
+%(InformationSecurityEvents_MaxStorageTime),5y
+%(UserEvents_MaxRecordsCount),100000
+%(UserEvents_MaxStorageTime),1M
