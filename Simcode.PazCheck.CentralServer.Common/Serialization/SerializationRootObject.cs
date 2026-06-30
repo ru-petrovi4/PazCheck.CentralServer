@@ -1,5 +1,6 @@
 ﻿using Simcode.PazCheck.CentralServer.Common.Properties;
 using Ssz.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -170,11 +171,11 @@ namespace Simcode.PazCheck.CentralServer.Common.Serialization
         /// </summary>
         public Dictionary<string, T> All { get; set; } = null!;        
 
-        public CaseInsensitiveOrderedDictionary<T> Added { get; } = new();
+        public HashSet<string> Added { get; } = new(StringComparer.InvariantCultureIgnoreCase);
 
-        public CaseInsensitiveOrderedDictionary<T> Updated { get; } = new();
+        public HashSet<string> Updated { get; } = new(StringComparer.InvariantCultureIgnoreCase);
 
-        public CaseInsensitiveOrderedDictionary<T> Deleted { get; } = new();
+        public HashSet<string> Deleted { get; } = new(StringComparer.InvariantCultureIgnoreCase);
     }
 
     public class ImportSerializationResultEx<T>
@@ -185,11 +186,11 @@ namespace Simcode.PazCheck.CentralServer.Common.Serialization
         /// </summary>
         public Dictionary<string, List<T>> All { get; set; } = null!;
 
-        public CaseInsensitiveOrderedDictionary<T> Added { get; } = new();
+        public HashSet<string> Added { get; } = new(StringComparer.InvariantCultureIgnoreCase);
 
-        public CaseInsensitiveOrderedDictionary<T> Updated { get; } = new();
+        public HashSet<string> Updated { get; } = new(StringComparer.InvariantCultureIgnoreCase);
 
-        public CaseInsensitiveOrderedDictionary<T> Deleted { get; } = new();
+        public HashSet<string> Deleted { get; } = new(StringComparer.InvariantCultureIgnoreCase);
     }
 
     public class ImportMetadata

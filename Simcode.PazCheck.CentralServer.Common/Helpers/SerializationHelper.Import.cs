@@ -1084,7 +1084,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                         ProjectId = project.Id // Optimization
                     };
                     entities.Add(entity);
-                    entities_ImportSerializationResult.Added.Add(entity.Identifier, entity);
+                    entities_ImportSerializationResult.Added.Add(entity.Identifier);
                     entities_ImportSerializationResult.All.Add(entity.Identifier, entity);
                 }
                 else
@@ -1093,7 +1093,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                         continue;
 
                     entity.Identifier = serializationEntity.Identifier; // Case-sensivity issues
-                    entities_ImportSerializationResult.Updated[entity.Identifier] = entity;
+                    entities_ImportSerializationResult.Updated.Add(entity.Identifier);
                     originalEntities.Remove(entity);
                 }
                 entity._LockedByUser = dbContext.User;
@@ -1108,7 +1108,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                 foreach (var entity in originalEntities)
                 {
                     setIsDeleted_Entity_Action(dbContext, entity);
-                    entities_ImportSerializationResult.Deleted[entity.Identifier] = entity;
+                    entities_ImportSerializationResult.Deleted.Add(entity.Identifier);
                     entities_ImportSerializationResult.All.Remove(entity.Identifier);
                 }
             }
@@ -1295,7 +1295,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                         SetDbFileReferences(basePcObject.BasePcObjectDbFileReferences, serializationBasePcObject.BasePcObjectDbFileReferences, referenceEntities, dbContext, Serialization.CollectionMode.AddToEmpty, loggersSet);
 
                         dbContext.BasePcObjects.Add(basePcObject);
-                        result.BasePcObjects_ImportSerializationResult.Added.Add(key, basePcObject);
+                        result.BasePcObjects_ImportSerializationResult.Added.Add(key);
                         if (basePcObjectsList is null)
                             result.BasePcObjects_ImportSerializationResult.All.Add(key, new List<BasePcObject>() { basePcObject });
                         else
@@ -1313,7 +1313,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                         SetDbFileReferences(basePcObject.BasePcObjectDbFileReferences, serializationBasePcObject.BasePcObjectDbFileReferences, referenceEntities, dbContext, importMetadata.ChildCollectionMode, loggersSet);
 
                         basePcObject._IsDeleted = false;
-                        result.BasePcObjects_ImportSerializationResult.Updated[key] = basePcObject;
+                        result.BasePcObjects_ImportSerializationResult.Updated.Add(key);
                         if (originalBasePcObjects.TryGetValue(basePcObject.Unit.IdentifierLower, out List<BasePcObject>? forUnit_basePcObjects))
                             forUnit_basePcObjects.Remove(basePcObject);
                         basePcObjectsList!.Remove(basePcObject);
@@ -1337,7 +1337,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                                 string key = basePcObject.Unit.IdentifierLower + "." + basePcObject.IdentifierLower;
 
                                 basePcObject._IsDeleted = true;                                
-                                result.BasePcObjects_ImportSerializationResult.Deleted.Add(key, basePcObject);
+                                result.BasePcObjects_ImportSerializationResult.Deleted.Add(key);
                                 result.BasePcObjects_ImportSerializationResult.All.TryGetValue(key, out var basePcObjectsList);
                                 if (basePcObjectsList is not null)
                                 {
@@ -1419,7 +1419,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                         SetDbFileReferences(pcObject.PcObjectDbFileReferences, serializationPcObject.PcObjectDbFileReferences, referenceEntities, dbContext, Serialization.CollectionMode.AddToEmpty, loggersSet);
 
                         dbContext.PcObjects.Add(pcObject);
-                        result.PcObjects_ImportSerializationResult.Added.Add(key, pcObject);
+                        result.PcObjects_ImportSerializationResult.Added.Add(key);
                         if (pcObjectsList is null)
                             result.PcObjects_ImportSerializationResult.All.Add(key, new List<PcObject>() { pcObject });
                         else
@@ -1445,7 +1445,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                         SetDbFileReferences(pcObject.PcObjectDbFileReferences, serializationPcObject.PcObjectDbFileReferences, referenceEntities, dbContext, importMetadata.ChildCollectionMode, loggersSet);
 
                         pcObject._IsDeleted = false;
-                        result.PcObjects_ImportSerializationResult.Updated[key] = pcObject;
+                        result.PcObjects_ImportSerializationResult.Updated.Add(key);
                         var rootPcObject = PazCheckDbHelper.GetRootPcObject(pcObject);
                         if (originalPcObjects.TryGetValue(pcObject.Unit.IdentifierLower, out List<PcObject>? forUnit_PcObjects))
                             forUnit_PcObjects.Remove(pcObject);
@@ -1465,7 +1465,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                                 string key = pcObject.Unit.IdentifierLower + "." + pcObject.IdentifierLower;
 
                                 pcObject._IsDeleted = true;                                
-                                result.PcObjects_ImportSerializationResult.Deleted.Add(key, pcObject);
+                                result.PcObjects_ImportSerializationResult.Deleted.Add(key);
                                 result.PcObjects_ImportSerializationResult.All.TryGetValue(key, out var pcObjectsList);
                                 if (pcObjectsList is not null)
                                 {

@@ -1237,8 +1237,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
             ProjectAllParamValues projectAllParamValues = await _cache.DbCache.GetProjectAllParamValuesAsync(projectId, projectVersionNum, dbContext, LoggersSet.Empty);
             foreach (var tagName in projectAllParamValues.TagConditions.Keys)
             {
-                List<Common.Serialization.TagCondition> tagConditions = PazCheckDbHelper.GetTagConditions(
-                        dbContext,
+                List<Common.Serialization.TagCondition> tagConditions = PazCheckDbHelper.GetTagConditions(                        
                         projectAllParamValues,                        
                         tagName,
                         ceMatrixRuntimeAddon.CsvDb,

@@ -486,14 +486,13 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
 
         /// <summary>
         ///     Includes template TagConditions. Generic constants %() are substituted.
-        /// </summary>
-        /// <param name="readOnlyDbContext"></param>
+        /// </summary>        
         /// <param name="projectAllParamValues"></param>        
         /// <param name="tagName"></param>
         /// <param name="csvDb"></param>
         /// <param name="loggersSet"></param>
         /// <returns></returns>
-        public static List<Serialization.TagCondition> GetTagConditions(PazCheckDbContext readOnlyDbContext,
+        public static List<Serialization.TagCondition> GetTagConditions(
             ProjectAllParamValues projectAllParamValues,                 
             string tagName,
             CsvDb csvDb,            
@@ -511,8 +510,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
 
             IterationInfo iterationInfo = new();            
             
-            GatTemplateTag_TagConditions(
-                    readOnlyDbContext,
+            GatTemplateTag_TagConditions(                    
                     projectAllParamValues,                    
                     tagName,
                     getConstantValue,
@@ -521,8 +519,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                     resultTagConditionsList,                    
                     loggersSet);
 
-            GatTag_TagConditions(
-                    readOnlyDbContext,
+            GatTag_TagConditions(                    
                     projectAllParamValues,
                     tagName,
                     getConstantValue,
@@ -2919,7 +2916,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
             return v ?? @"";
         }        
 
-        private static void GatTemplateTag_TagConditions(PazCheckDbContext readOnlyDbContext,
+        private static void GatTemplateTag_TagConditions(
                     ProjectAllParamValues projectAllParamValues,                    
                     string tagName,
                     Func<string, IterationInfo, string>? getConstantValue,
@@ -2939,7 +2936,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
 
             if (!String.IsNullOrEmpty(template))
             {
-                GatTemplateTag_TagConditions(readOnlyDbContext,
+                GatTemplateTag_TagConditions(
                         projectAllParamValues,                        
                         template,
                         getConstantValue,
@@ -2948,7 +2945,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                         resultTagConditionsList,                        
                         loggersSet);
 
-                GatTag_TagConditions(readOnlyDbContext,
+                GatTag_TagConditions(
                        projectAllParamValues,
                        template,
                        getConstantValue,
@@ -2958,8 +2955,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
             }
         }
 
-        private static void GatTag_TagConditions(
-            PazCheckDbContext readOnlyDbContext,
+        private static void GatTag_TagConditions(            
             ProjectAllParamValues projectAllParamValues,
             string tagName,
             Func<string, IterationInfo, string>? getConstantValue,
