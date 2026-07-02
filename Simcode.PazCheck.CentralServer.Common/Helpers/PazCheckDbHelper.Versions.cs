@@ -26,6 +26,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Frozen;
 using Ssz.Utils.ClosedXML;
+using System.Linq.Expressions;
 
 namespace Simcode.PazCheck.CentralServer.Common.Helpers
 {
@@ -458,6 +459,8 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
         /// <param name="projectVersion"></param>
         /// <param name="projectVersionNum"></param>
         /// <param name="user"></param>
+        /// <param name="dbContextFactory"></param>
+        /// <param name="dbCache"></param>
         /// <returns></returns>
         public static async Task SetActiveProjectVersionAsync(
             PazCheckDbContext dbContext, 
@@ -465,7 +468,9 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
             ProjectVersion? oldProjectVersion,
             ProjectVersion projectVersion,
             UInt32 projectVersionNum,
-            string user)
+            string user,
+            IDbContextFactory<PazCheckDbContext> dbContextFactory,
+            DbCache dbCache)
         {  
             UInt32 oldProjectVersionNum = 0;
             if (oldProjectVersion is not null)
@@ -499,6 +504,13 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
             project.Unit.ActiveProjectVersion = projectVersion;
 
             await dbContext.SaveChangesAsync();
+
+            _ = Sync_BasePcObjects_PcObjects_WithActiveProjectVersionAsync(
+                project.Unit.Identifier,
+                project.Id, 
+                projectVersionNum, 
+                dbContextFactory, 
+                dbCache);
         }
 
         public static async Task CompareVersionsCeMatricesAsync(
@@ -1678,6 +1690,19 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
             return result;
         }
 
+        public static void SafeRemoveRange<T>(PazCheckDbContext dbContext, List<T> entities)
+            where T : class
+        {
+            foreach (var entity in entities)
+            {
+                var entry = dbContext.Entry(entity);
+                if (entry.State == EntityState.Added)
+                    entry.State = EntityState.Detached;
+                else
+                    entry.State = EntityState.Deleted;
+            }
+        }
+
         #endregion
 
         #region private functions
@@ -2387,19 +2412,81 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                         });
                     }
                 }
-        }
+        }        
 
-        public static void SafeRemoveRange<T>(PazCheckDbContext dbContext, List<T> entities)
-            where T : class
+        private static async Task Sync_BasePcObjects_PcObjects_WithActiveProjectVersionAsync(
+            string unitIdentifier,
+            int projectId,
+            UInt32 projectVersionNum,
+            IDbContextFactory<PazCheckDbContext> dbContextFactory,
+            DbCache dbCache)
         {
-            foreach (var entity in entities)
+            await using var readOnlyDbContext = dbContextFactory.CreateDbContext();
+            readOnlyDbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
+            Common.Serialization.SerializationRootObject serializationRootObject = new();
+            serializationRootObject.BasePcObjects = new List<Common.Serialization.BasePcObject>();
+            serializationRootObject.PcObjects = new List<Common.Serialization.PcObject>();
+            var projectAllParamValues = await dbCache.GetProjectAllParamValuesAsync(projectId, projectVersionNum, readOnlyDbContext, LoggersSet.Empty);
+
+            foreach (var kvp in projectAllParamValues.SafetyControllersParams)
             {
-                var entry = dbContext.Entry(entity);
-                if (entry.State == EntityState.Added)
-                    entry.State = EntityState.Detached;
+                if (kvp.Key.EndsWith(PazCheckConstants.IdentifierEnding_Template, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    var serializationBasePcObject = new Common.Serialization.BasePcObject()
+                    {
+                        Identifier = kvp.Key,
+                        Unit = unitIdentifier,
+                        Params = kvp.Value.Select(p =>
+                        {
+                            var param_ = new Common.Serialization.Param();
+                            param_.Name = p.ParamName;
+                            param_.Value = p.Value;
+                            return param_;
+                        })
+                        .ToList()
+                    };
+                    serializationRootObject.BasePcObjects.Add(serializationBasePcObject);
+                }
                 else
-                    entry.State = EntityState.Deleted;
+                {
+                    var serializationPcObject = new Common.Serialization.PcObject()
+                    {
+                        Identifier = kvp.Key,
+                        Unit = unitIdentifier,
+                        Params = kvp.Value.Select(p =>
+                        {
+                            var param_ = new Common.Serialization.Param();
+                            param_.Name = p.ParamName;
+                            param_.Value = p.Value;
+                            return param_;
+                        })
+                        .ToList()
+                    };
+                    serializationRootObject.PcObjects.Add(serializationPcObject);
+                }
             }
+
+            if (serializationRootObject.BasePcObjects.Any(bo => !PazCheckDbHelper.CheckBasePcObject(bo, dbCache)) ||
+                serializationRootObject.PcObjects.Any(o => !PazCheckDbHelper.CheckPcObject(o, dbCache)))
+            {
+                await SerializationHelper.ImportSerializationRootObjectAsync(
+                        serializationRootObject,
+                        new Common.Serialization.ImportMetadata()
+                        {
+                            RootCollectionMode = Common.Serialization.CollectionMode.Replace,
+                            ChildCollectionMode = Common.Serialization.CollectionMode.Replace,
+                            DataCollectionMode = Common.Serialization.CollectionMode.Update,
+                        },
+                        dbContextFactory,
+                        @"",
+                        null,
+                        CancellationToken.None,
+                        NullJobProgress.Instance,
+                        LoggersSet.Empty,
+                        new Common.Serialization.ImportSerializationRootObjectResult(),
+                        preview: false);
+            }            
         }
 
         #endregion

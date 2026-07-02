@@ -57,10 +57,7 @@ public partial class Monitoring
         _configuration = configuration;            
         _informationSecurityEventsLogger = informationSecurityEventsLogger;
         _logger = logger;
-        _applicationStopping_CancellationToken = applicationLifetime.ApplicationStopping;            
-
-        _paramPooledPolicy = new Common.Serialization.ParamPooledPolicy();
-        _serializationParamsPool = new SingleThreadObjectPool<Common.Serialization.Param>(_paramPooledPolicy, 100000);            
+        _applicationStopping_CancellationToken = applicationLifetime.ApplicationStopping;
 
         _dataAccessProvider = ActivatorUtilities.CreateInstance<GrpcDataAccessProvider>(mainServerWorker.ServiceProvider);
 
@@ -372,7 +369,7 @@ public partial class Monitoring
                     pcObjectTrendSubscription.Dispose();
                     _pcObject_JournalParam_ValueSubscriptionsDictionary.Remove(kvp.Key);
                 }
-            }
+            }            
 
             if (dataChanged_PcObjects.Count > 0)
             {
@@ -404,11 +401,7 @@ public partial class Monitoring
             }
 
             if (units_BasePcObjects_PcObjects_Changed)
-            {
                 _cache.DbCache = dbCache;
-
-                await Sync_BasePcObjects_PcObjects_WithActiveProjectVersionAsync(); // Active ProjectVersion contained in Units.                                     
-            }
         }
         else
         {
@@ -726,94 +719,7 @@ public partial class Monitoring
             //    .Where(v => v.JournalParamValuesCollection == journalParamValuesCollection &&
             //
         }
-    }
-
-    private async Task Sync_BasePcObjects_PcObjects_WithActiveProjectVersionAsync()
-    {
-        Common.Serialization.SerializationRootObject serializationRootObject = new();
-        serializationRootObject.BasePcObjects = new List<Common.Serialization.BasePcObject>();
-        serializationRootObject.PcObjects = new List<Common.Serialization.PcObject>();
-        foreach (var rootPcObject in _cache.DbCache.PcObjectsDictionary2.Values.Where(o => String.IsNullOrEmpty(o.ParamsDictionary.TryGetValue(PazCheckConstants.ParamName_PcObjectParent))))
-        {
-            ProjectAllParamValues? projectAllParamValues = null;
-            ProjectVersion? activeProjectVersion = rootPcObject.Unit.ActiveProjectVersion;
-            if (activeProjectVersion is not null)
-            {
-                projectAllParamValues = await _cache.DbCache.GetProjectAllParamValuesAsync(activeProjectVersion.ProjectId, activeProjectVersion.VersionNum, _dbContext_ReadOnly.ReadOnlyDbContext, LoggersSet.Empty);
-
-                foreach (var kvp in projectAllParamValues.SafetyControllersParams)
-                {
-                    if (kvp.Key.EndsWith(PazCheckConstants.IdentifierEnding_Template, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        var serializationBasePcObject = new Common.Serialization.BasePcObject()
-                        {
-                            Identifier = kvp.Key,
-                            Unit = rootPcObject.Unit.Identifier,
-                            Params = kvp.Value.Select(p =>
-                            {
-                                var param_ = _serializationParamsPool.Get();
-                                param_.Name = p.ParamName;
-                                param_.Value = p.Value;
-                                return param_;
-                            })
-                            .ToList()
-                        };
-                        serializationRootObject.BasePcObjects.Add(serializationBasePcObject);
-                    }
-                    else
-                    {
-                        var serializationPcObject = new Common.Serialization.PcObject()
-                        {
-                            Identifier = kvp.Key,
-                            Unit = rootPcObject.Unit.Identifier,
-                            Params = kvp.Value.Select(p =>
-                            {
-                                var param_ = _serializationParamsPool.Get();
-                                param_.Name = p.ParamName;
-                                param_.Value = p.Value;
-                                return param_;
-                            })
-                            .ToList()
-                        };
-                        serializationRootObject.PcObjects.Add(serializationPcObject);
-                    }
-                }
-            }
-        }
-
-        if (serializationRootObject.BasePcObjects.Any(bo => !PazCheckDbHelper.CheckBasePcObject(bo, _cache.DbCache)) ||
-            serializationRootObject.PcObjects.Any(o => !PazCheckDbHelper.CheckPcObject(o, _cache.DbCache)))
-        {
-            await SerializationHelper.ImportSerializationRootObjectAsync(
-                    serializationRootObject,
-                    new Common.Serialization.ImportMetadata()
-                    {
-                        RootCollectionMode = Common.Serialization.CollectionMode.Replace,
-                        ChildCollectionMode = Common.Serialization.CollectionMode.Replace,
-                        DataCollectionMode = Common.Serialization.CollectionMode.Update,
-                    },
-                    _dbContextFactory,
-                    @"",
-                    null,
-                    CancellationToken.None,
-                    NullJobProgress.Instance,
-                    LoggersSet.Empty,
-                    new Common.Serialization.ImportSerializationRootObjectResult(),
-                    preview: false);
-        }
-
-        foreach (var pcObject in serializationRootObject.PcObjects)
-            foreach (var param_ in pcObject.Params!)
-            {
-                _serializationParamsPool.Return(param_);
-            }
-
-        foreach (var basePcObject in serializationRootObject.BasePcObjects)
-            foreach (var param_ in basePcObject.Params!)
-            {
-                _serializationParamsPool.Return(param_);
-            }
-    }
+    }    
 
     #endregion
 
@@ -843,9 +749,6 @@ public partial class Monitoring
     ///     [id, PcObjectSubscription]
     /// </summary>
     private readonly CaseInsensitiveOrderedDictionary<PcObject_JournalParam_ValueSubscription> _pcObject_JournalParam_ValueSubscriptionsDictionary = new();
-
-    private readonly Common.Serialization.ParamPooledPolicy _paramPooledPolicy;
-    private readonly SingleThreadObjectPool<Common.Serialization.Param>  _serializationParamsPool;
 
     private CaseInsensitiveOrderedDictionary<string?> _optionsSubstituted = null!;
 

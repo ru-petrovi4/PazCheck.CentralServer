@@ -283,7 +283,16 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                 }
                 projectVersionComment = projectVersion.Comment;
 
-                await PazCheckDbHelper.SetActiveProjectVersionAsync(dbContext, project, oldProjectVersion, projectVersion, projectVersionNum, informationSecurityContext.User);
+                await PazCheckDbHelper.SetActiveProjectVersionAsync(
+                    dbContext, 
+                    project, 
+                    oldProjectVersion, 
+                    projectVersion, 
+                    projectVersionNum, 
+                    informationSecurityContext.User,
+                    _dbContextFactory,
+                    _cache.DbCache
+                    );
 
                 var metaParams = dbContext.MetaParams.ToCaseInsensitiveOrderedDictionary(mp => mp.ParamName);
                 string arg = NameValueCollectionHelper.GetNameValueCollectionString(

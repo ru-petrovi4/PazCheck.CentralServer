@@ -677,6 +677,9 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                     ceMatrix_CsvMemoryStream.Dispose();
                 }
 
+                string newDataGuid = Guid.NewGuid().ToString();
+                metaParams_DbContext.Database.ExecuteSql($"UPDATE \"Projects\" SET \"DataGuid\" = {newDataGuid} WHERE \"Id\" = {projectId}");
+
                 PazCheckDbHelper.AddOrUpdateMetaParam_Pause_HubMethod_Project_Changed(
                         metaParams_DbContext,
                         metaParams,

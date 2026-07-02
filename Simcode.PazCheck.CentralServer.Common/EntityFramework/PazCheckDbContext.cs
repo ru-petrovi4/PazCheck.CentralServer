@@ -1281,6 +1281,12 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
         /// </summary>
         public bool IsInformationSecurityEventsLoggingDisabled { get; set; }
 
+        /// <summary>
+        ///     Used in this.OnSavingChanges()
+        ///     Is project.DataGuid updating is disabled.
+        /// </summary>
+        public bool DisableProjectGuidUpdate { get; set; }
+
         #endregion
 
         #region protected functions
@@ -1409,15 +1415,15 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
                 .HasFilter("\"_IsDeleted\" = FALSE")
                 .IsUnique();
 
-            //modelBuilder
-            //    .Entity<Row>()
-            //    .HasIndex(e => new { e.CeMatrixId, e._CreateProjectVersionNum })                
-            //    .IsUnique(false);
+            modelBuilder
+                .Entity<Row>()
+                .HasIndex(e => new { e.CeMatrixId, e._CreateProjectVersionNum })
+                .IsUnique(false);
 
-            //modelBuilder
-            //    .Entity<Row>()
-            //    .HasIndex(e => new { e.CeMatrixId, e._DeleteProjectVersionNum })                
-            //    .IsUnique(false);
+            modelBuilder
+                .Entity<Row>()
+                .HasIndex(e => new { e.CeMatrixId, e._DeleteProjectVersionNum })
+                .IsUnique(false);
 
             modelBuilder
                 .Entity<Column>()
@@ -1425,25 +1431,25 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
                 .HasFilter("\"_IsDeleted\" = FALSE")
                 .IsUnique();
 
-            //modelBuilder
-            //    .Entity<Column>()
-            //    .HasIndex(e => new { e.CeMatrixId, e._CreateProjectVersionNum })                
-            //    .IsUnique(false);
+            modelBuilder
+                .Entity<Column>()
+                .HasIndex(e => new { e.CeMatrixId, e._CreateProjectVersionNum })
+                .IsUnique(false);
 
-            //modelBuilder
-            //    .Entity<Column>()
-            //    .HasIndex(e => new { e.CeMatrixId, e._DeleteProjectVersionNum })                
-            //    .IsUnique(false);
+            modelBuilder
+                .Entity<Column>()
+                .HasIndex(e => new { e.CeMatrixId, e._DeleteProjectVersionNum })
+                .IsUnique(false);
 
-            //modelBuilder
-            //    .Entity<Cell>()
-            //    .HasIndex(e => new { e.CeMatrixId, e._CreateProjectVersionNum })                
-            //    .IsUnique(false);
+            modelBuilder
+                .Entity<Cell>()
+                .HasIndex(e => new { e.CeMatrixId, e._CreateProjectVersionNum })
+                .IsUnique(false);
 
-            //modelBuilder
-            //    .Entity<Cell>()
-            //    .HasIndex(e => new { e.CeMatrixId, e._DeleteProjectVersionNum })                
-            //    .IsUnique(false);
+            modelBuilder
+                .Entity<Cell>()
+                .HasIndex(e => new { e.CeMatrixId, e._DeleteProjectVersionNum })
+                .IsUnique(false);
 
             modelBuilder
                 .Entity<CeMatrixComment>()
@@ -2420,7 +2426,8 @@ namespace Simcode.PazCheck.CentralServer.Common.EntityFramework
                     string newDataGuid = Guid.NewGuid().ToString();
                     foreach (var project_ChangedMessage in _project_ChangedMessages)
                     {
-                        secondaryDbContext.Database.ExecuteSql($"UPDATE \"Projects\" SET \"DataGuid\" = {newDataGuid} WHERE \"Id\" = {project_ChangedMessage.ProjectId}");
+                        if (!DisableProjectGuidUpdate)
+                            secondaryDbContext.Database.ExecuteSql($"UPDATE \"Projects\" SET \"DataGuid\" = {newDataGuid} WHERE \"Id\" = {project_ChangedMessage.ProjectId}");
 
                         PazCheckDbHelper.AddOrUpdateMetaParam_Project(
                             secondaryDbContext,

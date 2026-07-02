@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Simcode.PazCheck.CentralServer.Common.EntityFramework;
@@ -11,9 +12,11 @@ using Simcode.PazCheck.CentralServer.Common.EntityFramework;
 namespace Simcode.PazCheck.CentralServer.Common.Migrations
 {
     [DbContext(typeof(PazCheckDbContext))]
-    partial class PazCheckDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260701135756_CeMatrixIndicesAdded")]
+    partial class CeMatrixIndicesAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

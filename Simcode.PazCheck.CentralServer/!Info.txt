@@ -1,7 +1,7 @@
 ѕри экспорте файлов, если не указан часовой по€с, то считаетс€ что это серверное врем€.
 
 $ErrorActionPreference = "Continue"
-Add-Migration Initialization
+Add-Migration Initialization -ErrorAction Continue 
 
 
 —войства плагинов могут содержать следующие константы:

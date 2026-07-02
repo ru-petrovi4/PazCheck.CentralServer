@@ -221,7 +221,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
 
             var metaParams = metaParams_DbContext.MetaParams.ToCaseInsensitiveOrderedDictionary(mp => mp.ParamName);
 
-            if (projectId is not null)
+            if (!preview && projectId is not null)
             {                
                 PazCheckDbHelper.AddOrUpdateMetaParam_Pause_HubMethod_Project_Changed(
                         metaParams_DbContext,
@@ -233,10 +233,6 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
 
             try
             {
-                await using PazCheckDbContext dbContext = dbContextFactory.CreateDbContext();
-                dbContext.User = informationSecurityContext.User;
-                dbContext.IsInformationSecurityEventsLoggingDisabled = true;
-
                 if (String.Equals(sourceTypeIdentifier, PazCheckConstants.TypeIdentifier_Std_File, StringComparison.InvariantCultureIgnoreCase))
                 {
                     var streamWithInfoList = GetStreamWithInfoList(@"", fileName, stream);
@@ -392,8 +388,11 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
             }            
             finally
             {
-                if (projectId is not null)
+                if (!preview && projectId is not null)
                 {
+                    string newDataGuid = Guid.NewGuid().ToString();
+                    metaParams_DbContext.Database.ExecuteSql($"UPDATE \"Projects\" SET \"DataGuid\" = {newDataGuid} WHERE \"Id\" = {projectId}");
+
                     PazCheckDbHelper.AddOrUpdateMetaParam_Pause_HubMethod_Project_Changed(
                         metaParams_DbContext,
                         metaParams,
@@ -983,8 +982,15 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                         serializationRootObject,
                         referenceEntities,
                         result,
-                        importMetadata,             
-                        loggersSet);                    
+                        importMetadata,                          
+                        loggersSet);
+
+                    if (!preview)
+                    {
+                        var metaParam = dbContext.MetaParams.Single(mp => mp.ParamName == PazCheckConstants.MetaParamNameBase_Monitoring_Config);
+                        metaParam.Value = Guid.NewGuid().ToString();
+                        metaParam._LastChangeTimeUtc = DateTime.UtcNow;
+                    }
 
                     changed = true;
                 }                                  
@@ -1213,7 +1219,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                     RootCollectionMode = CentralServer.Common.Serialization.CollectionMode.Replace,
                     ChildCollectionMode = CentralServer.Common.Serialization.CollectionMode.Replace,
                     DataCollectionMode = CentralServer.Common.Serialization.CollectionMode.Update,
-                },
+                },                
                 loggersSet);
         }
 
@@ -1222,7 +1228,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
             Serialization.SerializationRootObject serializationRootObject,
             ReferenceEntities referenceEntities,
             Serialization.ImportSerializationRootObjectResult result, 
-            Serialization.ImportMetadata importMetadata, 
+            Serialization.ImportMetadata importMetadata,             
             ILoggersSet loggersSet)
         {
             Dictionary<string, Unit> units = await dbContext.Units.ToDictionaryAsync(u => u.Identifier, StringComparer.InvariantCultureIgnoreCase);
@@ -1577,11 +1583,7 @@ namespace Simcode.PazCheck.CentralServer.Common.Helpers
                     }
                     pcObject.Level = level;
                 }
-            }
-
-            var metaParam = dbContext.MetaParams.Single(mp => mp.ParamName == PazCheckConstants.MetaParamNameBase_Monitoring_Config);
-            metaParam.Value = Guid.NewGuid().ToString();
-            metaParam._LastChangeTimeUtc = DateTime.UtcNow;
+            }            
         }
 
         private static void ValidateParam(string paramName, string? paramValue, IUserFriendlyLogger userFriendlyLogger)

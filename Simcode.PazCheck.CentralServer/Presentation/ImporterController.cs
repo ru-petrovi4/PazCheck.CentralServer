@@ -467,10 +467,6 @@ namespace Simcode.PazCheck.CentralServer.Presentation
 
                                     using (var stream = System.IO.File.OpenRead(tempFileFullName))
                                     {
-                                        await using PazCheckDbContext dbContext = _dbContextFactory.CreateDbContext();
-                                        dbContext.User = informationSecurityContext.User;
-                                        dbContext.IsInformationSecurityEventsLoggingDisabled = true;
-
                                         result = await SerializationHelper.ImportFileAsync(
                                             _dbContextFactory,
                                             stream,
