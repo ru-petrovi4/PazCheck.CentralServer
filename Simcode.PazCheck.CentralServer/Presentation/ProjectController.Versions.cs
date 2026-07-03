@@ -289,9 +289,7 @@ namespace Simcode.PazCheck.CentralServer.Presentation
                     oldProjectVersion, 
                     projectVersion, 
                     projectVersionNum, 
-                    informationSecurityContext.User,
-                    _dbContextFactory,
-                    _cache.DbCache
+                    informationSecurityContext.User
                     );
 
                 var metaParams = dbContext.MetaParams.ToCaseInsensitiveOrderedDictionary(mp => mp.ParamName);
@@ -336,12 +334,26 @@ namespace Simcode.PazCheck.CentralServer.Presentation
 
                     try
                     {
+                        await PazCheckDbHelper.Sync_BasePcObjects_PcObjects_WithActiveProjectVersionAsync(
+                            project.Unit.Identifier,
+                            project.Id,
+                            projectVersionNum,
+                            _dbContextFactory,
+                            _cache.DbCache);
+                    }
+                    catch (Exception ex)
+                    {
+                        loggersSet.LoggerAndUserFriendlyLogger.LogError(ex, @"Sync_BasePcObjects_PcObjects_WithActiveProjectVersionAsync error.");
+                    }
+
+                    try
+                    {
                         await AddJournalParamsAsync(projectId, projectVersionNum, informationSecurityContext);
                     }
                     catch (Exception ex)
                     {
                         loggersSet.LoggerAndUserFriendlyLogger.LogError(ex, @"AddJournalParamsAsync error.");
-                    }                    
+                    }                                       
                 });
 
                 succeeded = true;
